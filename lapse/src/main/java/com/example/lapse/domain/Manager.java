@@ -10,9 +10,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Manager extends User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+
 	private int annualLeaveEntitlement;
 	private int medicalLeaveEntitment;
 	private int compensationLeaveEntitlment;
@@ -34,15 +32,6 @@ public class Manager extends User {
 		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
 		
 
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getAnnualLeaveEntitlement() {
@@ -77,13 +66,4 @@ public class Manager extends User {
 	public void setStaffList(List<Staff> staffList) {
 		this.staffList = staffList;
 	}
-
-
-
-
-	
-
-
-
-
 }

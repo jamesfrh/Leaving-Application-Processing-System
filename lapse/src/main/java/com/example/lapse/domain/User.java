@@ -1,8 +1,14 @@
 package com.example.lapse.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-public class User {
-
+@MappedSuperclass
+public abstract class User {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	private String name;
 	private String password;
 	private String email;
@@ -39,11 +45,13 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", password=" + password + ", email=" + email + "]";
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + "]";
 	}
-	
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-
-	
 }

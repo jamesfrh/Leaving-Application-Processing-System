@@ -9,11 +9,10 @@ import javax.persistence.Id;
 @Entity
 public class Admin extends User {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	
+	public Admin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Admin(String name, String password, String email) {
 		super(name, password, email);

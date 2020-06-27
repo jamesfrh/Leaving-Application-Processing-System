@@ -44,10 +44,15 @@ public class LapseApplication {
 			mgrRepo.save(manager3);
 
 			
-			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL", 20,21,22, manager1);
-			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL", 23,24,25, manager3);
-			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL", 29,28,26, manager3);
+			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL", 20,21,22);
+			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL", 23,24,25);
+			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL", 29,28,26);
 
+			
+			
+			staff1.setManager(manager1);
+			staff2.setManager(manager3);
+			staff3.setManager(manager3);
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);

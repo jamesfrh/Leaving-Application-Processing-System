@@ -9,9 +9,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Staff extends User{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
 	private int annualLeaveEntitlement;
 	private int medicalLeaveEntitment;
 	private int compensationLeaveEntitlment;
@@ -32,6 +29,13 @@ public class Staff extends User{
 		this.manager = manager;
 	}
 
+	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitment, int compensationLeaveEntitlment) {
+		super(name, password, email);
+		this.annualLeaveEntitlement = annualLeaveEntitlement;
+		this.medicalLeaveEntitment = medicalLeaveEntitment;
+		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
+	}
+	
 	public Manager getManager() {
 		return manager;
 	}
@@ -39,12 +43,6 @@ public class Staff extends User{
 		this.manager = manager;
 	}
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public int getAnnualLeaveEntitlement() {
 		return annualLeaveEntitlement;
 	}
@@ -63,8 +61,6 @@ public class Staff extends User{
 	public void setCompensationLeaveEntitlment(int compensationLeaveEntitlment) {
 		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
 	}
-	
-
 	
 }
 	

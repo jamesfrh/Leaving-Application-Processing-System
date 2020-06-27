@@ -1,5 +1,7 @@
 package com.example.lapse;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -47,8 +49,6 @@ public class LapseApplication {
 			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL", 20,21,22);
 			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL", 23,24,25);
 			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL", 29,28,26);
-
-			
 			
 			staff1.setManager(manager1);
 			staff2.setManager(manager3);
@@ -60,22 +60,16 @@ public class LapseApplication {
 			//promoting a staff (can be put into a method)
 			Manager newManager = new Manager();
 			
-			//setting all staff attributes into new manager obj
+			//setting all staff attributes into new manager obj and delete previous staff obj
 			newManager.setEmail(staff1.getEmail());
 			newManager.setName(staff1.getName());
 			newManager.setPassword(staff1.getPassword());
 			newManager.setAnnualLeaveEntitlement(staff1.getAnnualLeaveEntitlement());
 			newManager.setMedicalLeaveEntitment(staff1.getMedicalLeaveEntitment());
 			newManager.setCompensationLeaveEntitlment(staff1.getCompensationLeaveEntitlment());
-			
 			mgrRepo.save(newManager);
 			staffRepo.delete(staff1);
-
-				
 			
-			
-			
-
 		};
 	}
 }

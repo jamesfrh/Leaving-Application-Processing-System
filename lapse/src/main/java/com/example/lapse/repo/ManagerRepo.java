@@ -6,4 +6,5 @@ import com.example.lapse.domain.Manager;
 
 public interface ManagerRepo extends JpaRepository<Manager, Integer> {
 
+	
 }

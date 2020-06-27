@@ -1,23 +1,17 @@
 package com.example.lapse.domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Manager extends User {
+public class Manager extends Staff {
 
-	private int annualLeaveEntitlement;
-	private int medicalLeaveEntitment;
-	private int compensationLeaveEntitlment;
-
-	@OneToMany(mappedBy = "manager")
-	private List<Staff> staffList;
-
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
+	private Collection<Staff> staffList;
 
 	public Manager() {
 		super();
@@ -26,11 +20,7 @@ public class Manager extends User {
 
 	public Manager(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitment,
 			int compensationLeaveEntitlment) {
-		super(name, password, email);
-		this.annualLeaveEntitlement = annualLeaveEntitlement;
-		this.medicalLeaveEntitment = medicalLeaveEntitment;
-		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
-		
+		super(name, password, email, annualLeaveEntitlement, medicalLeaveEntitment, compensationLeaveEntitlment);
 
 	}
 
@@ -59,7 +49,7 @@ public class Manager extends User {
 	}
 
 
-	public List<Staff> getStaffList() {
+	public Collection<Staff> getStaffList() {
 		return staffList;
 	}
 

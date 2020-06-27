@@ -9,9 +9,9 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Staff extends User{
 	
-	private int annualLeaveEntitlement;
-	private int medicalLeaveEntitment;
-	private int compensationLeaveEntitlment;
+	protected int annualLeaveEntitlement;
+	protected int medicalLeaveEntitment;
+	protected int compensationLeaveEntitlment;
 	
 	@ManyToOne
 	private Manager manager;

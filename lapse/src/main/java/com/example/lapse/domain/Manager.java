@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+
 @Entity
 public class Manager extends Staff {
 
@@ -17,13 +18,13 @@ public class Manager extends Staff {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public Manager(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitment,
-			int compensationLeaveEntitlment) {
-		super(name, password, email, annualLeaveEntitlement, medicalLeaveEntitment, compensationLeaveEntitlment);
-
+	
+	public Manager(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitlement,
+			int compensationLeaveEntitlement) {
+		super(name, password, email, annualLeaveEntitlement, medicalLeaveEntitlement, compensationLeaveEntitlement);
+		this.setRole("Manager");
 	}
-
+	
 	public int getAnnualLeaveEntitlement() {
 		return annualLeaveEntitlement;
 	}
@@ -32,20 +33,20 @@ public class Manager extends Staff {
 		this.annualLeaveEntitlement = annualLeaveEntitlement;
 	}
 
-	public int getMedicalLeaveEntitment() {
-		return medicalLeaveEntitment;
+	public int getMedicalLeaveEntitlement() {
+		return medicalLeaveEntitlement;
 	}
 
-	public void setMedicalLeaveEntitment(int medicalLeaveEntitment) {
-		this.medicalLeaveEntitment = medicalLeaveEntitment;
+	public void setMedicalLeaveEntitlement(int medicalLeaveEntitlement) {
+		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
 	}
 
-	public int getCompensationLeaveEntitlment() {
-		return compensationLeaveEntitlment;
+	public int getCompensationLeaveEntitlement() {
+		return compensationLeaveEntitlement;
 	}
 
-	public void setCompensationLeaveEntitlment(int compensationLeaveEntitlment) {
-		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
+	public void setCompensationLeaveEntitlement(int compensationLeaveEntitlement) {
+		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
 	}
 
 
@@ -56,11 +57,10 @@ public class Manager extends Staff {
 	public void setStaffList(List<Staff> staffList) {
 		this.staffList = staffList;
 	}
-
 	@Override
 	public String toString() {
-		return "Manager [name = " + super.getName() + " ID = " + super.getId() +  " Password = " + super.getPassword() +" annualLeaveEntitlement=" + annualLeaveEntitlement + ", medicalLeaveEntitment="
-				+ medicalLeaveEntitment + ", compensationLeaveEntitlment=" + compensationLeaveEntitlment + "]";
+		return "Manager [name = " + super.getName() + " ID = " + super.getId() +  " Password = " + super.getPassword() +" annualLeaveEntitlement=" + annualLeaveEntitlement + ", medicalLeaveEntitlement="
+				+ medicalLeaveEntitlement + ", compensationLeaveEntitlement=" + compensationLeaveEntitlement + "]";
 	}
 	
 }

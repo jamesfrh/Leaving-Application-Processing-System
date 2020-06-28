@@ -39,18 +39,18 @@ public class LapseApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL",10,11,12);
-			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL",13,14,15);
-			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL",16,17,18);
+			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com",10,11,12);
+			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com",13,14,15);
+			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL@gmail.com",16,17,18);
 
-			mgrRepo.save(manager1);
-			mgrRepo.save(manager2);
-			mgrRepo.save(manager3);
+			staffRepo.save(manager1);
+			staffRepo.save(manager2);
+			staffRepo.save(manager3);
 
 			
-			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL", 20,21,22);
-			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL", 23,24,25);
-			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL", 29,28,26);
+			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", 20,21,22);
+			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL@gmail.com", 23,24,25);
+			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", 29,28,26);
 			
 			staff1.setManager(manager1);
 			staff2.setManager(manager3);
@@ -58,19 +58,20 @@ public class LapseApplication {
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
-			
-			//promoting a staff (can be put into a method)
-			Manager newManager = new Manager();
-			
-			//setting all staff attributes into new manager obj and delete previous staff obj
-			newManager.setEmail(staff1.getEmail());
-			newManager.setName(staff1.getName());
-			newManager.setPassword(staff1.getPassword());
-			newManager.setAnnualLeaveEntitlement(staff1.getAnnualLeaveEntitlement());
-			newManager.setMedicalLeaveEntitment(staff1.getMedicalLeaveEntitment());
-			newManager.setCompensationLeaveEntitlment(staff1.getCompensationLeaveEntitlment());
-			mgrRepo.save(newManager);
-			staffRepo.delete(staff1);
+
+			//Removed: 
+//			//promoting a staff (can be put into a method)
+//			Manager newManager = new Manager();
+//			
+//			//setting all staff attributes into new manager obj and delete previous staff obj
+//			newManager.setEmail(staff1.getEmail());
+//			newManager.setName(staff1.getName());
+//			newManager.setPassword(staff1.getPassword());
+//			newManager.setAnnualLeaveEntitlement(staff1.getAnnualLeaveEntitlement());
+//			newManager.setMedicalLeaveEntitment(staff1.getMedicalLeaveEntitment());
+//			newManager.setCompensationLeaveEntitlment(staff1.getCompensationLeaveEntitlment());
+//			mgrRepo.save(newManager);
+//			staffRepo.delete(staff1);
 
 			
 			List<Manager> managerList1 = mgrRepo.findByEmail("BOBEMAIL");

@@ -18,17 +18,19 @@ public class Admin extends User {
 	}
 
 
-	public void promotestaff(Staff staff) {
-		
-		Manager newManager = new Manager();
+	// Removed:
 	
-		newManager.setEmail(staff.getEmail());
-		newManager.setName(staff.getName());
-		newManager.setPassword(staff.getPassword());
-		newManager.setAnnualLeaveEntitlement(staff.getAnnualLeaveEntitlement());
-		newManager.setMedicalLeaveEntitment(staff.getMedicalLeaveEntitment());
-		newManager.setCompensationLeaveEntitlment(staff.getCompensationLeaveEntitlment());
-	}
-	
+//	public void promotestaff(Staff staff) {
+//		
+//		Manager newManager = new Manager();
+//	
+//		newManager.setEmail(staff.getEmail());
+//		newManager.setName(staff.getName());
+//		newManager.setPassword(staff.getPassword());
+//		newManager.setAnnualLeaveEntitlement(staff.getAnnualLeaveEntitlement());
+//		newManager.setMedicalLeaveEntitment(staff.getMedicalLeaveEntitment());
+//		newManager.setCompensationLeaveEntitlment(staff.getCompensationLeaveEntitlment());
+//	}
+//	
 
 }

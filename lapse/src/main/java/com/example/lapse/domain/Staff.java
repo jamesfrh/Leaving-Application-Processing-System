@@ -1,17 +1,15 @@
 package com.example.lapse.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Staff extends User{
 	
 	protected int annualLeaveEntitlement;
-	protected int medicalLeaveEntitment;
-	protected int compensationLeaveEntitlment;
+	protected int medicalLeaveEntitlement;
+	protected int compensationLeaveEntitlement;
+	protected String role = "Staff";
 	
 	@ManyToOne
 	private Manager manager;
@@ -20,20 +18,27 @@ public class Staff extends User{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitment,
-			int compensationLeaveEntitlment, Manager manager) {
+	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitlement,
+			int compensationLeaveEntitlement, Manager manager) {
 		super(name, password, email);
 		this.annualLeaveEntitlement = annualLeaveEntitlement;
-		this.medicalLeaveEntitment = medicalLeaveEntitment;
-		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
+		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
+		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
 		this.manager = manager;
 	}
 
-	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitment, int compensationLeaveEntitlment) {
+	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitlement, int compensationLeaveEntitlement) {
 		super(name, password, email);
 		this.annualLeaveEntitlement = annualLeaveEntitlement;
-		this.medicalLeaveEntitment = medicalLeaveEntitment;
-		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
+		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
+		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	public Manager getManager() {
@@ -49,17 +54,17 @@ public class Staff extends User{
 	public void setAnnualLeaveEntitlement(int annualLeaveEntitlement) {
 		this.annualLeaveEntitlement = annualLeaveEntitlement;
 	}
-	public int getMedicalLeaveEntitment() {
-		return medicalLeaveEntitment;
+	public int getMedicalLeaveEntitlement() {
+		return medicalLeaveEntitlement;
 	}
-	public void setMedicalLeaveEntitment(int medicalLeaveEntitment) {
-		this.medicalLeaveEntitment = medicalLeaveEntitment;
+	public void setMedicalLeaveEntitlement(int medicalLeaveEntitlement) {
+		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
 	}
-	public int getCompensationLeaveEntitlment() {
-		return compensationLeaveEntitlment;
+	public int getCompensationLeaveEntitlement() {
+		return compensationLeaveEntitlement;
 	}
-	public void setCompensationLeaveEntitlment(int compensationLeaveEntitlment) {
-		this.compensationLeaveEntitlment = compensationLeaveEntitlment;
+	public void setCompensationLeaveEntitlment(int compensationLeaveEntitlement) {
+		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
 	}
 	
 }

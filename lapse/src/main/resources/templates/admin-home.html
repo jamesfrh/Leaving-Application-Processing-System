@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" >
+<title>AdminHomePage</title>
+
+<style>
+.button1 {
+    display: block;
+    width: 105px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    background-color: #4CAF50; /* Green */
+}    
+    .button2 {
+    display: block;
+    width: 105px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    background-color: #008CBA; /* Green */
+}
+</style>
+</head>
+<body>
+<td><a class="button1" th:href="@{/staff/list}">Staff List</a></td>
+<td><a class="button2" th:href="@{/leave/list/}">Maintain Leave</a></td>
+
+</body>
+</html>

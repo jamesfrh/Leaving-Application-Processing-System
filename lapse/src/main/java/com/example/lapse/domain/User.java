@@ -4,13 +4,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @MappedSuperclass
 public abstract class User {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@NotEmpty
 	private String name;
+	@NotEmpty
+	@Size(min=6, max=20)
 	private String password;
+	@NotEmpty
+	@Email
 	private String email;
 	
 	
@@ -18,7 +26,7 @@ public abstract class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(String name, String password, String email) {
+	public User(@NotEmpty String name, @NotEmpty @Size(min=6, max=20) String password, @NotEmpty @Email String email) {
 		super();
 		this.name = name;
 		this.password = password;

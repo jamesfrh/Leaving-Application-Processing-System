@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Staff Form</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Staff Form</h1>
+<form action="#" th:object="${staff}" th:action="@{/staff/save}" method="post" >
+		<fieldset>
+		<input type="hidden" th:field="*{id}">  
+		</fieldset>
+		<fieldset>
+			Staff Name: <input type="text" th:field="*{name}">
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+		</fieldset>
+		<fieldset>
+			Staff Email: <input type="email" th:field="*{email}">
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{email}"></p>
+		</fieldset>
+	    <fieldset>
+        	Password: <input type="password" th:field="*{password}">
+      		<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+    	</fieldset>
+		<fieldset>
+			Staff Annual Leave Entitlement: <input type="text" th:field="*{annualLeaveEntitlement}">
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+		</fieldset>
+		<fieldset>
+			Staff Medical Leave Entitlement: <input type="text" th:field="*{medicalLeaveEntitlement}">
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+		</fieldset>
+		<fieldset>
+			<button type="submit" >Save</button>
+			<button type="reset">Reset</button>
+		</fieldset>
+		
+	</form>
+
+</body>
+</html>

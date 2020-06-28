@@ -20,4 +20,5 @@ public interface StaffService {
 	public int demoteStaff(Integer id);
 	
 	public Staff findStaffByEmail(String email);
+	public boolean validateStaff(String email, String password);
 }

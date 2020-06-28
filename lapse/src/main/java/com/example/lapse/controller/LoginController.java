@@ -38,16 +38,28 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping("/submit")
-	public String submit(@ModelAttribute("staff") Staff staff, HttpSession session) {
+//	@RequestMapping("/submit")
+//	public String submit(@ModelAttribute("staff") Staff staff, HttpSession session) {
 //		if (bindingResult.hasErrors()) {
 //			return "login";
 //		}
-		Staff currStaff = staffservice.findStaffByEmail(staff.getEmail());
-		session.setAttribute("role", currStaff.getRole());
-		session.setAttribute("id", currStaff.getId());
-		
-		return "homePage";
-	}
+//		Staff currStaff = staffservice.findStaffByEmail(staff.getEmail());
+//		session.setAttribute("role", currStaff.getRole());
+//		session.setAttribute("id", currStaff.getId());
+//		
+//		return "homePage";
+//	}
+	
+	@RequestMapping("/submit")
+	public String submit(@ModelAttribute("staff") Staff staff, HttpSession session) {
+		boolean staffstatus = staffservice.validateStaff(staff.getEmail(), staff.getPassword());
+	    if (staffstatus==true) {
+	    	Staff currStaff = staffservice.findStaffByEmail(staff.getEmail());
+	    	session.setAttribute("role", currStaff.getRole());
+	    	session.setAttribute("id", currStaff.getId());
+	    	return "homepage";
+	    }
+	    return "login";
+	  }
 	
 }

@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,4 +73,17 @@ public class StaffServiceImpl implements StaffService {
 		return srepo.findByEmail(email);
 	}
 
+	@Override
+	  public boolean validateStaff(String email, String password) {
+	    boolean status=false;
+	    ArrayList<Staff> staffList = (ArrayList<Staff>) srepo.findAll();
+	    for(Iterator<Staff> iterator = staffList.iterator(); iterator.hasNext();) {
+	      Staff staff = (Staff) iterator.next();
+	      if(staff.getEmail().equals(email)&& staff.getPassword().equals(password)) {
+	        status=true;
+	        break;
+	      }
+	    }
+	    return status;
+	  }
 }

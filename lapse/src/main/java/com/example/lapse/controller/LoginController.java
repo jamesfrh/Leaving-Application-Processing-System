@@ -5,47 +5,49 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.lapse.repo.AdminRepo;
-import com.example.lapse.repo.ManagerRepo;
-import com.example.lapse.repo.StaffRepo;
+import com.example.lapse.domain.Staff;
+import com.example.lapse.service.StaffService;
+import com.example.lapse.service.StaffServiceImpl;
 
 @Controller
 @RequestMapping("/home")
 public class LoginController {
 	
 	@Autowired
-	StaffRepo staffRepo;
+	private StaffService staffservice;
 
 	@Autowired
-	ManagerRepo mgrRepo;
-
-	@Autowired
-	AdminRepo adminRepo;
-
+	public void setStaffService(StaffServiceImpl sserviceImpl) {
+		this.staffservice = sserviceImpl;
+	}
 	
-	@GetMapping("/login")
-	public String login(HttpSession session) {
-		
-		
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(new StaffValidator());
+	}
+	
+	@RequestMapping("/login")
+	public String login(Model model) {
+		Staff staff = new Staff();
+		model.addAttribute("staff", staff);
 		return "login";
 	}
 	
-	@GetMapping("/submit")
-	public String submit(HttpSession session) {
+	@RequestMapping("/submit")
+	public String submit(@ModelAttribute("staff") Staff staff, HttpSession session) {
+//		if (bindingResult.hasErrors()) {
+//			return "login";
+//		}
+		Staff currStaff = staffservice.findStaffByEmail(staff.getEmail());
+		session.setAttribute("role", currStaff.getRole());
+		session.setAttribute("id", currStaff.getId());
 		
-		
-		return "login";
-	}
-	
-	@RequestMapping("/homepage")
-	public String home(HttpSession session, Model model) {
-		
-		//testing hyperlink
-		model.addAttribute("role", "manager");
 		return "homePage";
 	}
-
+	
 }

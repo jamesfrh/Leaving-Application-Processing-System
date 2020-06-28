@@ -18,4 +18,6 @@ public interface StaffService {
 	
 	public int promoteStaff(Integer id);
 	public int demoteStaff(Integer id);
+	
+	public Staff findStaffByEmail(String email);
 }

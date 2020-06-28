@@ -67,6 +67,9 @@ public class StaffServiceImpl implements StaffService {
 		return srepo.demoteUser(id);
 	}
 
-
+	@Override
+	public Staff findStaffByEmail(String email) {
+		return srepo.findByEmail(email);
+	}
 
 }

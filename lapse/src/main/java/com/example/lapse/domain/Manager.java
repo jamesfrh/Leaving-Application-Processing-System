@@ -56,4 +56,11 @@ public class Manager extends Staff {
 	public void setStaffList(List<Staff> staffList) {
 		this.staffList = staffList;
 	}
+
+	@Override
+	public String toString() {
+		return "Manager [name = " + super.getName() + " ID = " + super.getId() +  " Password = " + super.getPassword() +" annualLeaveEntitlement=" + annualLeaveEntitlement + ", medicalLeaveEntitment="
+				+ medicalLeaveEntitment + ", compensationLeaveEntitlment=" + compensationLeaveEntitlment + "]";
+	}
+	
 }

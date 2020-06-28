@@ -1,6 +1,8 @@
 package com.example.lapse;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -69,6 +71,15 @@ public class LapseApplication {
 			newManager.setCompensationLeaveEntitlment(staff1.getCompensationLeaveEntitlment());
 			mgrRepo.save(newManager);
 			staffRepo.delete(staff1);
+
+			
+			List<Manager> managerList1 = mgrRepo.findByEmail("BOBEMAIL");
+			for (Iterator <Manager> iterator = managerList1.iterator(); iterator.hasNext();) {
+				Manager user = (Manager) iterator.next();
+				System.out.println(user.toString());
+			}
+
+			
 			
 		};
 	}

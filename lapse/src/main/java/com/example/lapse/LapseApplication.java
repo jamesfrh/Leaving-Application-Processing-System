@@ -1,8 +1,12 @@
 package com.example.lapse;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +23,6 @@ import com.example.lapse.repo.StaffRepo;
 
 @SpringBootApplication
 public class LapseApplication {
-	
 
 	@Autowired
 	StaffRepo staffRepo;
@@ -30,12 +33,11 @@ public class LapseApplication {
 	@Autowired
 	AdminRepo adminRepo;
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(LapseApplication.class, args);
-		
+
 	}
-	
+
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
@@ -74,15 +76,76 @@ public class LapseApplication {
 //			staffRepo.delete(staff1);
 
 			
-			List<Manager> managerList1 = mgrRepo.findByEmail("BOBEMAIL");
-			for (Iterator <Manager> iterator = managerList1.iterator(); iterator.hasNext();) {
-				Manager user = (Manager) iterator.next();
-				System.out.println(user.toString());
+//			List<Manager> managerList1 = mgrRepo.findByEmail("BOBEMAIL");
+//			for (Iterator <Manager> iterator = managerList1.iterator(); iterator.hasNext();) {
+//				Manager user = (Manager) iterator.next();
+//				System.out.println(user.toString());
+//			}
+			
+			//User applied start date and end date of leave
+			LocalDate dateStart = LocalDate.of(2020, 6, 15);
+			LocalDate dateEnd = LocalDate.of(2020, 6,22);
+			System.out.println(dateStart);
+			System.out.println(dateEnd);
+
+			//Validate that start day and end day must not be weekends
+			DayOfWeek dayStart = DayOfWeek.of(dateStart.get(ChronoField.DAY_OF_WEEK));
+			System.out.println(dayStart);
+			DayOfWeek dayEnd = DayOfWeek.of(dateEnd.get(ChronoField.DAY_OF_WEEK));
+			System.out.println(dayStart);
+			
+			if((dayStart == DayOfWeek.SATURDAY || dayStart == DayOfWeek.SUNDAY) ||
+					(dayEnd == DayOfWeek.SATURDAY || dayEnd == DayOfWeek.SUNDAY)) {
+				System.out.println("start day/ end day of leave is a weekend");
+			}
+			
+			
+			//Retrieve number of days in between start and end date (inclusive of start and end)
+			float appliedCalendarLeaveDays = ChronoUnit.DAYS.between(dateStart,dateEnd) + 1;
+			System.out.println(appliedCalendarLeaveDays);
+
+			
+			float actualLeaveDaysApplied = 0;
+
+			//validate if appliedLeaveDays <=14 with a method and put the if statment below inside
+			if(appliedCalendarLeaveDays <=14) {
+				//converting start and end date from LocalDate format to Calendar format
+	            GregorianCalendar calStart = GregorianCalendar.from(dateStart.atStartOfDay(ZoneId.systemDefault()));
+	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd.atStartOfDay(ZoneId.systemDefault()));
+
+
+	            //validate if start date and end date are the same, return an error if they are
+	            //calStart.getTimeInMillis() == calEnd.getTimeInMillis()) 
+
+	            //validate if end date is before start date, return an error if they are
+	            //startCal.getTimeInMillis() > endCal.getTimeInMillis()
+
+
+				do {
+				  if (calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+				  calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {;
+				  actualLeaveDaysApplied++; }
+				  calStart.add(Calendar.DAY_OF_MONTH, 1);
+				  } 
+				while (calStart.getTimeInMillis() <= calEnd.getTimeInMillis());
+				
+				System.out.println(actualLeaveDaysApplied);
+				// return actualLeaveDaysApplied
+			}
+			//query if balance in DB >= actualLeaveDaysApplied
+			//deduct from balance if ok, if not then return an error
+
+			//when appliedLeaveDays >14 
+			else {
+				//query if balance in DB >= appliedLeaveDays
+				//deduct from balance if ok, if not then return an error
+				
 			}
 
-			
-			
+
+			 	
 		};
+		
+		
 	}
 }
-

@@ -100,7 +100,6 @@ public class LapseApplication {
 			//Retrieve number of days in between start and end date (inclusive of start and end)
 			float noOfDays1 = ChronoUnit.DAYS.between(dateStart1,dateEnd1) + 1;
 			float noOfDays2 = ChronoUnit.DAYS.between(dateStart2,dateEnd2) + 1;
-
 			
 			//converting localdate to date
 			Date APPLICATIONDATE =java.sql.Date.valueOf(ApplicationDate);
@@ -126,12 +125,6 @@ public class LapseApplication {
 			laRepo.save(apply3);
 
 
-
-			
-
-			
-
-
 			//Validate that start day and end day must not be weekends
 			DayOfWeek dayStart = DayOfWeek.of(dateStart1.get(ChronoField.DAY_OF_WEEK));
 			System.out.println(dayStart);
@@ -143,9 +136,7 @@ public class LapseApplication {
 				System.out.println("start day/ end day of leave is a weekend");
 			}
 			
-			
-
-			
+		
 			float actualLeaveDaysApplied = 0;
 
 			//validate if appliedLeaveDays <=14 with a method and put the if statment below inside
@@ -153,10 +144,11 @@ public class LapseApplication {
 				//converting start and end date from LocalDate format to Calendar format
 	            GregorianCalendar calStart = GregorianCalendar.from(dateStart1.atStartOfDay(ZoneId.systemDefault()));
 	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd1.atStartOfDay(ZoneId.systemDefault()));
+				System.out.println(calStart);
+				
+//				System.out.println(daysBetween);
+//				System.out.println(noOfDays1);
 
-
-	            //validate if start date and end date are the same, return an error if they are
-	            //calStart.getTimeInMillis() == calEnd.getTimeInMillis()) 
 
 	            //validate if end date is before start date, return an error if they are
 	            //startCal.getTimeInMillis() > endCal.getTimeInMillis()
@@ -183,6 +175,10 @@ public class LapseApplication {
 				
 			}
 
+			
+				  Calendar cal = Calendar.getInstance();
+				  cal.setTime(START1);
+			      System.out.println(cal);
 
 			 	
 		};

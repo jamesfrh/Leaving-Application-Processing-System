@@ -1,5 +1,7 @@
 package com.example.lapse.controller;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -34,10 +36,31 @@ public class LeaveValidator implements Validator {
 	  @Override
 	  public void validate(Object target, Errors errors) {
 	    LeaveApplication application = (LeaveApplication) target;
+	    Calendar calStart = dateToCalendar(application.getStartDate());
+	    Calendar calEnd = dateToCalendar(application.getEndDate());
+
+//	    	1. Applied startdate <= endDate (min 1 day)
+	    boolean status = startDateBeforeEndDate(calStart, calEnd);
+	    if (status == false) { 
+			errors.rejectValue("dates", "Start Date is after End Date");
+	    }
+//	    	2. (Jaye) 
+	    //Check if end date of previous transaction is not after current startdate ("Start date can not be in between other application date"
+//
 	    
-	    boolean status = startDateBeforeEndDate(application.getStartDate(), application.getEndDate());
+//	    	3.Retrieve number of days in between start and end date (inclusive of start and end)
+		float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
+		if(daysBetween <= 14) {
+			float actualLeaveDays = removeWeekends(calStart, calEnd);
+
+		}
+		else {
+			//daysBetween = 
+		}
+
+
 	    
-	    
+	    //Jayes part
 	    List<LeaveApplication> lalist = laservice.findApplicationByStaffId(application.getId());
 	      
 	    if(application.getEndDate().before(application.getStartDate()))
@@ -53,10 +76,33 @@ public class LeaveValidator implements Validator {
 	    }
 	  }
 	  
-		public boolean startDateBeforeEndDate(Date start, Date end) {
-            //startCal.getTimeInMillis() > endCal.getTimeInMillis()
-
-			return true;
+	  
+	  //convert Date format to Calendar format
+	  public  Calendar dateToCalendar(Date date){ 
+		  Calendar cal = Calendar.getInstance();
+		  cal.setTime(date);
+		  return cal;
+		}
+	  //Check if start date is <= end date
+		public boolean startDateBeforeEndDate(Calendar start, Calendar end) {
+            if(start.getTimeInMillis() <= end.getTimeInMillis()) {
+    			return true;
+            }
+            else return false;
 		};
+		
+		//Remove weekends when days applied  <=14
+		public float removeWeekends(Calendar start, Calendar end) {
+			float daysWithoutWeekends = 0;
+			do {
+				  if (start.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+						  start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {;
+				  daysWithoutWeekends++; }
+				  start.add(Calendar.DAY_OF_MONTH, 1);
+				  } 
+				while (start.getTimeInMillis() <= end.getTimeInMillis());
+					return daysWithoutWeekends;
+			
+		}
 	  
 }

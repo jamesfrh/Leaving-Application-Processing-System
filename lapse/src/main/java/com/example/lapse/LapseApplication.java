@@ -6,7 +6,10 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,9 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Manager;
 import com.example.lapse.domain.Staff;
+import com.example.lapse.enums.LeaveStatus;
+import com.example.lapse.enums.TimeOfDay;
 import com.example.lapse.repo.AdminRepo;
 import com.example.lapse.repo.LeaveApplicationRepo;
 import com.example.lapse.repo.LeaveTypeRepo;
@@ -57,55 +63,74 @@ public class LapseApplication {
 			ltRepo.save(lt2);
 			ltRepo.save(lt3);
 			
-			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com");
-			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com");
-			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL@gmail.com");
+			List<LeaveType> leaveList = ltRepo.findAll();
+			for (Iterator<LeaveType> iterator = leaveList.iterator(); iterator.hasNext();) {
+				LeaveType leaveType = (LeaveType) iterator.next();
+				System.out.println(leaveType.toString());
+				
+			}
+			
+			
+			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com",leaveList );
+			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com",leaveList);
+			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL@gmail.com",leaveList);
 
 			staffRepo.save(manager1);
 			staffRepo.save(manager2);
 			staffRepo.save(manager3);
 
-			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", manager1);
-			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL@gmail.com", manager3);
-			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", manager3);
+			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", leaveList, manager1);
+			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL@gmail.com", leaveList, manager3);
+			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", leaveList, manager3);
 			
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
 			
-			
-
-			//Removed: 
-//			//promoting a staff (can be put into a method)
-//			Manager newManager = new Manager();
-//			
-//			//setting all staff attributes into new manager obj and delete previous staff obj
-//			newManager.setEmail(staff1.getEmail());
-//			newManager.setName(staff1.getName());
-//			newManager.setPassword(staff1.getPassword());
-//			newManager.setAnnualLeaveEntitlement(staff1.getAnnualLeaveEntitlement());
-//			newManager.setMedicalLeaveEntitment(staff1.getMedicalLeaveEntitment());
-//			newManager.setCompensationLeaveEntitlment(staff1.getCompensationLeaveEntitlment());
-//			mgrRepo.save(newManager);
-//			staffRepo.delete(staff1);
-
-			
-//			List<Manager> managerList1 = mgrRepo.findByEmail("BOBEMAIL");
-//			for (Iterator <Manager> iterator = managerList1.iterator(); iterator.hasNext();) {
-//				Manager user = (Manager) iterator.next();
-//				System.out.println(user.toString());
-//			}
-			
 			//User applied start date and end date of leave
-			LocalDate dateStart = LocalDate.of(2020, 6, 15);
-			LocalDate dateEnd = LocalDate.of(2020, 6,22);
-			System.out.println(dateStart);
-			System.out.println(dateEnd);
+			LocalDate ApplicationDate = LocalDate.of(2020, 6, 1);
+
+			
+			LocalDate dateStart1 = LocalDate.of(2020, 6, 15);
+			LocalDate dateEnd1 = LocalDate.of(2020, 6,22);
+			
+			LocalDate dateStart2 = LocalDate.of(2020, 6, 3);
+			LocalDate dateEnd2 = LocalDate.of(2020, 6,18);
+
+			//Retrieve number of days in between start and end date (inclusive of start and end)
+			float noOfDays1 = ChronoUnit.DAYS.between(dateStart1,dateEnd1) + 1;
+			float noOfDays2 = ChronoUnit.DAYS.between(dateStart2,dateEnd2) + 1;
+
+			
+			//converting localdate to date
+			Date APPLICATIONDATE =java.sql.Date.valueOf(ApplicationDate);
+
+			Date START1 =java.sql.Date.valueOf(dateStart1);
+			Date END1 = java.sql.Date.valueOf(dateEnd1);
+			
+			Date START2 =java.sql.Date.valueOf(dateStart2);
+			Date END2 = java.sql.Date.valueOf(dateEnd2);
+			
+			
+			LeaveApplication apply1 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
+					lt1, noOfDays1, LeaveStatus.APPLIED,"staff 2", true, "999",  "holiday", staff1);
+			
+			LeaveApplication apply2 = new LeaveApplication(APPLICATIONDATE, START2,TimeOfDay.AM,END2, TimeOfDay.AM,
+					lt2, noOfDays2, LeaveStatus.APPLIED,"wait for return", true, "888",  "medical", staff2);
+			
+			laRepo.save(apply1);
+			laRepo.save(apply2);
+
+
+			
+
+			
+
 
 			//Validate that start day and end day must not be weekends
-			DayOfWeek dayStart = DayOfWeek.of(dateStart.get(ChronoField.DAY_OF_WEEK));
+			DayOfWeek dayStart = DayOfWeek.of(dateStart1.get(ChronoField.DAY_OF_WEEK));
 			System.out.println(dayStart);
-			DayOfWeek dayEnd = DayOfWeek.of(dateEnd.get(ChronoField.DAY_OF_WEEK));
+			DayOfWeek dayEnd = DayOfWeek.of(dateEnd1.get(ChronoField.DAY_OF_WEEK));
 			System.out.println(dayStart);
 			
 			if((dayStart == DayOfWeek.SATURDAY || dayStart == DayOfWeek.SUNDAY) ||
@@ -114,18 +139,15 @@ public class LapseApplication {
 			}
 			
 			
-			//Retrieve number of days in between start and end date (inclusive of start and end)
-			float appliedCalendarLeaveDays = ChronoUnit.DAYS.between(dateStart,dateEnd) + 1;
-			System.out.println(appliedCalendarLeaveDays);
 
 			
 			float actualLeaveDaysApplied = 0;
 
 			//validate if appliedLeaveDays <=14 with a method and put the if statment below inside
-			if(appliedCalendarLeaveDays <=14) {
+			if(noOfDays1 <=14) {
 				//converting start and end date from LocalDate format to Calendar format
-	            GregorianCalendar calStart = GregorianCalendar.from(dateStart.atStartOfDay(ZoneId.systemDefault()));
-	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd.atStartOfDay(ZoneId.systemDefault()));
+	            GregorianCalendar calStart = GregorianCalendar.from(dateStart1.atStartOfDay(ZoneId.systemDefault()));
+	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd1.atStartOfDay(ZoneId.systemDefault()));
 
 
 	            //validate if start date and end date are the same, return an error if they are

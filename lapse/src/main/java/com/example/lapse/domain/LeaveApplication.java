@@ -71,8 +71,8 @@ public class LeaveApplication {
 		this.applicationDate = Calendar.getInstance().getTime();
 	}
 	
-	public LeaveApplication(@NotNull Date applicationDate, @NotNull Date startDate, TimeOfDay startTimeOfDay,
-			@NotNull Date endDate, TimeOfDay endTimeOfDay, LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,
+	public LeaveApplication(Date applicationDate,  Date startDate, TimeOfDay startTimeOfDay,
+			 Date endDate, TimeOfDay endTimeOfDay, LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,
 			String workDissemination, boolean overseasTrip, String contactDetails, String managerComment, Staff staff) {
 		super();
 		this.applicationDate = applicationDate;
@@ -86,6 +86,8 @@ public class LeaveApplication {
 		this.contactDetails = contactDetails;
 		this.managerComment = managerComment;
 		this.staff = staff;
+		this.startTimeOfDay = startTimeOfDay;
+		this.endTimeOfDay = endTimeOfDay;
 	}
 
 	public int getId() {

@@ -14,38 +14,38 @@ import com.example.lapse.repo.LeaveApplicationRepo;
 public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 	
 	@Autowired
-	LeaveApplicationRepo lrepo;
+	LeaveApplicationRepo laRepo;
 	
 	@Transactional 
 	public void addLeaveApplication(LeaveApplication leaveApplication) {
-		lrepo.save(leaveApplication);
+		laRepo.save(leaveApplication);
 	}
 
 	@Transactional
 	public void cancelLeaveApplication(LeaveApplication leaveApplication) {
 		leaveApplication.setLeaveStatus(LeaveStatus.CANCELLED);
-		lrepo.save(leaveApplication);
+		laRepo.save(leaveApplication);
 	}
 	
 	@Transactional
 	public ArrayList<LeaveApplication> listAllLeaveApplications() {
-		ArrayList<LeaveApplication> leaveApplicationList = (ArrayList<LeaveApplication>) lrepo.findAll();
+		ArrayList<LeaveApplication> leaveApplicationList = (ArrayList<LeaveApplication>) laRepo.findAll();
 		return leaveApplicationList;
 	}
 
 	@Override
 	public LeaveApplication findApplicationById(Integer id) {
 		
-		return lrepo.findById(id).get();
+		return laRepo.findById(id).get();
 	}
 
 	@Override
 	public ArrayList<LeaveApplication> findApplicationByStaffId(Integer id) {
-		return (ArrayList<LeaveApplication>) lrepo.findByStaffId(id);
+		return (ArrayList<LeaveApplication>) laRepo.findByStaffId(id);
 	}
 
 	@Override
 	public float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId) {
-	return lrepo.getSumOfLeavesAppliedByStaff(staffId, leaveTypeId);
+	return laRepo.getSumOfLeavesAppliedByStaff(staffId, leaveTypeId);
 	}
 }

@@ -9,7 +9,12 @@ import com.example.lapse.domain.LeaveApplication;
 
 @Service
 public interface LeaveApplicationService {
-	public ArrayList<LeaveApplication> findAll();
+
 	public LeaveApplication findApplicationById(Integer id);
 	public LeaveApplication findApplicationByStaffId(Integer id);
+	
+	
+	public void addLeaveApplication(LeaveApplication leaveApplication);
+	public void cancelLeaveApplication(LeaveApplication leaveApplication);
+	public ArrayList<LeaveApplication> listAllLeaveApplications();
 }

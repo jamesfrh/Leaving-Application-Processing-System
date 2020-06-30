@@ -1,5 +1,6 @@
 package com.example.lapse.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -21,8 +22,14 @@ import com.example.lapse.enums.TimeOfDay;
 @Entity
 public class LeaveApplication {
 	
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern ="dd-MM-yyyy")
+	private Date applicationDate;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -40,34 +47,44 @@ public class LeaveApplication {
 	@Enumerated(EnumType.STRING)
 	private TimeOfDay endTimeOfDay;
 	
-	private float noOfDays;
-	
 	@ManyToOne
 	private LeaveType leaveType;
+		
+	private float noOfDays;
 	
 	@Enumerated(EnumType.STRING)
 	private LeaveStatus leaveStatus;
-	
-	private String comments;
+
+	private String workDissemination;
+	private boolean overseasTrip;
+	private String contactDetails; 
+	private String managerComment;
 	
 	@ManyToOne
 	private Staff staff;
 	
-	Manager manager = staff.getManager();
+	//private Manager manager = staff.getManager();
 			
 	public LeaveApplication() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.leaveStatus = LeaveStatus.APPLIED;
+		this.applicationDate = Calendar.getInstance().getTime();
 	}
-
-	public LeaveApplication(Date startDate, Date endDate, LeaveType leaveType,
-			LeaveStatus leaveStatus, String comments, Staff staff) {
+	
+	public LeaveApplication(@NotNull Date applicationDate, @NotNull Date startDate, TimeOfDay startTimeOfDay,
+			@NotNull Date endDate, TimeOfDay endTimeOfDay, LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,
+			String workDissemination, boolean overseasTrip, String contactDetails, String managerComment, Staff staff) {
 		super();
+		this.applicationDate = applicationDate;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.leaveType = leaveType;
+		this.noOfDays = noOfDays;
 		this.leaveStatus = leaveStatus;
-		this.comments = comments;
+		this.workDissemination = workDissemination;
+		this.overseasTrip = overseasTrip;
+		this.contactDetails = contactDetails;
+		this.managerComment = managerComment;
 		this.staff = staff;
 	}
 
@@ -77,6 +94,14 @@ public class LeaveApplication {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Date getApplicationDate() {
+		return applicationDate;
+	}
+
+	public void setApplicationDate(Date applicationDate) {
+		this.applicationDate = applicationDate;
 	}
 
 	public Date getStartDate() {
@@ -111,20 +136,20 @@ public class LeaveApplication {
 		this.endTimeOfDay = endTimeOfDay;
 	}
 
-	public float getNoOfDays() {
-		return noOfDays;
-	}
-
-	public void setNoOfDays(int noOfDays) {
-		this.noOfDays = noOfDays;
-	}
-
 	public LeaveType getLeaveType() {
 		return leaveType;
 	}
 
 	public void setLeaveType(LeaveType leaveType) {
 		this.leaveType = leaveType;
+	}
+
+	public float getNoOfDays() {
+		return noOfDays;
+	}
+
+	public void setNoOfDays(float noOfDays) {
+		this.noOfDays = noOfDays;
 	}
 
 	public LeaveStatus getLeaveStatus() {
@@ -135,12 +160,36 @@ public class LeaveApplication {
 		this.leaveStatus = leaveStatus;
 	}
 
-	public String getComments() {
-		return comments;
+	public String getWorkDissemination() {
+		return workDissemination;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setWorkDissemination(String workDissemination) {
+		this.workDissemination = workDissemination;
+	}
+
+	public boolean isOverseasTrip() {
+		return overseasTrip;
+	}
+
+	public void setOverseasTrip(boolean overseasTrip) {
+		this.overseasTrip = overseasTrip;
+	}
+
+	public String getContactDetails() {
+		return contactDetails;
+	}
+
+	public void setContactDetails(String contactDetails) {
+		this.contactDetails = contactDetails;
+	}
+
+	public String getManagerComment() {
+		return managerComment;
+	}
+
+	public void setManagerComment(String managerComment) {
+		this.managerComment = managerComment;
 	}
 
 	public Staff getStaff() {
@@ -150,8 +199,6 @@ public class LeaveApplication {
 	public void setStaff(Staff staff) {
 		this.staff = staff;
 	}
-	
-	
 		
 
 }

@@ -13,7 +13,7 @@ public class LeaveType {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String leaveType;
-	private float noOfDays;
+	private float entitlement;
 	
 	@ManyToMany (mappedBy="leaveTypes")
 	private List<Staff> staffList;
@@ -23,10 +23,10 @@ public class LeaveType {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LeaveType(String leaveType, float noOfDays) {
+	public LeaveType(String leaveType, float entitlement) {
 		super();
 		this.leaveType = leaveType;
-		this.noOfDays = noOfDays;
+		this.entitlement = entitlement;
 	}
 
 	public int getId() {
@@ -45,17 +45,17 @@ public class LeaveType {
 		this.leaveType = leaveType;
 	}
 
-	public float getNoOfDays() {
-		return noOfDays;
+	public float getEntitlement() {
+		return entitlement;
 	}
 
-	public void setNoOfDays(float noOfDays) {
-		this.noOfDays = noOfDays;
+	public void setNoOfDays(float entitlement) {
+		this.entitlement = entitlement;
 	}
 
 	@Override
 	public String toString() {
-		return "LeaveType [id=" + id + ", leaveType=" + leaveType + ", noOfDays=" + noOfDays + "]";
+		return "LeaveType [id=" + id + ", leaveType=" + leaveType + ", entitlement=" + entitlement + "]";
 	}
 	
 	

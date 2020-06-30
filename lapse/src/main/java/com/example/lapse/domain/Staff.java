@@ -1,16 +1,22 @@
 package com.example.lapse.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Staff extends User{
 	
-	protected int annualLeaveEntitlement;
-	protected int medicalLeaveEntitlement;
-	protected int compensationLeaveEntitlement;
+	@ManyToMany
+	protected List<LeaveType> leaveTypes;
 	protected String role = "Staff";
 	
+	@OneToMany (mappedBy="staff")
+	private List<LeaveApplication> leaveTransactions;
+
 	@ManyToOne
 	private Manager manager;
 	
@@ -18,54 +24,60 @@ public class Staff extends User{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitlement,
-			int compensationLeaveEntitlement, Manager manager) {
+
+	public Staff(String name, String password, String email, List<LeaveType> leaveTypes, Manager manager) {
 		super(name, password, email);
-		this.annualLeaveEntitlement = annualLeaveEntitlement;
-		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
-		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
+		this.leaveTypes = leaveTypes;
 		this.manager = manager;
 	}
-
-	public Staff(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitlement, int compensationLeaveEntitlement) {
+	
+	public Staff(String name, String password, String email, Manager manager) {
 		super(name, password, email);
-		this.annualLeaveEntitlement = annualLeaveEntitlement;
-		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
-		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
+		this.manager = manager;
 	}
 	
+	public Staff(String name, String password, String email) {
+		super(name, password, email);
+	}
+	
+	public Staff(String name, String password, String email, List<LeaveType> leaveTypes) {
+		super(name, password, email);
+		this.leaveTypes = leaveTypes;
+	}
+
+	public List<LeaveType> getLeaveTypes() {
+		return leaveTypes;
+	}
+
+	public void setsLeaveTypes(List<LeaveType> leaveTypes) {
+		this.leaveTypes = leaveTypes;
+	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+
 	public Manager getManager() {
 		return manager;
 	}
+
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
+	
+	public List<LeaveApplication> getLeaveTransactions() {
+		return leaveTransactions;
+	}
 
-	public int getAnnualLeaveEntitlement() {
-		return annualLeaveEntitlement;
+	public void setLeaveTransactions(List<LeaveApplication> leaveTransactions) {
+		this.leaveTransactions = leaveTransactions;
 	}
-	public void setAnnualLeaveEntitlement(int annualLeaveEntitlement) {
-		this.annualLeaveEntitlement = annualLeaveEntitlement;
-	}
-	public int getMedicalLeaveEntitlement() {
-		return medicalLeaveEntitlement;
-	}
-	public void setMedicalLeaveEntitlement(int medicalLeaveEntitlement) {
-		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
-	}
-	public int getCompensationLeaveEntitlement() {
-		return compensationLeaveEntitlement;
-	}
-	public void setCompensationLeaveEntitlment(int compensationLeaveEntitlement) {
-		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
-	}
+	
+
 	
 }
 	

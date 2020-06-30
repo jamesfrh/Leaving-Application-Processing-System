@@ -19,36 +19,15 @@ public class Manager extends Staff {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Manager(String name, String password, String email, int annualLeaveEntitlement, int medicalLeaveEntitlement,
-			int compensationLeaveEntitlement) {
-		super(name, password, email, annualLeaveEntitlement, medicalLeaveEntitlement, compensationLeaveEntitlement);
+	public Manager(String name, String password, String email, List<LeaveType> leaveTypes) {
+		super(name, password, email, leaveTypes);
 		this.setRole("Manager");
 	}
 	
-	public int getAnnualLeaveEntitlement() {
-		return annualLeaveEntitlement;
+	public Manager(String name, String password, String email) {
+		super(name, password, email);
+		this.setRole("Manager");
 	}
-
-	public void setAnnualLeaveEntitlement(int annualLeaveEntitlement) {
-		this.annualLeaveEntitlement = annualLeaveEntitlement;
-	}
-
-	public int getMedicalLeaveEntitlement() {
-		return medicalLeaveEntitlement;
-	}
-
-	public void setMedicalLeaveEntitlement(int medicalLeaveEntitlement) {
-		this.medicalLeaveEntitlement = medicalLeaveEntitlement;
-	}
-
-	public int getCompensationLeaveEntitlement() {
-		return compensationLeaveEntitlement;
-	}
-
-	public void setCompensationLeaveEntitlement(int compensationLeaveEntitlement) {
-		this.compensationLeaveEntitlement = compensationLeaveEntitlement;
-	}
-
 
 	public Collection<Staff> getStaffList() {
 		return staffList;
@@ -57,10 +36,5 @@ public class Manager extends Staff {
 	public void setStaffList(List<Staff> staffList) {
 		this.staffList = staffList;
 	}
-	@Override
-	public String toString() {
-		return "Manager [name = " + super.getName() + " ID = " + super.getId() +  " Password = " + super.getPassword() +" annualLeaveEntitlement=" + annualLeaveEntitlement + ", medicalLeaveEntitlement="
-				+ medicalLeaveEntitlement + ", compensationLeaveEntitlement=" + compensationLeaveEntitlement + "]";
-	}
-	
+
 }

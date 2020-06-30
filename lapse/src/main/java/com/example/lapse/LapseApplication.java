@@ -15,9 +15,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Manager;
 import com.example.lapse.domain.Staff;
 import com.example.lapse.repo.AdminRepo;
+import com.example.lapse.repo.LeaveApplicationRepo;
+import com.example.lapse.repo.LeaveTypeRepo;
 import com.example.lapse.repo.ManagerRepo;
 import com.example.lapse.repo.StaffRepo;
 
@@ -32,6 +35,12 @@ public class LapseApplication {
 
 	@Autowired
 	AdminRepo adminRepo;
+	
+	@Autowired
+	LeaveTypeRepo ltRepo;
+	
+	@Autowired
+	LeaveApplicationRepo laRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LapseApplication.class, args);
@@ -41,25 +50,30 @@ public class LapseApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com",10,11,12);
-			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com",13,14,15);
-			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL@gmail.com",16,17,18);
+			LeaveType lt1 = new LeaveType("Annual Leave", 14);
+			LeaveType lt2 = new LeaveType("Medical Leave", 60);
+			LeaveType lt3 = new LeaveType("Compensation Leave", 0);
+			ltRepo.save(lt1);
+			ltRepo.save(lt2);
+			ltRepo.save(lt3);
+			
+			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com");
+			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com");
+			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL@gmail.com");
 
 			staffRepo.save(manager1);
 			staffRepo.save(manager2);
 			staffRepo.save(manager3);
 
+			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", manager1);
+			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL@gmail.com", manager3);
+			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", manager3);
 			
-			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", 20,21,22);
-			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL@gmail.com", 23,24,25);
-			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", 29,28,26);
-			
-			staff1.setManager(manager1);
-			staff2.setManager(manager3);
-			staff3.setManager(manager3);
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
+			
+			
 
 			//Removed: 
 //			//promoting a staff (can be put into a method)

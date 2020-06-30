@@ -1,12 +1,14 @@
 package com.example.lapse.repo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.lapse.domain.Manager;
 import com.example.lapse.domain.Staff;
 
 public interface StaffRepo extends JpaRepository<Staff, Integer> {
@@ -27,5 +29,6 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 			nativeQuery = true)
 	int demoteUser(Integer id);
 	
-	Staff findByEmail(String email);
+	 List<Staff> findByEmail(String email);
+	
 }

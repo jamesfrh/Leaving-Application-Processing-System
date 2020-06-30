@@ -70,7 +70,7 @@ public class StaffServiceImpl implements StaffService {
 
 	@Override
 	public Staff findStaffByEmail(String email) {
-		return srepo.findByEmail(email);
+		return srepo.findByEmail(email).get(0);
 	}
 
 	@Override

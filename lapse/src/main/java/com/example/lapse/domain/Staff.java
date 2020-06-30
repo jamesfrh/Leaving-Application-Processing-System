@@ -1,4 +1,4 @@
-package com.example.lapse.domain;
+ package com.example.lapse.domain;
 
 import java.util.List;
 

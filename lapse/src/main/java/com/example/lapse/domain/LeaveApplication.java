@@ -52,7 +52,9 @@ public class LeaveApplication {
 	
 	@ManyToOne
 	private Staff staff;
-
+	
+	Manager manager = staff.getManager();
+			
 	public LeaveApplication() {
 		super();
 		// TODO Auto-generated constructor stub

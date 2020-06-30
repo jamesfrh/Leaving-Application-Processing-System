@@ -40,9 +40,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 	}
 
 	@Override
-	public LeaveApplication findApplicationByStaffId(Integer id) {
-		
-		return lrepo.findByStaffId(id);
+	public ArrayList<LeaveApplication> findApplicationByStaffId(Integer id) {
+		return (ArrayList<LeaveApplication>) lrepo.findByStaffId(id);
 	}
 
 }

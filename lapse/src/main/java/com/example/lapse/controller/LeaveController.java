@@ -29,7 +29,7 @@ public class LeaveController {
 	
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {
-		model.addAttribute("leaveappplication", new LeaveApplication());
+		model.addAttribute("leaveapplication", new LeaveApplication());
 		return "leaveapplication-form";
 	}
 	

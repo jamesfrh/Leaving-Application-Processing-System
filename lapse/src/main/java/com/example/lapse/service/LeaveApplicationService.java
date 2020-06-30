@@ -11,7 +11,7 @@ import com.example.lapse.domain.LeaveApplication;
 public interface LeaveApplicationService {
 
 	public LeaveApplication findApplicationById(Integer id);
-	public LeaveApplication findApplicationByStaffId(Integer id);
+	public ArrayList<LeaveApplication> findApplicationByStaffId(Integer id);
 	
 	
 	public void addLeaveApplication(LeaveApplication leaveApplication);

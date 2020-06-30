@@ -113,13 +113,18 @@ public class LapseApplication {
 			
 			
 			LeaveApplication apply1 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
-					lt1, noOfDays1, LeaveStatus.APPLIED,"staff 2", true, "999",  "holiday", staff1);
+					lt1, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff1);
 			
 			LeaveApplication apply2 = new LeaveApplication(APPLICATIONDATE, START2,TimeOfDay.AM,END2, TimeOfDay.AM,
-					lt2, noOfDays2, LeaveStatus.APPLIED,"wait for return", true, "888",  "medical", staff2);
+					lt2, noOfDays2, LeaveStatus.APPLIED, "sick", "wait for return", true, "888",  "medical", staff2);
+			
+			LeaveApplication apply3 = new LeaveApplication(APPLICATIONDATE, START2,TimeOfDay.AM,END2, TimeOfDay.AM,
+					lt2, noOfDays2, LeaveStatus.APPROVED, "sick again", "return", true, "777",  "hospital", manager2);
 			
 			laRepo.save(apply1);
 			laRepo.save(apply2);
+			laRepo.save(apply3);
+
 
 
 			

@@ -63,7 +63,7 @@ public class LeaveApplication {
 	@ManyToOne
 	private Staff staff;
 	
-	//private Manager manager = staff.getManager();
+	private String reason;
 			
 	public LeaveApplication() {
 		super();
@@ -72,7 +72,7 @@ public class LeaveApplication {
 	}
 	
 	public LeaveApplication(Date applicationDate,  Date startDate, TimeOfDay startTimeOfDay,
-			 Date endDate, TimeOfDay endTimeOfDay, LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,
+			 Date endDate, TimeOfDay endTimeOfDay, LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,String reason,
 			String workDissemination, boolean overseasTrip, String contactDetails, String managerComment, Staff staff) {
 		super();
 		this.applicationDate = applicationDate;
@@ -88,6 +88,7 @@ public class LeaveApplication {
 		this.staff = staff;
 		this.startTimeOfDay = startTimeOfDay;
 		this.endTimeOfDay = endTimeOfDay;
+		this.reason = reason;
 	}
 
 	public int getId() {
@@ -200,6 +201,14 @@ public class LeaveApplication {
 
 	public void setStaff(Staff staff) {
 		this.staff = staff;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 		
 

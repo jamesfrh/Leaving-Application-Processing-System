@@ -39,26 +39,25 @@ public class LeaveValidator implements Validator {
 	    Calendar calStart = dateToCalendar(application.getStartDate());
 	    Calendar calEnd = dateToCalendar(application.getEndDate());
 
-//	    	1. Applied startdate <= endDate (min 1 day)
+//	    1. Applied startdate <= endDate (min 1 day)
 	    boolean status = startDateBeforeEndDate(calStart, calEnd);
 	    if (status == false) { 
 			errors.rejectValue("dates", "Start Date is after End Date");
 	    }
-//	    	2. (Jaye) 
+
+	    
+//	    2. (Jaye) 
 	    //Check if end date of previous transaction is not after current startdate ("Start date can not be in between other application date"
 //
+
 	    
-//	    	3.Retrieve number of days in between start and end date (inclusive of start and end)
+	    
+//	    3.Retrieve number of days in between start and end date (inclusive of start and end)
 		float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
 		if(daysBetween <= 14) {
-			float actualLeaveDays = removeWeekends(calStart, calEnd);
-
+			daysBetween = removeWeekends(calStart, calEnd);
 		}
-		else {
-			//daysBetween = 
-		}
-
-
+		
 	    
 	    //Jayes part
 	    List<LeaveApplication> lalist = laservice.findApplicationByStaffId(application.getId());
@@ -74,7 +73,17 @@ public class LeaveValidator implements Validator {
 	          errors.rejectValue("startDate", "Start date can not inbetween other application date");
 	        }
 	    }
+	    
+	    
+	    //5. Check balance 
+	    if ((application.getLeaveType().getEntitlement() - laRepo.getSumOfLeavesAppliedByStaff(application.getStaff().getId(), application.getLeaveType().getId()) - daysBetween) < 0) {
+	          errors.rejectValue("endDate", "Not enough leave balance "+application.getLeaveType().getLeaveType());
+	    };    
+	    
 	  }
+	  
+	  
+	  
 	  
 	  
 	  //convert Date format to Calendar format
@@ -83,6 +92,7 @@ public class LeaveValidator implements Validator {
 		  cal.setTime(date);
 		  return cal;
 		}
+	  
 	  //Check if start date is <= end date
 		public boolean startDateBeforeEndDate(Calendar start, Calendar end) {
             if(start.getTimeInMillis() <= end.getTimeInMillis()) {

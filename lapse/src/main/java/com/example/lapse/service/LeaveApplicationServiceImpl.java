@@ -44,4 +44,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 		return (ArrayList<LeaveApplication>) lrepo.findByStaffId(id);
 	}
 
+	@Override
+	public float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId) {
+	return lrepo.getSumOfLeavesAppliedByStaff(staffId, leaveTypeId);
+	}
 }

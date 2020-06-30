@@ -1,6 +1,5 @@
 package com.example.lapse.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
@@ -19,4 +18,5 @@ public interface LeaveApplicationService {
 	public void cancelLeaveApplication(LeaveApplication leaveApplication);
 	public ArrayList<LeaveApplication> listAllLeaveApplications();
 	
+	public float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId);
 }

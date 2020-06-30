@@ -179,10 +179,21 @@ public class LapseApplication {
 				  Calendar cal = Calendar.getInstance();
 				  cal.setTime(START1);
 			      System.out.println(cal);
-
-			 	
+			      
+			      
+			      // test get sum of leaves applied by Staff3 
+					LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
+							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff3);
+					LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
+							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff3);
+					LeaveApplication apply6 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
+							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff3);
+					laRepo.save(apply4);
+					laRepo.save(apply5);
+					laRepo.save(apply6);
+					
+			      float totaldaysapplied = laRepo.getSumOfLeavesAppliedByStaff(6, 2);
+			      System.out.println(totaldaysapplied);
 		};
-		
-		
 	}
 }

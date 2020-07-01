@@ -58,11 +58,23 @@ public class LeaveController {
 	protected void initBinder(WebDataBinder binder) {
 		binder.addValidators(new LeaveValidator());
 	}
-	@RequestMapping(value = "/list")
-	public String list(Model model) {
-		model.addAttribute("leaveapplications", lservice.listAllLeaveApplications());
-		return "leaveapplications";
+//	@RequestMapping(value = "/list")
+//	public String list(Model model) {
+//		model.addAttribute("leaveapplications", lservice.listAllLeaveApplications());
+//		return "leaveapplications";
+//	}
+
+	
+	//view history
+	
+	@RequestMapping(value = "/viewhistory")
+	public String viewMyLeaveHistory(Model model, HttpSession session) {
+		int id = (int) session.getAttribute("id");
+		List<LeaveApplication> leaves = lservice.findApplicationByStaffId(id);
+		model.addAttribute("leaves", leaves);
+		return "viewMyHistory";
 	}
+	
 	
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {

@@ -6,11 +6,35 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>Apply Leave</title>
+
+<title>Leave History</title>
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
-
+<h1>My Leave History</h1>
+<table class="w3-container" th:if="${not #lists.isEmpty(leaves)}">
+	<!-- <thead> -->
+         <tr>
+		    <td >ID</td>	
+			<td >Application Date</td>			
+			<td >Start Date</td>
+			<td >End Date</td>			
+			<td >Leave Type</td>
+			<td >No of days</td>
+	<!-- </thead>
+	<tbody> -->			
+		<tr th:each="leave : ${leaves}">		
+		    
+		    <td th:text=${leave.staff.id}>ID</td>	
+			<td th:text=${leave.applicationDate}>Application Date</td>			
+			<td th:text=${leave.startDate}>Start Date</td>
+			<td th:text=${leave.endDate}>End Date</td>			
+			<td th:text=${leave.leaveType.leaveType}>Leave Type</td>
+			<td th:text=${leave.noOfDays}>No of Days</td>			
+        </tr>
+        <tr th:if="${leaves.empty}">No applications found</tr>
+    <!-- </tbody> -->	
+</table>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

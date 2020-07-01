@@ -86,4 +86,10 @@ public class StaffServiceImpl implements StaffService {
 	    }
 	    return status;
 	  }
+
+	@Override
+	public ArrayList<Staff> findSubordinateByManager(int managerId) {
+		ArrayList<Staff> subordinates=srepo.findByManagerId(managerId);
+		return subordinates;
+	}
 }

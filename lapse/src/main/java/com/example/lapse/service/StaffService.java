@@ -21,4 +21,5 @@ public interface StaffService {
 	
 	public Staff findStaffByEmail(String email);
 	public boolean validateStaff(String email, String password);
+	public ArrayList<Staff> findSubordinateByManager(int managerId);
 }

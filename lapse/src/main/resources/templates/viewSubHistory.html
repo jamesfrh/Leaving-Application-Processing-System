@@ -10,6 +10,35 @@
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
+<div class="container" style="float:left; margin-left:80px; width:750px">
+<h1 align="center">Subordinates Leave History</h1>
+<p th:if="${leaves.empty}" style="color:red" align="center">No applications found.</p>
+<table class="table table-bordered" style="width:auto; text-align:center" align="center" th:if="${not #lists.isEmpty(leaves)}">
+	<thead style="background-color:lightgrey">         
+         <tr>
+		    <td >Leave ID</td>	
+			<td >Application Date</td>			
+			<td >Start Date</td>
+			<td >End Date</td>			
+			<td >Leave Type</td>
+			<td >No of days</td>
+			<td>Status</td>	
+		</tr>
+	</thead>		
+	<tbody>	  
+		<tr th:each="leave : ${leaves}">  
+		    <td th:text=${leave.id}>Leave ID</td>	
+			<td th:text=${leave.applicationDate}>Application Date</td>			
+			<td th:with="startdatetime=${leave.startDate}+' '+${leave.startTimeOfDay}" th:text=${startdatetime}>Start Date</td>
+			<td th:with="enddatetime=${leave.endDate}+' '+${leave.endTimeOfDay}" th:text=${enddatetime}>End Date</td>			
+			<td th:text=${leave.leaveType.leaveType}>Leave Type</td>
+			<td th:text=${leave.noOfDays}>No of Days</td>
+			<td th:text=${leave.leaveStatus}>Status</td>			
+        </tr>
+    </tbody>
+</table>
+</div>
+
 
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>

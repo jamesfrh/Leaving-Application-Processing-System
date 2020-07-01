@@ -151,5 +151,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 			 }
 			return LeaveListExceptCancelAndReject;
 		}
+
+	@Override
+	public ArrayList<LeaveApplication> findSubLeaveAppByManagerId(int managerId) {
+		List<Staff> listofstaff=staffRepo.findByManagerId(managerId);
+	 	 
+		 ArrayList<LeaveApplication> allEmployeeLeave= new ArrayList<LeaveApplication>();
+		 for (Iterator<Staff> iterator = listofstaff.iterator(); iterator.hasNext();) {
+				Staff staff = (Staff) iterator.next();
+				allEmployeeLeave.addAll(laRepo.findByStaffId(staff.getId()));					
+		}
+		
+		return allEmployeeLeave;
+	}
 	 
 }

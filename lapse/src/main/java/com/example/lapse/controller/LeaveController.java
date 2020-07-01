@@ -79,6 +79,14 @@ public class LeaveController {
 		return "viewMyHistory";
 	}
 	
+	@RequestMapping(value = "/viewSubHistory")
+	public String viewSubHistory(Model model, HttpSession session) {
+		int id = (int) session.getAttribute("id");
+		List<LeaveApplication> leaves = lservice.findSubLeaveAppByManagerId(id);
+		model.addAttribute("leaves", leaves);
+		return "viewSubHistory";
+	}
+	
 	
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {

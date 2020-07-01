@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.lapse.domain.LeaveApplication;
+import com.example.lapse.enums.LeaveStatus;
 
 
 @Service
@@ -24,4 +25,5 @@ public interface LeaveApplicationService {
 	public List<LeaveApplication> findpendingleaveapproval(Integer mgrid);
 	public void approveleaveapplication(Integer id);
 	public void rejectleaveapplication(Integer id);
+	public void updateLeaveStatus(int LeaveId, LeaveStatus status, String mComment);
 }

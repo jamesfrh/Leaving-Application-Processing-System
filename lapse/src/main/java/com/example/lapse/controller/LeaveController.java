@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -84,4 +85,19 @@ public class LeaveController {
     lservice.rejectleaveapplication(id);
     return "Managerapproval";	
     } 
+    
+    @RequestMapping(value="/viewdetails/{id}")
+	public String viewDetailPending(@PathVariable("id") int id,Model model)
+	{
+		LeaveApplication leave=lservice.findApplicationById(id);
+		
+		model.addAttribute("leaveapplication", leave);
+		return "viewDetailPending";
+	}
+	
+	@RequestMapping(value = "/updateStatus")
+	public String updatePendingStatus(@ModelAttribute("leaveapplication") LeaveApplication leaveApp, Model model) {
+		lservice.updateLeaveStatus(leaveApp.getId(), leaveApp.getLeaveStatus(), leaveApp.getManagerComment());
+		return "forward:/leave/viewallpending";
+	}
 }

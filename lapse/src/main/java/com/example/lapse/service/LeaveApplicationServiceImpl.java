@@ -91,4 +91,17 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 			 leaveapplication.setLeaveStatus(LeaveStatus.REJECTED); 
 				laRepo.save(leaveapplication);
 		 }
+	 
+	 @Override
+		public void updateLeaveStatus(int LeaveId, LeaveStatus status, String mComment) {
+			LeaveApplication currLeaveApp=laRepo.findById(LeaveId);
+			if(status.toString().equals("APPROVED")) {
+				currLeaveApp.setLeaveStatus(LeaveStatus.APPROVED);
+			}
+			if(status.toString().equals("REJECTED")) {
+				currLeaveApp.setLeaveStatus(LeaveStatus.REJECTED);
+			}
+			currLeaveApp.setManagerComment(mComment);
+			laRepo.save(currLeaveApp);
+		}
 }

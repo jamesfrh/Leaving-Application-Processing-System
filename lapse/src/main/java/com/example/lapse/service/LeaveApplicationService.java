@@ -26,4 +26,7 @@ public interface LeaveApplicationService {
 	public void approveleaveapplication(Integer id);
 	public void rejectleaveapplication(Integer id);
 	public void updateLeaveStatus(int LeaveId, LeaveStatus status, String mComment);
+	
+	public void deleteLeaveApplication(LeaveApplication leaveApplication);
+	public void deleteLeaveApplication(Integer id);
 }

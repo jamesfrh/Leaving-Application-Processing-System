@@ -41,6 +41,7 @@ public class LoginController {
 //	@RequestMapping("/submit")
 //	public String submit(@ModelAttribute("staff") Staff staff, HttpSession session) {
 //		if (bindingResult.hasErrors()) {
+//			model.addAttribute("staff", staff);
 //			return "login";
 //		}
 //		Staff currStaff = staffservice.findStaffByEmail(staff.getEmail());

@@ -17,8 +17,8 @@
 		</fieldset>
 
             <div th:each="type : ${leavetypes}">
-                    <input type="radio" th:field="${leaveapplication.leaveType}" th:value="${type}" >
-                    <label th:for="${#ids.seq('leaveapplication.leaveType')}" th:text="${type}">type</label>
+                    <input type="radio" th:field="${leaveapplication.leaveType.leaveType}" th:value="${type}" >
+                    <label th:for="${#ids.seq('leaveapplication.leaveType.leaveType')}" th:text="${type}">type</label>
 			</div>
 <!--		<fieldset>
 			Leave Type: <input type="radio" name="type" value="Annual Leave" th:field="*{leaveType.leaveType}">
@@ -32,12 +32,12 @@
 		</fieldset>
 		<fieldset>
 			Start Date: <input type="text" th:field="*{startDate}" placeholder="dd-MM-yyyy"
-              th:text="${#dates.format(application.startDate, 'dd-MM-yyyy')}"/>
+              th:text="${#dates.format(leaveapplication.startDate, 'dd-MM-yyyy')}"/>
               <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
 		</fieldset>
 		<fieldset>
 			End Date: <input type="text" th:field="*{endDate}" placeholder="dd-MM-yyyy"
-              th:text="${#dates.format(application.endDate, 'dd-MM-yyyy')}"/>
+              th:text="${#dates.format(leaveapplication.endDate, 'dd-MM-yyyy')}"/>
               <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
 		</fieldset>
 		

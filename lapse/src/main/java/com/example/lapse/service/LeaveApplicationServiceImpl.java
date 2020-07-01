@@ -104,4 +104,23 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 			currLeaveApp.setManagerComment(mComment);
 			laRepo.save(currLeaveApp);
 		}
+	 
+	 
+	 @Transactional
+	 public void deleteLeaveApplication(LeaveApplication leaveApplication) {
+		 if(leaveApplication.getLeaveStatus()==LeaveStatus.APPLIED) {
+			 leaveApplication.setLeaveStatus(LeaveStatus.DELETED);
+			 laRepo.save(leaveApplication);
+		 }
+	 }
+	 
+	 @Transactional
+	 public void deleteLeaveApplication(Integer id) {
+		 LeaveApplication leaveApplication = laRepo.findById(id).get();
+		 if(leaveApplication.getLeaveStatus()==LeaveStatus.APPLIED) {
+			 leaveApplication.setLeaveStatus(LeaveStatus.DELETED);
+			 laRepo.save(leaveApplication);
+		 }
+	 }
+	 
 }

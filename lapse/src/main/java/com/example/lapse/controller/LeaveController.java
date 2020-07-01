@@ -1,5 +1,7 @@
 package com.example.lapse.controller;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,12 +16,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lapse.domain.LeaveApplication;
+import com.example.lapse.domain.LeaveType;
+import com.example.lapse.domain.Staff;
 import com.example.lapse.service.LeaveApplicationService;
 import com.example.lapse.service.LeaveApplicationServiceImpl;
 import com.example.lapse.service.LeaveTypeService;
 import com.example.lapse.service.LeaveTypeServiceImpl;
 import com.example.lapse.service.StaffService;
 import com.example.lapse.service.StaffServiceImpl;
+import com.example.lapse.utils.DateUtils;
 
 @Controller
 @RequestMapping("/leave")
@@ -66,6 +71,31 @@ public class LeaveController {
 		return "applyLeave";
 
 	}
+	//missing validation part
+	@RequestMapping("/submit")
+	public String submit(@ModelAttribute("leaveapplication") LeaveApplication application, HttpSession session, Model model) {
+//		if (bindingResult.hasErrors()) {
+//			model.addAttribute("leaveapplication", application);
+//			model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
+//			return "applyLeave";
+//		}
+			
+		Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
+		LeaveType leaveType = ltservice.findLeaveTypeByLeaveType(application.getLeaveType().getLeaveType());
+		application.setStaff(currStaff);
+		application.setLeaveType(leaveType);
+		Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
+	    Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
+		float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
+		if(daysBetween <= 14) {
+			daysBetween = DateUtils.removeWeekends(calStart, calEnd);
+		}
+		application.setNoOfDays(daysBetween);
+		lservice.addLeaveApplication(application);
+		
+		return "homePage";
+	}
+	
 	 @RequestMapping(value = "/viewallpending")
 	 public String viewpendingleaveapproval(Model model,HttpSession session) {	
 		 int id=(int) session.getAttribute("id");
@@ -99,5 +129,12 @@ public class LeaveController {
 	public String updatePendingStatus(@ModelAttribute("leaveapplication") LeaveApplication leaveApp, Model model) {
 		lservice.updateLeaveStatus(leaveApp.getId(), leaveApp.getLeaveStatus(), leaveApp.getManagerComment());
 		return "forward:/leave/viewallpending";
+	}
+	
+	//delete not tested
+	@RequestMapping(value = "/delete/{id}")
+	public String deleteLeaveapplication(@PathVariable("id") Integer id) {
+		lservice.deleteLeaveApplication(lservice.findApplicationById(id));
+		return "forward:/applyleave/viewApprove";
 	}
 }

@@ -11,5 +11,7 @@ public interface LeaveTypeRepo extends JpaRepository<LeaveType, Integer> {
 	
 	@Query("SELECT t.leaveType from LeaveType AS t where t.leaveType != 'Compensation Leave'")
 	ArrayList<String> findAllLeaveTypeNamesExCL();
+	
+	LeaveType findLeaveTypeByLeaveType(String name);
 
 }

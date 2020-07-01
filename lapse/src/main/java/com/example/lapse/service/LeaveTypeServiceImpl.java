@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.lapse.domain.LeaveType;
 import com.example.lapse.repo.LeaveTypeRepo;
 
 @Service
@@ -16,5 +17,10 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 	@Override
 	public ArrayList<String> findAllLeaveTypeNamesExCL() {
 		return (ArrayList<String>) ltRepo.findAllLeaveTypeNamesExCL();
+	}
+	
+	@Override
+	public LeaveType findLeaveTypeByLeaveType(String name) {
+		return ltRepo.findLeaveTypeByLeaveType(name);
 	}
 }

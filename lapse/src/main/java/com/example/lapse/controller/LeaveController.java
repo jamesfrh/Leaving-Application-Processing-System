@@ -1,7 +1,10 @@
 package com.example.lapse.controller;
 
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Staff;
+import com.example.lapse.enums.LeaveStatus;
 import com.example.lapse.service.LeaveApplicationService;
 import com.example.lapse.service.LeaveApplicationServiceImpl;
 import com.example.lapse.service.LeaveTypeService;
@@ -129,24 +133,42 @@ public class LeaveController {
     } 
     
     @RequestMapping(value="/viewdetails/{id}")
-	public String viewDetailPending(@PathVariable("id") int id,Model model)
+	public String viewDetailPending(@PathVariable("id") int id,Model model, HttpSession session)
 	{
 		LeaveApplication leave=lservice.findApplicationById(id);
-		
 		model.addAttribute("leaveapplication", leave);
+		
+		//retrieve leave applications between start and end date of current application
+		
+		Date currStartDate=leave.getStartDate();
+		Date currEndDate=leave.getEndDate();		
+		int currUserId=(int) session.getAttribute("id");
+		
+		List<LeaveApplication> leaveList=lservice.findApplicationByManagerId(currUserId);
+		ArrayList<LeaveApplication> finalLeaveAppList=new ArrayList<LeaveApplication>();
+		
+		for (Iterator<LeaveApplication> iterator=leaveList.iterator();iterator.hasNext();) {
+			 LeaveApplication la=(LeaveApplication)iterator.next();
+			 boolean isTrue=lservice.isWithinDateRange(currStartDate, currEndDate, la.getStartDate(), la.getEndDate());
+			 if(isTrue) {
+				 finalLeaveAppList.add(la);
+			 }
+		}
+		
+		model.addAttribute("leaveListExceptApproveAndReject",finalLeaveAppList);
 		return "viewDetailPending";
 	}
 	
 	@RequestMapping(value = "/updateStatus")
 	public String updatePendingStatus(@ModelAttribute("leaveapplication") LeaveApplication leaveApp, Model model) {
+		if(leaveApp.getLeaveStatus()==LeaveStatus.REJECTED) {
+			if(!(leaveApp.getManagerComment()!=null) || leaveApp.getManagerComment()=="") {
+				model.addAttribute("error", "ERROR: Please add comment!");
+				return "forward:/leave/viewdetails/"+leaveApp.getId();
+			}
+		}
+		
 		lservice.updateLeaveStatus(leaveApp.getId(), leaveApp.getLeaveStatus(), leaveApp.getManagerComment());
 		return "forward:/leave/viewallpending";
-	}
-	
-	//delete not tested
-	@RequestMapping(value = "/delete/{id}")
-	public String deleteLeaveapplication(@PathVariable("id") Integer id) {
-		lservice.deleteLeaveApplication(lservice.findApplicationById(id));
-		return "forward:/applyleave/viewApprove";
 	}
 }

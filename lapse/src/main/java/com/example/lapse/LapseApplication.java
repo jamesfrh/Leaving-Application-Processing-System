@@ -92,7 +92,7 @@ public class LapseApplication {
 
 			
 			LocalDate dateStart1 = LocalDate.of(2020, 6, 15);
-			LocalDate dateEnd1 = LocalDate.of(2020, 6,22);
+			LocalDate dateEnd1 = LocalDate.of(2020, 6,17);
 			
 			LocalDate dateStart2 = LocalDate.of(2020, 6, 3);
 			LocalDate dateEnd2 = LocalDate.of(2020, 6,18);

@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -122,5 +123,33 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 			 laRepo.save(leaveApplication);
 		 }
 	 }
+
+	 @Override
+		public boolean isWithinDateRange(Date currStartDate, Date currEndDate, Date testStartDate, Date testEndDate) {
+			if(testStartDate.after(currStartDate) && testEndDate.before(currEndDate)) {
+				return true;
+			}
+			return false;
+		}
+
+	 @Override
+		public ArrayList<LeaveApplication> findApplicationByManagerId(int managerId) {
+			List<Staff>listofstaff=staffRepo.findByManagerId(managerId);
+		 	 
+			 ArrayList<LeaveApplication> allEmployeeLeave= new ArrayList<LeaveApplication>();
+			 for (Iterator<Staff> iterator = listofstaff.iterator(); iterator.hasNext();) {
+					Staff staff = (Staff) iterator.next();
+					allEmployeeLeave.addAll(laRepo.findByStaffId(staff.getId()));					
+			 }
+			 
+			 ArrayList<LeaveApplication> LeaveListExceptCancelAndReject= new ArrayList<LeaveApplication>();
+			 for (Iterator<LeaveApplication> iterator=allEmployeeLeave.iterator();iterator.hasNext();) {
+				 LeaveApplication la=(LeaveApplication)iterator.next();
+				 if(la.getLeaveStatus()!=LeaveStatus.CANCELLED && la.getLeaveStatus()!=LeaveStatus.REJECTED) {
+					 LeaveListExceptCancelAndReject.add(la);
+				 }
+			 }
+			return LeaveListExceptCancelAndReject;
+		}
 	 
 }

@@ -10,38 +10,16 @@
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
-<div>
-<form>
-<div class="container" style="float:left; width:600px">
-  <h2 style="margin-left:150px; margin-bottom:20px">Bordered Table</h2>
-             
-  <table class="table table-bordered" style="width:auto" align="center">
-    <thead style="background-color:lightgrey">
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>a</th>
-        <th>b</th>
-      </tr>
-    </thead>
-    <tbody>      
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</form>
-<div class="verticalLine" style="float:left; border-left: 6px solid; width:0px; height: Auto"></div>
 
-<div class="container" style="float:left; width:400px;margin-left:80px">
-  <h2 style="margin-left:100px; margin-bottom:20px">Detail</h2>
+
+<div class="verticalLine" style="float:left; border-left: 6px solid; width:0px; height: Auto"></div>
+	
+
+<div class="container" style="float:left; width:400px;">
+	<p th:text="${error}" style="color:red; margin-left:100px"><b></b></p>
+  <h2 style="margin-left:70px; margin-bottom:20px">Detail</h2>
   <form class="form-horizontal" th:object="${leaveapplication}" th:action="@{/leave/updateStatus}" method="get" style="margin-left:100px">
+    
     <input type="hidden" class="form-control" th:field="*{id}"/>
     <div class="form-group">
       <label class="control-label col-sm-2" style="width:auto">Staff Name:</label>
@@ -103,7 +81,7 @@
         <input type="text" class="form-control" th:field="*{overseasTrip}" style="width:300px" readonly> 
       </div>
     </div>
-    <div class="form-group" style="width:150px">
+    <div class="form-group" style="width:150px; margin-left:20px">
       <label for="sel1">Status:</label>
       <select class="form-control" th:field="*{leaveStatus}">
         <option th:value="APPROVED" th:utext="*{getLeaveStatus().APPROVED}"></option>
@@ -121,7 +99,43 @@
     </div>
   </form>
 </div>
+
+<div th:if="${#lists.size(leaveListExceptApproveAndReject)==0}">
+	<p align="center" style="color:red">There is no application within the current leave application date range.</p>
 </div>
+
+<form th:if="${#lists.size(leaveListExceptApproveAndReject)>0}">
+<div class="container" style="float:left; margin-left:80px; width:750px">
+  <h2 style="margin-left:150px; margin-bottom:20px">Other Subordinates Application</h2>
+             
+  <table class="table table-bordered" style="width:auto; text-align:center" align="center">
+    <thead style="background-color:lightgrey">
+      <tr>
+        <th>Staff</th>
+        <th>Role</th>
+        <th>Application Date</th>
+        <th>Start Date</th>
+        <th>End date</th>
+        <th>Leave Type</th>
+        <th>Overseas Trip</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>      
+      <tr th:each="la:${leaveListExceptApproveAndReject}">
+        <td th:text="${la.staff.name}"></td>
+        <td th:text="${la.staff.role}"></td>
+        <td th:text="${la.applicationDate}"></td>
+        <td th:text="${la.startDate}"></td>
+        <td th:text="${la.endDate}"></td>
+        <td th:text="${la.leaveType.leaveType}"></td>
+        <td th:text="${la.overseasTrip}"></td>
+        <td th:text="${la.leaveStatus}"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</form>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

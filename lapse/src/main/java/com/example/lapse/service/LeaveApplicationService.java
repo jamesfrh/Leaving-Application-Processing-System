@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public interface LeaveApplicationService {
 	public void approveleaveapplication(Integer id);
 	public void rejectleaveapplication(Integer id);
 	public void updateLeaveStatus(int LeaveId, LeaveStatus status, String mComment);
+	public boolean isWithinDateRange(Date currStartDate, Date currEndDate,Date testStartDate, Date testEndDate);
+	public List<LeaveApplication> findApplicationByManagerId(int managerId);
 	
 	public void deleteLeaveApplication(LeaveApplication leaveApplication);
 	public void deleteLeaveApplication(Integer id);

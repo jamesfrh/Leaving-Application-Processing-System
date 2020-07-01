@@ -30,5 +30,5 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	int demoteUser(Integer id);
 	
 	 List<Staff> findByEmail(String email);
-	
+	 ArrayList<Staff> findByManagerId(Integer id);
 }

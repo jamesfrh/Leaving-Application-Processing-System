@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" /> 
+	<style>
+	.button2 {
+    display: block;
+    width: 105px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    background-color: #008CBA; /* Green */
+}
+</style> 
+	
+<title>Managerapproval</title>
+</head>
+<body>
+<h1>Leave Pending Approval</h1>
+<table class="w3-container" th:if="${not #lists.isEmpty(LeaveApplication)}">
+         <tr>
+		    
+		    <td >Staff</td>	
+			<td >Applicationdate</td>			
+			<td >Startdate</td>
+			<td >Enddate</td>			
+			<td >Leavetype</td>
+			<td >Noofdays</td>			
+		<tr th:each="LeaveApplication:${LeaveApplication}">		
+		    
+		    <td th:text=${LeaveApplication.staff.name}>staff</td>	
+			<td th:text=${LeaveApplication.applicationDate}>applicationdate</td>			
+			<td th:text=${LeaveApplication.startDate}>startdate</td>
+			<td th:text=${LeaveApplication.endDate}>startdate</td>			
+			<td th:text=${LeaveApplication.leaveType.leaveType}>Leavetype</td>
+			<td th:text=${LeaveApplication.noOfDays}>nofodays</td>
+			
+			<td ><a class="button2" th:href="@{/leave/viewdetails/}+${LeaveApplication.id}">View Details</a></td>
+							
+        </tr>	
+        </table>	
+			
+
+</body>
+</html>

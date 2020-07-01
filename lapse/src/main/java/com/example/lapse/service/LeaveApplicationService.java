@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,8 @@ public interface LeaveApplicationService {
 	public ArrayList<LeaveApplication> listAllLeaveApplications();
 	
 	public float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId);
+	
+	public List<LeaveApplication> findpendingleaveapproval(Integer mgrid);
+	public void approveleaveapplication(Integer id);
+	public void rejectleaveapplication(Integer id);
 }

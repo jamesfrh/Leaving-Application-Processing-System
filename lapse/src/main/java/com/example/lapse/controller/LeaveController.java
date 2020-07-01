@@ -1,5 +1,7 @@
 package com.example.lapse.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lapse.domain.LeaveApplication;
@@ -62,5 +65,23 @@ public class LeaveController {
 		return "applyLeave";
 
 	}
-	
+	 @RequestMapping(value = "/viewallpending")
+	 public String viewpendingleaveapproval(Model model,HttpSession session) {	
+		 int id=(int) session.getAttribute("id");
+		 List<LeaveApplication> PendingLeaveList=lservice.findpendingleaveapproval(id);					  		 			 					
+		 model.addAttribute(("LeaveApplication"), PendingLeaveList);
+		 return"Managerapproval";
+	 }
+	 
+	 @RequestMapping(value = "/approve/{id}")
+	 public String approveleaveapplication(@PathVariable("id") Integer id) {
+	 lservice.approveleaveapplication(id);
+	 return "Managerapproval";
+}
+
+    @RequestMapping(value = "/reject/{id}")
+    public String rejectleaveapplication(@PathVariable("id") Integer id) {
+    lservice.rejectleaveapplication(id);
+    return "Managerapproval";	
+    } 
 }

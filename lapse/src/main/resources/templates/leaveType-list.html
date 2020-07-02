@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Type Listing</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<h1>Leave Type Listing</h1>
+	<a href="AddLeaveType.html" th:href="@{/leavetype/add}">Add Leave Type</a>
+    <div th:if="${error != ''}" th:text="${error}"></div>
+	<h2 th:if="${not #lists.isEmpty(ltlist)}">Leave Type List</h2>
+	<table class="w3-container" th:if="${not #lists.isEmpty(ltlist)}">
+		<tr th:each="leaveType:${ltlist}">
+			<td th:text=${leaveType.id}>Id</td>
+			<td th:text=${leaveType.leaveType}>Leave Type</td>
+			<td th:text=${leaveType.entitlement}>Entitlement</td>
+			<td><a href="DeleteLeaveType.html"
+				th:href="@{/leavetype/delete/}+${leaveType.id}">Delete</a></td>
+		</tr>
+	</table>
+</body>
+</html>

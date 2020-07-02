@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Type Form</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Leave Type Form</h1>
+<form action="#" th:object="${leavetype}" th:action="@{/leavetype/save}" method="post" >
+		<fieldset>
+		<input type="hidden" th:field="*{id}">  
+		</fieldset>
+		<fieldset>
+			Name: <input type="text" th:field="*{leaveType}">
+			<p th:if="${#fields.hasErrors('leaveType')}" th:errors="*{leaveType}"></p>
+		</fieldset>
+		<fieldset>
+			Entitlement: <input type="text" th:field="*{entitlement}">
+			<p th:if="${#fields.hasErrors('entitlement')}" th:errors="*{entitlement}"></p>
+		</fieldset>
+		<fieldset>
+			<button type="submit" >Save</button>
+			<button type="reset">Reset</button>
+		</fieldset>
+		
+	</form>
+
+</body>
+</html>

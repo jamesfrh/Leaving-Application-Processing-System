@@ -8,7 +8,7 @@ import com.example.lapse.domain.Admin;
 
 public interface AdminRepo extends JpaRepository<Admin, Integer> {
 	
-	
-	  List<Admin> findByEmailLike(String email);
+	Admin findByEmail(String email);
+	List<Admin> findByEmailLike(String email);
 
 }

@@ -145,7 +145,7 @@ public class LeaveController {
 		
 		return "redirect:/home/index";
 	}
-	//missing validation part
+
 	@RequestMapping("/submit")
 	public String submit(@ModelAttribute("leaveapplication") @Valid LeaveApplication application, BindingResult bindingResult, HttpSession session, Model model) {
 		if (bindingResult.hasErrors()) {
@@ -165,6 +165,9 @@ public class LeaveController {
 			daysBetween = DateUtils.removeWeekends(calStart, calEnd);
 		}
 		application.setNoOfDays(daysBetween);
+		if (currStaff.getRole().equals("Manager")) {
+			application.setLeaveStatus(LeaveStatus.APPROVED);
+		}
 		lservice.addLeaveApplication(application);
 		
 		return "redirect:/home/index";

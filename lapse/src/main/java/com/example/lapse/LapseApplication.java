@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import com.example.lapse.domain.Admin;
 import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Manager;
@@ -60,6 +61,9 @@ public class LapseApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
+			Admin admin1 = new Admin("AUDREY", "AUDREYPASSWORD", "AUDREYEMAIL@gmail.com" );
+			adminRepo.save(admin1);
+			
 			LeaveType lt1 = new LeaveType("Annual Leave", 14);
 			LeaveType lt2 = new LeaveType("Medical Leave", 60);
 			LeaveType lt3 = new LeaveType("Compensation Leave", 0);

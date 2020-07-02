@@ -115,7 +115,7 @@ public class LoginController {
 		}
 		model.addAttribute("balanceArr", balanceArr);
 		model.addAttribute("leaveTypes",leaveTypeArr);
-		return "homePage";
+		return "index";
 	}
 	
 	

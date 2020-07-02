@@ -12,58 +12,6 @@
 <th:block th:replace="~{layout/layout :: header}"></th:block>
 
 
-<div class="container">
-	<div class="row">
-		<div class="col-xs-6">
-			<div class="row" style="margin-bottom : 10px">
-				<div class="col-xs-12">
-					<div style="font-weight : 550;font-size : 2rem">
-						Leave Entitlements
-					</div>
-				</div>
-			</div>
-			<div class="row" th:if="${not #lists.isEmpty(leaveTypes)}" >
-				<div class="col-xs-3"  th:each="leaveType:${leaveTypes}">
-					<div class="row">
-						<div class="col-xs-12">
-							<div th:text="${leaveType.leaveType}"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<div th:text="${leaveType.entitlement}"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-xs-6">
-			<div class="row" style="margin-bottom : 10px">
-				<div class="col-xs-12">
-					<div style="font-weight : 550;font-size : 2rem">
-						Your Balances
-					</div>
-				</div>
-			</div>
-			<div class="row" th:if="${not #lists.isEmpty(balanceArr)}" >
-				<div class="col-xs-3"  th:each="index : ${#numbers.sequence( 0, #arrays.length(balanceArr)-1)}">
-					<div class="row">
-						<div class="col-xs-12">
-							<div th:text="${leaveTypes[index].leaveType}"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<div th:text="${balanceArr[index]}"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>

@@ -36,49 +36,54 @@ public class LeaveValidator implements Validator {
 	  @Override
 	  public void validate(Object target, Errors errors) {
 	    LeaveApplication application = (LeaveApplication) target;
-	    Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
-	    Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
-
-//	    1. Applied startdate <= endDate (min 1 day)
-	    boolean status = DateUtils.startDateBeforeEndDate(calStart, calEnd);
-	    if (status == false) { 
-			errors.rejectValue("dates", "Start Date is after End Date");
+	    
+//		Must select a type of leave (not working yet)
+	    if (application.getLeaveType().getLeaveType() == null) {
+	    	errors.rejectValue("leaveType", "leave.type.empty");
 	    }
 
-	    
-//	    2. (Jaye) 
-	    //Check if end date of previous transaction is not after current startdate ("Start date can not be in between other application date"
-//
+////		Dates cannot be empty
+//	    if (application.getStartDate() == null || application.getEndDate() == null) {
+//	    	errors.rejectValue("startDate", "leave.date.empty");
+//	    }
 
-	    
-	    
-//	    3.Retrieve number of days in between start and end date (inclusive of start and end)
-		float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
-		if(daysBetween <= 14) {
-			daysBetween = DateUtils.removeWeekends(calStart, calEnd);
-		}
-		
-	    
-	    //Jayes part
-	    List<LeaveApplication> lalist = laservice.findApplicationByStaffId(application.getId());
-	      
-	    if(application.getEndDate().before(application.getStartDate()))
-	    {
-	      errors.rejectValue("endDate", "Start date can not be later than end date");
+//		Need dates to begin this validation	    
+	    if (application.getStartDate() != null && application.getEndDate() != null) {
+	    	Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
+	    	Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
+
+	    	//	    Applied startdate <= endDate (min 1 day)
+	    	boolean status = DateUtils.startDateBeforeEndDate(calStart, calEnd);
+	    	if (status == false) { 
+	    		errors.rejectValue("startDate", "leave.date.conflict");
+	    	}
+
+	    	//	    Retrieve number of days in between start and end date (inclusive of start and end)
+	    	float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
+	    	if(daysBetween <= 14) {
+	    		daysBetween = DateUtils.removeWeekends(calStart, calEnd);
+	    	}
+
+	    	//		Current application period not overlapping with old applications
+	    	List<LeaveApplication> lalist = laservice.findApplicationByStaffId((Integer) application.getStaff().getId());
+
+	    	for (Iterator<LeaveApplication> iterator = lalist.iterator(); iterator.hasNext();) {
+	    		LeaveApplication application2 = (LeaveApplication) iterator.next();
+	    		if (application2.getEndDate().after(application.getStartDate())) {
+	    			errors.rejectValue("startDate", "leave.date.repeat");
+	    		}
+	    	}
+
+
+	    	//	 	Check for sufficient leave balance 
+	    	if ((application.getLeaveType().getEntitlement() - laservice.getSumOfLeavesAppliedByStaff(application.getStaff().getId(), application.getLeaveType().getId()) - daysBetween) < 0) {
+	    		errors.rejectValue("endDate", "leave.balance");
+	    	};  
+
+	    	//		Overseas Trip true, contact details required	    
+	    	if (application.isOverseasTrip() && application.getContactDetails().isEmpty()) {
+	    		errors.rejectValue("contactDetails", "leave.contact.empty");
+	    	}
 	    }
-	    
-	    for (Iterator<LeaveApplication> iterator = lalist.iterator(); iterator.hasNext();) {
-	        LeaveApplication application2 = (LeaveApplication) iterator.next();
-	      if (application2.getEndDate().after(application.getStartDate())) {
-	          errors.rejectValue("startDate", "Start date can not inbetween other application date");
-	        }
-	    }
-	    
-	    
-	    //5. Check balance 
-	    if ((application.getLeaveType().getEntitlement() - laservice.getSumOfLeavesAppliedByStaff(application.getStaff().getId(), application.getLeaveType().getId()) - daysBetween) < 0) {
-	          errors.rejectValue("endDate", "Not enough leave balance "+application.getLeaveType().getLeaveType());
-	    };    
-	    
 	  }	  
 }

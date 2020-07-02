@@ -1,11 +1,8 @@
 package com.example.lapse.utils;
 
-import javax.validation.constraints.NotEmpty;
-
 public class Login {
-	@NotEmpty
+
 	private String email;
-	@NotEmpty
 	private String password;
 	public Login() {
 		super();

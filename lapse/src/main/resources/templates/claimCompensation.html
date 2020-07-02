@@ -7,10 +7,23 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>Compensation Leave Application</title>
+<style>
+form
+{
+    margin-top:20px;
+    margin-left:100px;
+}
+
+textarea
+{
+	width:170px;
+	height:50px;
+}
+</style>
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
-<h1>Compensation Leave Application</h1>
+<h1 style="margin-left:100px;">Compensation Leave Application</h1>
 <form action="#" th:object="${compensationapplication}" th:action="@{/leave/submitCompensation}" method="post" >
 		<fieldset>
 		<input type="hidden" th:field="*{id}">  
@@ -21,18 +34,18 @@
 		</fieldset>
 
 		<fieldset>
-			Start Date: <input type="text" th:field="*{startDate}" placeholder="dd-MM-yyyy"
+			Start Date: <input type="text" th:field="*{startDate}" placeholder="dd-MM-yyyy" style="margin-left:58px; margin-top:10px;"
               th:text="${#dates.format(compensationapplication.startDate, 'dd-MM-yyyy')}"/>
               <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
 		</fieldset>
 		<fieldset>
-			End Date: <input type="text" th:field="*{endDate}" placeholder="dd-MM-yyyy"
+			End Date: <input type="text" th:field="*{endDate}" placeholder="dd-MM-yyyy" style="margin-left:65px;margin-top:10px;"
               th:text="${#dates.format(compensationapplication.endDate, 'dd-MM-yyyy')}"/>
               <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
 		</fieldset>
 		
 		<fieldset>
-        	Reason: <textarea th:field="*{reason}"></textarea>
+        	Reason: <textarea th:field="*{reason}" style="margin-left:75px;margin-top:10px;"></textarea>
     	</fieldset>
 
 		<br/>

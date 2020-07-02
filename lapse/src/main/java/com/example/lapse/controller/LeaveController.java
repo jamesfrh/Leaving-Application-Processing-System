@@ -8,10 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -137,12 +139,12 @@ public class LeaveController {
 	}
 	//missing validation part
 	@RequestMapping("/submit")
-	public String submit(@ModelAttribute("leaveapplication") LeaveApplication application, HttpSession session, Model model) {
-//		if (bindingResult.hasErrors()) {
-//			model.addAttribute("leaveapplication", application);
-//			model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
-//			return "applyLeave";
-//		}
+	public String submit(@ModelAttribute("leaveapplication") @Valid LeaveApplication application, BindingResult bindingResult, HttpSession session, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("leaveapplication", application);
+			model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
+			return "applyLeave";
+		}
 			
 		Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
 		LeaveType leaveType = ltservice.findLeaveTypeByLeaveType(application.getLeaveType().getLeaveType());

@@ -81,6 +81,14 @@ public class LeaveController {
 		int id = (int) session.getAttribute("id");
 		List<LeaveApplication> leaves = lservice.findApplicationByStaffId(id);
 		model.addAttribute("leaves", leaves);
+		
+		ArrayList<Boolean> status=new ArrayList<Boolean>();
+		for(LeaveApplication l:leaves) {
+			boolean s=lservice.validateforCancel(l);
+			status.add(s);
+		}
+		model.addAttribute("status", status);
+		
 		return "viewMyHistory";
 	}
 	

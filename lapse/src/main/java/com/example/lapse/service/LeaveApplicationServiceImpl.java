@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -163,6 +164,25 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 		}
 		
 		return allEmployeeLeave;
+	}
+	
+	@Override
+	public boolean validateforCancel(LeaveApplication leaveApp) {
+		if(leaveApp.getLeaveStatus()==LeaveStatus.APPROVED) {
+			Calendar c = Calendar.getInstance();
+
+			c.set(Calendar.HOUR_OF_DAY, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MILLISECOND, 0);
+			
+			Date startDate=leaveApp.getStartDate();
+			Date today = c.getTime();
+			if(startDate.after(today) || startDate.compareTo(today)!=0) {
+				return true;
+			}
+		}
+		return false;
 	}
 	 
 }

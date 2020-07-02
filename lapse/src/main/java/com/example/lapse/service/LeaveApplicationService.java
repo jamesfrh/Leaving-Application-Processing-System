@@ -33,4 +33,5 @@ public interface LeaveApplicationService {
 	public void deleteLeaveApplication(LeaveApplication leaveApplication);
 	public void deleteLeaveApplication(Integer id);
 	public ArrayList<LeaveApplication> findSubLeaveAppByManagerId(int managerId);
+	public boolean validateforCancel(LeaveApplication leaveApp);
 }

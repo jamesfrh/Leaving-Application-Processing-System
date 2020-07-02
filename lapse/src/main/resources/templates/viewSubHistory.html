@@ -29,8 +29,8 @@
 		<tr th:each="leave : ${leaves}">  
 		    <td th:text=${leave.id}>Leave ID</td>	
 			<td th:text=${leave.applicationDate}>Application Date</td>			
-			<td th:with="startdatetime=${leave.startDate}+' '+${leave.startTimeOfDay}" th:text=${startdatetime}>Start Date</td>
-			<td th:with="enddatetime=${leave.endDate}+' '+${leave.endTimeOfDay}" th:text=${enddatetime}>End Date</td>			
+			<td th:text="${leave.startDate}">Start Date</td>
+			<td th:text="${leave.endDate}">End Date</td>			
 			<td th:text=${leave.leaveType.leaveType}>Leave Type</td>
 			<td th:text=${leave.noOfDays}>No of Days</td>
 			<td th:text=${leave.leaveStatus}>Status</td>			
@@ -38,7 +38,6 @@
     </tbody>
 </table>
 </div>
-
 
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>

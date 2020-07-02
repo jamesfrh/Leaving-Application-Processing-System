@@ -58,9 +58,12 @@ public class LeaveController {
 		this.staffservice = sserviceImpl;
 	}
 	
+	@Autowired
+	private LeaveValidator leaveValidator;
+	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
-		binder.addValidators(new LeaveValidator());
+		binder.addValidators(leaveValidator);
 	}
 //	@RequestMapping(value = "/list")
 //	public String list(Model model) {
@@ -185,4 +188,12 @@ public class LeaveController {
 	  lservice.deleteLeaveApplication(lservice.findApplicationById(id));
 	  return "forward:/leave/viewhistory";
 	 }
+	
+	  @RequestMapping(value="/cancel/{id}")
+	  public String cancel(@PathVariable("id") Integer id,Model model)
+	  {
+	    LeaveApplication leaveapplication= lservice.findApplicationById(id);
+	    lservice.cancelLeaveApplication(leaveapplication);
+	    return "forward:/leave/viewhistory";
+	  }
 }

@@ -54,14 +54,13 @@ public class StaffController {
 	  
 	  //save staff & redirect to staff list
 	  @RequestMapping(value = "/save")
-	  public String saveStaff(@ModelAttribute("staff") Staff staff) { 
-	  /*@Valid ,BindingResult result, Model model) {*/
-			/*
-			 * if (result.hasErrors()) { model.addAttribute("staff", staff); return
-			 * "staff-form"; }
-			 */
+	  public String saveStaff(@ModelAttribute("staff") @Valid Staff staff, BindingResult result, Model model) {	
+		  if (result.hasErrors()) { 
+			  model.addAttribute("staff", staff); 
+			  return "staff-form"; 
+		  }
 		  staffservice.saveStaff(staff);
-	    return "forward:/staff/list";
+		  return "forward:/staff/list";
 	  }
 	  
 	  

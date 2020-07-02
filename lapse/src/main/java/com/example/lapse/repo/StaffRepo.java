@@ -29,6 +29,6 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 			nativeQuery = true)
 	int demoteUser(Integer id);
 	
-	 List<Staff> findByEmail(String email);
+	 Staff findByEmail(String email);
 	 ArrayList<Staff> findByManagerId(Integer id);
 }

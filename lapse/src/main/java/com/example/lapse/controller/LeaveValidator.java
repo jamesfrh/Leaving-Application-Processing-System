@@ -2,20 +2,21 @@ package com.example.lapse.controller;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.example.lapse.domain.LeaveApplication;
-import com.example.lapse.repo.LeaveApplicationRepo;
 import com.example.lapse.service.LeaveApplicationService;
 import com.example.lapse.service.LeaveApplicationServiceImpl;
 import com.example.lapse.utils.DateUtils;
 
+//@SessionAttributes
+@Component
 public class LeaveValidator implements Validator {
 	
 	  @Autowired
@@ -25,8 +26,6 @@ public class LeaveValidator implements Validator {
 	  public void setLeaveApplicationService(LeaveApplicationServiceImpl laserviceImpl) {
 	    this.laservice = laserviceImpl;
 	  }
-	  @Autowired
-	  LeaveApplicationRepo laRepo;
 
 	  @Override
 	  public boolean supports(Class<?> clazz) {
@@ -77,7 +76,7 @@ public class LeaveValidator implements Validator {
 	    
 	    
 	    //5. Check balance 
-	    if ((application.getLeaveType().getEntitlement() - laRepo.getSumOfLeavesAppliedByStaff(application.getStaff().getId(), application.getLeaveType().getId()) - daysBetween) < 0) {
+	    if ((application.getLeaveType().getEntitlement() - laservice.getSumOfLeavesAppliedByStaff(application.getStaff().getId(), application.getLeaveType().getId()) - daysBetween) < 0) {
 	          errors.rejectValue("endDate", "Not enough leave balance "+application.getLeaveType().getLeaveType());
 	    };    
 	    

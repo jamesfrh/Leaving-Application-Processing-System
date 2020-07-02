@@ -21,13 +21,14 @@ import org.springframework.context.annotation.Bean;
 import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Manager;
+import com.example.lapse.domain.PublicHoliday;
 import com.example.lapse.domain.Staff;
 import com.example.lapse.enums.LeaveStatus;
-import com.example.lapse.enums.TimeOfDay;
 import com.example.lapse.repo.AdminRepo;
 import com.example.lapse.repo.LeaveApplicationRepo;
 import com.example.lapse.repo.LeaveTypeRepo;
 import com.example.lapse.repo.ManagerRepo;
+import com.example.lapse.repo.PublicRepo;
 import com.example.lapse.repo.StaffRepo;
 
 @SpringBootApplication
@@ -48,6 +49,9 @@ public class LapseApplication {
 	@Autowired
 	LeaveApplicationRepo laRepo;
 
+	@Autowired
+	PublicRepo phRepo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(LapseApplication.class, args);
 
@@ -110,7 +114,7 @@ public class LapseApplication {
 			Date START2 =java.sql.Date.valueOf(dateStart2);
 			Date END2 = java.sql.Date.valueOf(dateEnd2);
 			
-			
+	
 			LeaveApplication apply1 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
 					lt1, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, false, "999",  "holiday", staff1);
 			
@@ -194,6 +198,63 @@ public class LapseApplication {
 					
 			      float totaldaysapplied = laRepo.getSumOfLeavesAppliedByStaff(6, 2);
 			      System.out.println(totaldaysapplied);
+			      
+				  Date ph1Start =java.sql.Date.valueOf(LocalDate.of(2020, 1, 1));
+				  Date ph1End =java.sql.Date.valueOf(LocalDate.of(2020, 1, 1));
+
+				  Date ph2Start =java.sql.Date.valueOf(LocalDate.of(2020, 1, 25));
+				  Date ph2End =java.sql.Date.valueOf(LocalDate.of(2020, 1, 26));
+
+				  Date ph3Start =java.sql.Date.valueOf(LocalDate.of(2020, 4, 10));
+				  Date ph3End =java.sql.Date.valueOf(LocalDate.of(2020, 4, 10));
+
+				  Date ph4Start =java.sql.Date.valueOf(LocalDate.of(2020, 5, 1));
+				  Date ph4End =java.sql.Date.valueOf(LocalDate.of(2020, 5, 1));
+
+				  Date ph5Start =java.sql.Date.valueOf(LocalDate.of(2020, 5, 7));
+				  Date ph5End =java.sql.Date.valueOf(LocalDate.of(2020, 5, 7));
+
+				  Date ph6Start =java.sql.Date.valueOf(LocalDate.of(2020, 5, 24));
+				  Date ph6End =java.sql.Date.valueOf(LocalDate.of(2020, 5, 24));
+
+				  Date ph7Start =java.sql.Date.valueOf(LocalDate.of(2020, 7, 31));
+				  Date ph7End =java.sql.Date.valueOf(LocalDate.of(2020, 7, 31));
+
+				  Date ph8Start =java.sql.Date.valueOf(LocalDate.of(2020, 8, 9));
+				  Date ph8End =java.sql.Date.valueOf(LocalDate.of(2020, 8, 9));
+
+				  Date ph9Start =java.sql.Date.valueOf(LocalDate.of(2020, 11, 14));
+				  Date ph9End =java.sql.Date.valueOf(LocalDate.of(2020, 11, 14));
+
+				  Date ph10Start =java.sql.Date.valueOf(LocalDate.of(2020, 12, 25));
+				  Date ph10End =java.sql.Date.valueOf(LocalDate.of(2020, 12, 25));
+				  
+				  PublicHoliday ph1 = new PublicHoliday("New Year’s Day", ph1Start, ph1End);
+				  PublicHoliday ph2 = new PublicHoliday("Chinese New Year", ph2Start, ph2End);
+				  PublicHoliday ph3 = new PublicHoliday("Good Friday", ph3Start, ph3End);
+				  PublicHoliday ph4 = new PublicHoliday("Labour Day", ph4Start, ph4End);
+				  PublicHoliday ph5 = new PublicHoliday("Vesak Day", ph5Start, ph5End);
+				  PublicHoliday ph6 = new PublicHoliday("Hari Raya Puasa", ph6Start, ph6End);
+				  PublicHoliday ph7 = new PublicHoliday("Hari Raya Haji", ph7Start, ph7End);
+				  PublicHoliday ph8 = new PublicHoliday("National Day", ph8Start, ph8End);
+				  PublicHoliday ph9 = new PublicHoliday("Deepavali", ph9Start, ph9End);
+				  PublicHoliday ph10 = new PublicHoliday("Christmas Day", ph10Start, ph10End);
+				  phRepo.save(ph1);
+				  phRepo.save(ph2);
+				  phRepo.save(ph3);
+				  phRepo.save(ph4);
+				  phRepo.save(ph5);
+				  phRepo.save(ph6);
+				  phRepo.save(ph7);
+				  phRepo.save(ph8);
+				  phRepo.save(ph9);
+				  phRepo.save(ph10);
+
+
+
+
+			      
+
 		};
 	}
 }

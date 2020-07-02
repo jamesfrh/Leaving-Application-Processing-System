@@ -17,15 +17,13 @@
 <table class="table table-bordered" style="width:auto; text-align:center" align="center" th:if="${not #lists.isEmpty(leaves)}">
 	<thead style="background-color:lightgrey">         
          <tr>
-		    <td >Leave ID</td>	
-			<td >Application Date</td>			
-			<td >Start Date</td>
-			<td >End Date</td>			
-			<td >Leave Type</td>
-			<td >No of days</td>
-			<td>Status</td>	
-			<td>Delete</td>	
-			<td>Cancel</td>	
+		    <td><b>Leave ID</b></td>	
+			<td><b>Application Date</b></td>			
+			<td><b>Start Date</b></td>
+			<td><b>End Date</b></td>			
+			<td><b>Leave Type</b></td>
+			<td><b>No of days</b></td>
+			<td><b>Status</b></td>	
 		</tr>
 	</thead>		
 	<tbody>	  
@@ -40,20 +38,16 @@
 			
 			<td><a th:href="@{/leave/delete/}+${leave.Id}" 
 				th:if="${leave.leaveStatus == T(com.example.lapse.enums.LeaveStatus).APPLIED}">
-			<button>Delete</button>
+			<button type="button" class="btn btn-danger">Delete</button>
 			</a></td>
-			<td>
-				<a href="" th:href="@{/leave/cancel/}+${leave.id}" th:each="s:${status}"
-	      			th:if="${s}">
-	      		<button>Cancel</button>
-	      		</a>
-      		</td>
-					
+			<td><a href="" th:href="@{/leave/cancel/}+${leave.id}" 
+      			th:if="${leave.leaveStatus == T(com.example.lapse.enums.LeaveStatus).APPROVED}">
+      		<button type="button" class="btn btn-warning">Cancel</button>
+      		</a></td>		
         </tr>
     </tbody>
 </table>
 </div>
-
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

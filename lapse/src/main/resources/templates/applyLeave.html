@@ -35,6 +35,9 @@ textarea
                     <input type="radio" th:field="${leaveapplication.leaveType.leaveType}" th:value="${type}" >
                     <label th:for="${#ids.seq('leaveapplication.leaveType.leaveType')}" th:text="${type}">type</label>
 			</div>
+			<script> 
+  			document.getElementById('leaveType.leaveType1').checked=true; 
+  			</script>
 <!--		<fieldset>
 			Leave Type: <input type="radio" name="type" value="Annual Leave" th:field="*{leaveType.leaveType}">
 		</fieldset>

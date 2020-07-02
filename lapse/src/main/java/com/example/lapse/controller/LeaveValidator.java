@@ -13,9 +13,10 @@ import org.springframework.validation.Validator;
 import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.service.LeaveApplicationService;
 import com.example.lapse.service.LeaveApplicationServiceImpl;
+import com.example.lapse.service.LeaveTypeService;
+import com.example.lapse.service.LeaveTypeServiceImpl;
 import com.example.lapse.utils.DateUtils;
 
-//@SessionAttributes
 @Component
 public class LeaveValidator implements Validator {
 	
@@ -25,6 +26,14 @@ public class LeaveValidator implements Validator {
 	  @Autowired
 	  public void setLeaveApplicationService(LeaveApplicationServiceImpl laserviceImpl) {
 	    this.laservice = laserviceImpl;
+	  }
+	  
+	  @Autowired
+	  private LeaveTypeService ltservice;
+	  
+	  @Autowired
+	  public void setLeaveTypeService(LeaveTypeServiceImpl ltserviceImpl) {
+	    this.ltservice = ltserviceImpl;
 	  }
 
 	  @Override
@@ -36,16 +45,6 @@ public class LeaveValidator implements Validator {
 	  @Override
 	  public void validate(Object target, Errors errors) {
 	    LeaveApplication application = (LeaveApplication) target;
-	    
-//		Must select a type of leave (not working yet)
-	    if (application.getLeaveType().getLeaveType() == null) {
-	    	errors.rejectValue("leaveType", "leave.type.empty");
-	    }
-
-////		Dates cannot be empty
-//	    if (application.getStartDate() == null || application.getEndDate() == null) {
-//	    	errors.rejectValue("startDate", "leave.date.empty");
-//	    }
 
 //		Need dates to begin this validation	    
 	    if (application.getStartDate() != null && application.getEndDate() != null) {
@@ -74,9 +73,11 @@ public class LeaveValidator implements Validator {
 	    		}
 	    	}
 
-
 	    	//	 	Check for sufficient leave balance 
-	    	if ((application.getLeaveType().getEntitlement() - laservice.getSumOfLeavesAppliedByStaff(application.getStaff().getId(), application.getLeaveType().getId()) - daysBetween) < 0) {
+	    	float entitlement = ltservice.findEntitlementByLeaveType(application.getLeaveType().getLeaveType());
+	    	Integer leaveTypeId = ltservice.findIdByLeaveType(application.getLeaveType().getLeaveType());
+	    	float consumed = laservice.getSumOfLeavesAppliedByStaff((Integer) application.getStaff().getId(), leaveTypeId);
+	    	if ((entitlement - consumed  - daysBetween) < 0) {
 	    		errors.rejectValue("endDate", "leave.balance");
 	    	};  
 

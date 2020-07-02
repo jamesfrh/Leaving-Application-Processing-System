@@ -17,6 +17,8 @@ public interface LeaveTypeService {
 	
 	public ArrayList<String> findAllLeaveTypeNamesExCL();
 	public LeaveType findLeaveTypeByLeaveType(String name);
+	public float findEntitlementByLeaveType(String name);
+	public Integer findIdByLeaveType(String name);
 	
 	public List<LeaveType> findAllLeaveTypesEXCL();
 

@@ -135,7 +135,7 @@ public class LeaveController {
 		application.setNoOfDays(daysBetween);
 		lservice.addLeaveApplication(application);
 		
-		return "homePage";
+		return "redirect:/home/index";
 	}
 	//missing validation part
 	@RequestMapping("/submit")
@@ -159,7 +159,7 @@ public class LeaveController {
 		application.setNoOfDays(daysBetween);
 		lservice.addLeaveApplication(application);
 		
-		return "homePage";
+		return "redirect:/home/index";
 	}
 	
 	 @RequestMapping(value = "/viewallpending")

@@ -57,4 +57,14 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 		System.out.print(lts);
 		return lts;
 	}
+	
+	@Override
+	public float findEntitlementByLeaveType(String name) {
+		return ltRepo.findEntitlementByLeaveType(name);
+	}
+
+	@Override
+	public Integer findIdByLeaveType(String name) {
+		return ltRepo.findIdByLeaveType(name);
+	}
 }

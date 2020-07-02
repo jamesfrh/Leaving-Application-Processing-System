@@ -111,14 +111,14 @@ public class LapseApplication {
 			Date END2 = java.sql.Date.valueOf(dateEnd2);
 			
 			
-			LeaveApplication apply1 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
-					lt1, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff1);
+			LeaveApplication apply1 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+					lt1, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, false, "999",  "holiday", staff1);
 			
-			LeaveApplication apply2 = new LeaveApplication(APPLICATIONDATE, START2,TimeOfDay.AM,END2, TimeOfDay.AM,
-					lt2, noOfDays2, LeaveStatus.APPLIED, "sick", "wait for return", true, "888",  "medical", staff2);
+			LeaveApplication apply2 = new LeaveApplication(APPLICATIONDATE, START2,/*TimeOfDay.AM,*/ END2, /*TimeOfDay.AM,*/
+					lt2, noOfDays2, LeaveStatus.APPLIED, "sick", "wait for return", true, false, "888",  "medical", staff2);
 			
-			LeaveApplication apply3 = new LeaveApplication(APPLICATIONDATE, START2,TimeOfDay.AM,END2, TimeOfDay.AM,
-					lt2, noOfDays2, LeaveStatus.APPROVED, "sick again", "return", true, "777",  "hospital", manager2);
+			LeaveApplication apply3 = new LeaveApplication(APPLICATIONDATE, START2,/*TimeOfDay.AM,*/END2, /*TimeOfDay.AM,*/
+					lt2, noOfDays2, LeaveStatus.APPROVED, "sick again", "return", true, false, "777",  "hospital", manager2);
 			
 			laRepo.save(apply1);
 			laRepo.save(apply2);
@@ -182,12 +182,12 @@ public class LapseApplication {
 			      
 			      
 			      // test get sum of leaves applied by Staff3 
-					LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
-							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff3);
-					LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
-							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff3);
-					LeaveApplication apply6 = new LeaveApplication(APPLICATIONDATE, START1,TimeOfDay.PM,END1, TimeOfDay.AM,
-							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, "999",  "holiday", staff3);
+					LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, false, "999",  "holiday", staff3);
+					LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
+					LeaveApplication apply6 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
 					laRepo.save(apply4);
 					laRepo.save(apply5);
 					laRepo.save(apply6);

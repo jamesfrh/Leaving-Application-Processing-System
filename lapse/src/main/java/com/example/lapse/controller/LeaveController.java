@@ -98,6 +98,43 @@ public class LeaveController {
 		return "applyLeave";
 
 	}
+	
+	//for compensation leave
+	@RequestMapping(value = "/addcompensation")
+	public String addCompensation(Model model) {
+		model.addAttribute("compensationapplication", new LeaveApplication());
+		model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
+		return "claimCompensation";
+
+	}
+	@RequestMapping(value ="/submitCompensation")
+	public String submitCompensation(@ModelAttribute("leaveapplication") LeaveApplication application, HttpSession session, Model model) {
+		
+		
+		Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
+		LeaveType leaveType = ltservice.findLeaveTypeByLeaveType("Compensation Leave");
+		application.setStaff(currStaff);
+		application.setLeaveType(leaveType);
+		
+		Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
+	    Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
+		float daysBetween = (ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1f);
+		System.out.println("after chro days between " + daysBetween );
+
+		if(daysBetween <= 14) {
+			daysBetween = DateUtils.removeWeekends(calStart, calEnd);
+			System.out.println("inside < 14 if condition " + daysBetween );
+		}
+
+		if(application.isHalfday() == true) {
+			daysBetween = daysBetween - 0.5f;
+			System.out.println("inside if " + daysBetween);
+		}
+		application.setNoOfDays(daysBetween);
+		lservice.addLeaveApplication(application);
+		
+		return "homePage";
+	}
 	//missing validation part
 	@RequestMapping("/submit")
 	public String submit(@ModelAttribute("leaveapplication") LeaveApplication application, HttpSession session, Model model) {

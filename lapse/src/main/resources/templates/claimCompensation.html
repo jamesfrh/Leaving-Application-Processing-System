@@ -6,11 +6,44 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>Claim Compensation</title>
+<title>Compensation Leave Application</title>
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
+<h1>Compensation Leave Application</h1>
+<form action="#" th:object="${compensationapplication}" th:action="@{/leave/submitCompensation}" method="post" >
+		<fieldset>
+		<input type="hidden" th:field="*{id}">  
+		</fieldset>
 
+	     <fieldset>
+			<input type="checkbox" name="halfday" value="true" th:field=*{halfday} />Half day 
+		</fieldset>
+
+		<fieldset>
+			Start Date: <input type="text" th:field="*{startDate}" placeholder="dd-MM-yyyy"
+              th:text="${#dates.format(compensationapplication.startDate, 'dd-MM-yyyy')}"/>
+              <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
+		</fieldset>
+		<fieldset>
+			End Date: <input type="text" th:field="*{endDate}" placeholder="dd-MM-yyyy"
+              th:text="${#dates.format(compensationapplication.endDate, 'dd-MM-yyyy')}"/>
+              <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+		</fieldset>
+		
+		<fieldset>
+        	Reason: <textarea th:field="*{reason}"></textarea>
+    	</fieldset>
+
+		<br/>
+		<fieldset>
+			<button type="submit" >Save</button>
+			<button type="reset">Reset</button>
+		</fieldset>
+		
+	</form>
+	
+	
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

@@ -36,16 +36,16 @@ public class LeaveApplication {
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date startDate;
 	
-	@Enumerated(EnumType.STRING)
-	private TimeOfDay startTimeOfDay;
+	//@Enumerated(EnumType.STRING)
+	//private TimeOfDay startTimeOfDay;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date endDate;
 	
-	@Enumerated(EnumType.STRING)
-	private TimeOfDay endTimeOfDay;
+	//@Enumerated(EnumType.STRING)
+	//private TimeOfDay endTimeOfDay;
 	
 	@ManyToOne
 	private LeaveType leaveType;
@@ -57,6 +57,8 @@ public class LeaveApplication {
 
 	private String workDissemination;
 	private boolean overseasTrip;
+	private boolean halfday;
+
 	private String contactDetails; 
 	private String managerComment;
 	
@@ -71,9 +73,9 @@ public class LeaveApplication {
 		this.applicationDate = Calendar.getInstance().getTime();
 	}
 	
-	public LeaveApplication(Date applicationDate,  Date startDate, TimeOfDay startTimeOfDay,
-			 Date endDate, TimeOfDay endTimeOfDay, LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,String reason,
-			String workDissemination, boolean overseasTrip, String contactDetails, String managerComment, Staff staff) {
+	public LeaveApplication(Date applicationDate,  Date startDate, /*TimeOfDay startTimeOfDay,*/
+			 Date endDate, /*TimeOfDay endTimeOfDay,*/ LeaveType leaveType, float noOfDays, LeaveStatus leaveStatus,String reason,
+			String workDissemination, boolean overseasTrip, boolean halfday, String contactDetails, String managerComment, Staff staff) {
 		super();
 		this.applicationDate = applicationDate;
 		this.startDate = startDate;
@@ -86,9 +88,10 @@ public class LeaveApplication {
 		this.contactDetails = contactDetails;
 		this.managerComment = managerComment;
 		this.staff = staff;
-		this.startTimeOfDay = startTimeOfDay;
-		this.endTimeOfDay = endTimeOfDay;
+		/*this.startTimeOfDay = startTimeOfDay;
+		this.endTimeOfDay = endTimeOfDay;*/
 		this.reason = reason;
+		this.halfday = halfday;
 	}
 
 	public int getId() {
@@ -115,13 +118,20 @@ public class LeaveApplication {
 		this.startDate = startDate;
 	}
 
-	public TimeOfDay getStartTimeOfDay() {
+/*	public TimeOfDay getStartTimeOfDay() {
 		return startTimeOfDay;
 	}
 
 	public void setStartTimeOfDay(TimeOfDay startTimeOfDay) {
 		this.startTimeOfDay = startTimeOfDay;
 	}
+	public TimeOfDay getEndTimeOfDay() {
+		return endTimeOfDay;
+	}
+
+	public void setEndTimeOfDay(TimeOfDay endTimeOfDay) {
+		this.endTimeOfDay = endTimeOfDay;
+	}*/
 
 	public Date getEndDate() {
 		return endDate;
@@ -131,13 +141,7 @@ public class LeaveApplication {
 		this.endDate = endDate;
 	}
 
-	public TimeOfDay getEndTimeOfDay() {
-		return endTimeOfDay;
-	}
 
-	public void setEndTimeOfDay(TimeOfDay endTimeOfDay) {
-		this.endTimeOfDay = endTimeOfDay;
-	}
 
 	public LeaveType getLeaveType() {
 		return leaveType;
@@ -209,6 +213,14 @@ public class LeaveApplication {
 
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+
+	public boolean isHalfday() {
+		return halfday;
+	}
+
+	public void setHalfday(boolean halfday) {
+		this.halfday = halfday;
 	}
 		
 

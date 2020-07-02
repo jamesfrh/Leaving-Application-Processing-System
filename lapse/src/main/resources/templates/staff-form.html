@@ -18,7 +18,7 @@
 		</fieldset>
 		<fieldset>
 			Staff Email: <input type="email" th:field="*{email}">
-			<p th:if="${#fields.hasErrors('name')}" th:errors="*{email}"></p>
+			<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 		</fieldset>
 	    <fieldset>
         	Password: <input type="password" th:field="*{password}">

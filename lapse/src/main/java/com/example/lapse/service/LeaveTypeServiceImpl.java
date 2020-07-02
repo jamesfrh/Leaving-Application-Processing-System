@@ -15,6 +15,12 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 	LeaveTypeRepo ltRepo;
 
 	@Override
+	public ArrayList<LeaveType> findAll() {
+		ArrayList<LeaveType> ltlist = (ArrayList<LeaveType>) ltRepo.findAll();
+		return ltlist;
+	}
+	
+	@Override
 	public ArrayList<String> findAllLeaveTypeNamesExCL() {
 		return (ArrayList<String>) ltRepo.findAllLeaveTypeNamesExCL();
 	}
@@ -22,5 +28,24 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 	@Override
 	public LeaveType findLeaveTypeByLeaveType(String name) {
 		return ltRepo.findLeaveTypeByLeaveType(name);
+	}
+
+	@Override
+	public boolean saveLeaveType(LeaveType leavetype) {
+		if(ltRepo.save(leavetype)!=null) 
+		    return true; 
+		else 
+		    return false;
+	}
+
+	@Override
+	public void deleteLeaveType(LeaveType leavetype) {
+		ltRepo.delete(leavetype);
+		
+	}
+	
+	@Override
+	public LeaveType findLeaveTypeById(Integer id) {
+		return ltRepo.findById(id).get();
 	}
 }

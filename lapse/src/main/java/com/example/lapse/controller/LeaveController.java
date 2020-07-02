@@ -179,4 +179,10 @@ public class LeaveController {
 		lservice.updateLeaveStatus(leaveApp.getId(), leaveApp.getLeaveStatus(), leaveApp.getManagerComment());
 		return "forward:/leave/viewallpending";
 	}
+	
+	@RequestMapping(value = "/delete/{id}")
+	 public String deleteLeaveapplication(@PathVariable("id") Integer id) {
+	  lservice.deleteLeaveApplication(lservice.findApplicationById(id));
+	  return "forward:/leave/viewhistory";
+	 }
 }

@@ -34,7 +34,13 @@
 			<td th:with="enddatetime=${leave.endDate}+' '+${leave.endTimeOfDay}" th:text=${enddatetime}>End Date</td>			
 			<td th:text=${leave.leaveType.leaveType}>Leave Type</td>
 			<td th:text=${leave.noOfDays}>No of Days</td>
-			<td th:text=${leave.leaveStatus}>Status</td>			
+			<td th:text=${leave.leaveStatus}>Status</td>	
+			
+			<td><a th:href="@{/leave/delete/}+${leave.Id}" 
+				th:if="${leave.leaveStatus == T(com.example.lapse.enums.LeaveStatus).APPLIED}">
+			<button>Delete</button>
+			</a></td>
+					
         </tr>
     </tbody>
 </table>

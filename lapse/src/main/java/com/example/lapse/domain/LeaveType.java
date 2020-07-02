@@ -7,12 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class LeaveType {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@NotEmpty
 	private String leaveType;
+	@NotNull
 	private float entitlement;
 	
 	@ManyToMany (mappedBy="leaveTypes")
@@ -47,6 +51,10 @@ public class LeaveType {
 
 	public float getEntitlement() {
 		return entitlement;
+	}
+
+	public void setEntitlement(float entitlement) {
+		this.entitlement = entitlement;
 	}
 
 	public void setNoOfDays(float entitlement) {

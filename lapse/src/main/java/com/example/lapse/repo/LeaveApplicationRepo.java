@@ -13,7 +13,7 @@ public interface LeaveApplicationRepo extends JpaRepository<LeaveApplication, In
 	LeaveApplication findById(int id);
 
 	@Query
-	(value = "SELECT IFNULL(SUM(no_of_days),0) FROM leave_application WHERE YEAR(start_date) = YEAR(CURDATE()) AND staff_id = ?1 AND leave_type_id = ?2 AND leave_status != 'REJECTED'", 
+	(value = "SELECT IFNULL(SUM(no_of_days),0) FROM leave_application WHERE YEAR(start_date) = YEAR(CURDATE()) AND staff_id = ?1 AND leave_type_id = ?2 AND leave_status NOT IN ('REJECTED','CANCELLED','DELETED')", 
 	nativeQuery = true)
 	float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId);
 	

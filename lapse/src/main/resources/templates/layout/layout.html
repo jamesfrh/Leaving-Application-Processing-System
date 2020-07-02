@@ -17,7 +17,7 @@
       <a class="navbar-brand" href="#"><b>Leave Application Processing System</b></a>
     </div>
     <ul class="nav navbar-nav" th:if="${session.role}=='Manager'">
-      <li class="active"><a th:href="@{/home}">Home</a></li>
+      <li class="active"><a th:href="@{/home/index}">Home</a></li>
       <li><a th:href="@{/leave/add}">Apply Leave</a></li>
       <li><a th:href="@{/leave/addcompensation}">Claim Compensation</a></li>
       <li><a th:href="@{/leave/viewallpending}">View for Approval</a></li>
@@ -25,7 +25,7 @@
       <li><a th:href="@{/leave/viewSubHistory}">View Sub History</a></li>
     </ul>
     <ul class="nav navbar-nav" th:if="${session.role}=='Staff'">
-      <li class="active"><a th:href="@{/home}">Home</a></li>
+      <li class="active"><a th:href="@{/home/index}">Home</a></li>
       <li><a th:href="@{/leave/add}">Apply Leave</a></li>
       <li><a th:href="@{/leave/addcompensation}">Claim Compensation</a></li>
       <li><a th:href="@{/leave/viewhistory}">View My History</a></li>

@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,7 @@ public interface LeaveTypeService {
 	
 	public ArrayList<String> findAllLeaveTypeNamesExCL();
 	public LeaveType findLeaveTypeByLeaveType(String name);
+	
+	public List<LeaveType> findAllLeaveTypesEXCL();
 
 }

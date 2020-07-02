@@ -1,5 +1,9 @@
 package com.example.lapse.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,7 +16,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Staff;
+import com.example.lapse.service.LeaveApplicationService;
+import com.example.lapse.service.LeaveApplicationServiceImpl;
+import com.example.lapse.service.LeaveTypeService;
+import com.example.lapse.service.LeaveTypeServiceImpl;
 import com.example.lapse.service.StaffService;
 import com.example.lapse.service.StaffServiceImpl;
 import com.example.lapse.utils.Login;
@@ -23,10 +32,26 @@ public class LoginController {
 	
 	@Autowired
 	private StaffService staffservice;
+	
+	@Autowired
+	private LeaveApplicationService laservice;
+
+	@Autowired
+	private LeaveTypeService ltservice;
 
 	@Autowired
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.staffservice = sserviceImpl;
+	}
+	
+	@Autowired
+	public void setLeaveApplicationService(LeaveApplicationServiceImpl laserviceImpl) {
+		this.laservice = laserviceImpl;
+	}
+	
+	@Autowired
+	public void setLeaveTypeService(LeaveTypeServiceImpl ltserviceImpl) {
+		this.ltservice = ltserviceImpl;
 	}
 	
 	@Autowired
@@ -56,7 +81,7 @@ public class LoginController {
 		session.setAttribute("role", currStaff.getRole());
 		session.setAttribute("id", currStaff.getId());
 		
-		return "homePage";
+		return "redirect:/home/index";
 	}
 	
 //	@RequestMapping("/submit")
@@ -70,6 +95,29 @@ public class LoginController {
 //	    }
 //	    return "login";
 //	  }
+	
+	
+	@RequestMapping("/index")
+	public String index(Model model, HttpSession session) {
+		if (session.getAttribute("id") == null) {
+			return "redirect:/home/login";
+		}
+		
+		int staffId = (int) session.getAttribute("id");
+		
+		List<LeaveType> leaveTypeArr = ltservice.findAllLeaveTypesEXCL();
+		Iterator<LeaveType> leaveTypeIterator = leaveTypeArr.iterator();
+		List<Float> balanceArr = new ArrayList<Float>();
+		while(leaveTypeIterator.hasNext()) {
+			LeaveType lt = leaveTypeIterator.next();
+			Float leavesApplied = laservice.getSumOfLeavesAppliedByStaff(staffId, lt.getId());
+			balanceArr.add(lt.getEntitlement() - leavesApplied);
+		}
+		model.addAttribute("balanceArr", balanceArr);
+		model.addAttribute("leaveTypes",leaveTypeArr);
+		return "homePage";
+	}
+	
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {

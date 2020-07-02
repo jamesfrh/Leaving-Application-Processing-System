@@ -1,6 +1,7 @@
 package com.example.lapse.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,13 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 	@Override
 	public LeaveType findLeaveTypeById(Integer id) {
 		return ltRepo.findById(id).get();
+	}
+	
+	@Override
+	public List<LeaveType> findAllLeaveTypesEXCL() {
+		List<LeaveType> lts = ltRepo.findAll();
+		lts.removeIf(lt -> (lt.getLeaveType().equals("Compensation Leave")));
+		System.out.print(lts);
+		return lts;
 	}
 }

@@ -48,53 +48,59 @@ public class LeaveValidator implements Validator {
 	  public void validate(Object target, Errors errors) {
 	    LeaveApplication application = (LeaveApplication) target;
 
-//		Need dates to begin this validation	    
+//		Process dates for checks	    
 	    if (application.getStartDate() != null && application.getEndDate() != null) {
 	    	Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
 	    	Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
 	    	Date trimmedAppDate = DateUtils.trim(application.getApplicationDate());
 	    	Calendar calApp = DateUtils.dateToCalendar(trimmedAppDate);
-
-	    	//	    Applied startdate <= endDate (min 1 day)
-	    	boolean status = DateUtils.startDateBeforeEndDate(calStart, calEnd);
-	    	if (status == false) { 
-	    		errors.rejectValue("startDate", "leave.date.conflict");
-	    	}
 	    	
-	    	//	    Applied startdate should be >= application date
+	    	//		Backdate check
 		    boolean todayAndUp = DateUtils.startDateBeforeEndDate(calApp, calStart);
 		   	if (todayAndUp == false) {
 		   		errors.rejectValue("startDate", "leave.date.past");
 		   	}
 
-	    	//	    Retrieve number of days in between start and end date (inclusive of start and end)
-	    	float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
-	    	if(daysBetween <= 14) {
-	    		daysBetween = DateUtils.removeWeekends(calStart, calEnd);
-	    	}
+		   	if (todayAndUp) {
+		   		
+		   		//	    Applied startdate <= endDate (min 1 day)
+		    	boolean status = DateUtils.startDateBeforeEndDate(calStart, calEnd);
+		    	if (status == false) { 
+		    		errors.rejectValue("startDate", "leave.date.conflict");
+		    	}
+		    	
+		    	float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
+		    	if(daysBetween <= 14) {
+		    		daysBetween = DateUtils.removeWeekends(calStart, calEnd);
+		    	}
 
-	    	//		Current application period not overlapping with applied, updated, approved applications
-	    	ArrayList<LeaveApplication> lalist = laservice.findApplicationsExCancelDeleteReject((Integer) application.getStaff().getId());
+		    	//		Current application period not overlapping with applied, updated, approved applications
+		    	ArrayList<LeaveApplication> lalist = laservice.findApplicationsExCancelDeleteReject((Integer) application.getStaff().getId());
 
-	    	for (Iterator<LeaveApplication> iterator = lalist.iterator(); iterator.hasNext();) {
-	    		LeaveApplication application2 = (LeaveApplication) iterator.next();
-	    		if (application2.getEndDate().after(application.getStartDate()) && application2.getId()!=application.getId()) {
-	    			errors.rejectValue("startDate", "leave.date.repeat");
-	    		}
-	    	}
+		    	for (Iterator<LeaveApplication> iterator = lalist.iterator(); iterator.hasNext();) {
+		    		LeaveApplication application2 = (LeaveApplication) iterator.next();
+		    		if ((application2.getEndDate().after(application.getStartDate()) && 
+		    				application2.getStartDate().before(application.getEndDate()) || 
+		    				application2.getStartDate().equals(application.getStartDate())) && 
+		    				application2.getId()!=application.getId()) {
+		    			errors.rejectValue("startDate", "leave.date.repeat");
+		    		}
+		    	}
 
-	    	//	 	Check for sufficient leave balance 
-	    	float entitlement = ltservice.findEntitlementByLeaveType(application.getLeaveType().getLeaveType());
-	    	Integer leaveTypeId = ltservice.findIdByLeaveType(application.getLeaveType().getLeaveType());
-	    	float consumed = laservice.getSumOfLeavesAppliedByStaff((Integer) application.getStaff().getId(), leaveTypeId);
-	    	if ((entitlement - consumed  - daysBetween) < 0) {
-	    		errors.rejectValue("endDate", "leave.balance");
-	    	};  
+		    	//	 	Check for sufficient leave balance 
+		    	float entitlement = ltservice.findEntitlementByLeaveType(application.getLeaveType().getLeaveType());
+		    	Integer leaveTypeId = ltservice.findIdByLeaveType(application.getLeaveType().getLeaveType());
+		    	float consumed = laservice.getSumOfLeavesAppliedByStaff((Integer) application.getStaff().getId(), leaveTypeId);
+		    	if ((entitlement - consumed  - daysBetween) < 0) {
+		    		errors.rejectValue("endDate", "leave.balance");
+		    	};  
 
-	    	//		Overseas Trip true, contact details required	    
-	    	if (application.isOverseasTrip() && application.getContactDetails().isEmpty()) {
-	    		errors.rejectValue("contactDetails", "leave.contact.empty");
-	    	}
-	    }
+		    	//		Overseas Trip true, contact details required	    
+		    	if (application.isOverseasTrip() && application.getContactDetails().isEmpty()) {
+		    		errors.rejectValue("contactDetails", "leave.contact.empty");
+		    	}
+		    }
+		   	}
+
 	  }	  
 }

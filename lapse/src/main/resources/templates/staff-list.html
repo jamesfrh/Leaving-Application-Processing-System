@@ -35,7 +35,7 @@ table
 <th:block th:replace="~{layout/layout :: header}"></th:block>
 <h1 style="margin-left:20px;">Staff Listing</h1>
 	<a href="AddStaff.html" th:href="@{/staff/add}" style="margin-left:20px;">Add Staff</a>
-    <div th:if="${error != ''}" th:text="${error}"></div>
+    <div th:if="${error != ''}" th:text="${error}" style="margin-left:20px;"></div>
 	<h2 th:if="${not #lists.isEmpty(slist)}" style="margin-left:20px">Staff List</h2>
 	<table class="table table-bordered" th:if="${not #lists.isEmpty(slist)}">
         <tr style="background-color:lightgrey">
@@ -65,29 +65,28 @@ table
 				th:href="@{/staff/demote/}+${staff.id}">Demote</a></td>
 		</tr>
 	</table>
-	<div align="center">
+<div align="center">
 <br> 
 Total Staff: [[${totalItems}]]  -  Page [[${currentPage}]] of [[${totalPages}]]
 &nbsp;
-<a th:if="${currentPage>1}" th:href="@{/staff/page/1}">First</a>
+<a th:if="${currentPage>1}" th:href="@{/staff/page/(currentPage=1,numberofitems=${numberofitems})}">First</a>
 <span th:unless="${currentPage>1}">First</span>
 &nbsp;&nbsp;
-<a th:if="${currentPage> 1}" th:href="@{/staff/page/}+${currentPage-1}">Previous</a>
+<a th:if="${currentPage> 1}" th:href="@{/staff/page/(currentPage=${currentPage-1},numberofitems=${numberofitems})}">Previous</a>
 <span th:unless="${currentPage> 1}">Previous</span>
 &nbsp;&nbsp;
 <span th:each="i:${#numbers.sequence(1,totalPages)}">
-<a th:if="${i !=currentPage}" th:href="@{/staff/page/}+${i}">[[${i}]]</a>
+<a th:if="${i !=currentPage}" th:href="@{/staff/page/(currentPage=${i},numberofitems=${numberofitems})}">[[${i}]]</a>
 <span th:unless="${i !=currentPage}">[[${i}]]</span>
 &nbsp;&nbsp;
 </span>
 
-<a th:if="${currentPage<totalPages}" th:href="@{/staff/page/}+${currentPage+1}">Next</a>
+<a th:if="${currentPage<totalPages}" th:href="@{/staff/page/(currentPage=${currentPage+1},numberofitems=${numberofitems})}">Next</a>
 <span th:unless="${currentPage<totalPages}">Next</span> 
 &nbsp;&nbsp;
-<a th:if="${currentPage<totalPages}" th:href="@{/staff/page/}+${totalPages}">Last</a>
+<a th:if="${currentPage<totalPages}" th:href="@{/staff/page/(currentPage=${totalPages},numberofitems=${numberofitems})}">Last</a>
 <span th:unless="${currentPage<totalPages}">Last</span>
 &nbsp;&nbsp;&nbsp;&nbsp;
-
 
 Number of Staff per page:
 &nbsp;&nbsp;
@@ -96,9 +95,7 @@ Number of Staff per page:
 <a th:href="@{/staff/page/(currentPage=${1},numberofitems=5)}">5</a>
 &nbsp;&nbsp;
 <a th:href="@{/staff/page/(currentPage=${1},numberofitems=10)}">10</a>
-
 </div>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>
-

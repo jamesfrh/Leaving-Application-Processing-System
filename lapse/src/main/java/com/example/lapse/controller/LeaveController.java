@@ -258,4 +258,40 @@ public class LeaveController {
 	    lservice.cancelLeaveApplication(leaveapplication);
 	    return "forward:/leave/viewhistory";
 	  }
+	  
+	  @RequestMapping(value="/edit/{id}")
+	  public String edit(@PathVariable("id") Integer id,Model model)
+	  {
+	    LeaveApplication leaveapplication= lservice.findApplicationById(id);
+	    model.addAttribute("leaveapplication", leaveapplication);
+	    return "updateLeaveApplication";
+	  }
+	  
+	  @RequestMapping("/updateLA")
+		public String updateLA(@ModelAttribute("leaveapplication") @Valid LeaveApplication application, BindingResult bindingResult, HttpSession session, Model model) {
+			if (bindingResult.hasErrors()) {
+				model.addAttribute("leaveapplication", application);
+				model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
+				return "updateLeaveApplication";
+			}
+				
+			Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
+			LeaveType leaveType = ltservice.findLeaveTypeByLeaveType(application.getLeaveType().getLeaveType());
+			application.setStaff(currStaff);
+			application.setLeaveType(leaveType);
+			Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
+		    Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
+			float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
+			if(daysBetween <= 14) {
+				daysBetween = DateUtils.removeWeekends(calStart, calEnd);
+			}
+			application.setNoOfDays(daysBetween);
+			if (currStaff.getRole().equals("Manager")) {
+				application.setLeaveStatus(LeaveStatus.APPROVED);
+			}
+			lservice.addLeaveApplication(application);
+			emailservice.sendleavecreationsucessful(currStaff, application);
+			emailservice.alertmanageofleaveapproval(currStaff, application);
+			return "redirect:/home/index";
+		}
 }

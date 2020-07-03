@@ -24,6 +24,9 @@
 			<td><b>Leave Type</b></td>
 			<td><b>No of days</b></td>
 			<td><b>Status</b></td>	
+			<td><b>Edit</b></td>
+			<td><b>Delete</b></td>
+			<td><b>Cancel</b></td>
 		</tr>
 	</thead>		
 	<tbody>	  
@@ -35,7 +38,10 @@
 			<td th:text=${leave.leaveType.leaveType}>Leave Type</td>
 			<td th:text=${leave.noOfDays}>No of Days</td>
 			<td th:text=${leave.leaveStatus}>Status</td>	
-			
+			<td><a th:href="@{/leave/edit/}+${leave.Id}" 
+				th:if="${leave.leaveStatus == T(com.example.lapse.enums.LeaveStatus).APPLIED}">
+			<button type="button" class="btn btn-danger" style="background-color:orange">Edit</button>
+			</a></td>
 			<td><a th:href="@{/leave/delete/}+${leave.Id}" 
 				th:if="${leave.leaveStatus == T(com.example.lapse.enums.LeaveStatus).APPLIED}">
 			<button type="button" class="btn btn-danger">Delete</button>

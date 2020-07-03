@@ -68,7 +68,7 @@ public class LeaveValidator implements Validator {
 
 	    	for (Iterator<LeaveApplication> iterator = lalist.iterator(); iterator.hasNext();) {
 	    		LeaveApplication application2 = (LeaveApplication) iterator.next();
-	    		if (application2.getEndDate().after(application.getStartDate())) {
+	    		if (application2.getEndDate().after(application.getStartDate()) && application2.getId()!=application.getId()) {
 	    			errors.rejectValue("startDate", "leave.date.repeat");
 	    		}
 	    	}

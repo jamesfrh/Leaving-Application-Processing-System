@@ -65,6 +65,7 @@ public class LeaveApplication {
 	@ManyToOne
 	private Staff staff;
 	
+	@NotNull
 	private String reason;
 			
 	public LeaveApplication() {

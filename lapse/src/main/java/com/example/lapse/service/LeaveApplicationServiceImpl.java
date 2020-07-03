@@ -189,5 +189,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 		}
 		return false;
 	}
-	 
+	
+	@Override
+	public ArrayList<LeaveApplication> findApplicationsExCancelDeleteReject(Integer staffId) {
+		return laRepo.findApplicationsExCancelDeleteReject(staffId);
+	}
 }

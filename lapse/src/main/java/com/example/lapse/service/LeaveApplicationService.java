@@ -22,6 +22,7 @@ public interface LeaveApplicationService {
 	public ArrayList<LeaveApplication> listAllLeaveApplications();
 	
 	public float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId);
+	public ArrayList<LeaveApplication> findApplicationsExCancelDeleteReject(Integer staffId);
 	
 	public List<LeaveApplication> findpendingleaveapproval(Integer mgrid);
 	public void approveleaveapplication(Integer id);

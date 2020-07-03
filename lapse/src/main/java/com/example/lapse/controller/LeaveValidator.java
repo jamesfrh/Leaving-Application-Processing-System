@@ -1,7 +1,9 @@
 package com.example.lapse.controller;
 
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,12 +52,20 @@ public class LeaveValidator implements Validator {
 	    if (application.getStartDate() != null && application.getEndDate() != null) {
 	    	Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
 	    	Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
+	    	Date trimmedAppDate = DateUtils.trim(application.getApplicationDate());
+	    	Calendar calApp = DateUtils.dateToCalendar(trimmedAppDate);
 
 	    	//	    Applied startdate <= endDate (min 1 day)
 	    	boolean status = DateUtils.startDateBeforeEndDate(calStart, calEnd);
 	    	if (status == false) { 
 	    		errors.rejectValue("startDate", "leave.date.conflict");
 	    	}
+	    	
+	    	//	    Applied startdate should be >= application date
+		    boolean todayAndUp = DateUtils.startDateBeforeEndDate(calApp, calStart);
+		   	if (todayAndUp == false) {
+		   		errors.rejectValue("startDate", "leave.date.past");
+		   	}
 
 	    	//	    Retrieve number of days in between start and end date (inclusive of start and end)
 	    	float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
@@ -63,8 +73,8 @@ public class LeaveValidator implements Validator {
 	    		daysBetween = DateUtils.removeWeekends(calStart, calEnd);
 	    	}
 
-	    	//		Current application period not overlapping with old applications
-	    	List<LeaveApplication> lalist = laservice.findApplicationByStaffId((Integer) application.getStaff().getId());
+	    	//		Current application period not overlapping with applied, updated, approved applications
+	    	ArrayList<LeaveApplication> lalist = laservice.findApplicationsExCancelDeleteReject((Integer) application.getStaff().getId());
 
 	    	for (Iterator<LeaveApplication> iterator = lalist.iterator(); iterator.hasNext();) {
 	    		LeaveApplication application2 = (LeaveApplication) iterator.next();

@@ -17,4 +17,9 @@ public interface LeaveApplicationRepo extends JpaRepository<LeaveApplication, In
 	nativeQuery = true)
 	float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId);
 	
+	@Query
+	(value = "SELECT * FROM leave_application WHERE YEAR(start_date) = YEAR(CURDATE()) AND staff_id = ?1 AND leave_status NOT IN ('REJECTED','CANCELLED','DELETED')",
+	nativeQuery = true)
+	ArrayList<LeaveApplication> findApplicationsExCancelDeleteReject(Integer staffId);
+	
 }

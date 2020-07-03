@@ -24,6 +24,18 @@ public class DateUtils {
 		  }
 		  else return false;
 	  };
+	  
+	  //Trim hour, min, sec, millisecond of a Date away
+	  public static Date trim(Date date) {
+	      Calendar cal = Calendar.getInstance();
+	      cal.clear();
+	      cal.setTime( date );
+	      cal.set(Calendar.HOUR_OF_DAY, 0);
+	      cal.set(Calendar.MINUTE, 0);
+	      cal.set(Calendar.SECOND, 0);
+	      cal.set(Calendar.MILLISECOND, 0);
+	      return cal.getTime();
+	 }
 
 	  //Remove weekends when days applied  <=14
 	  public static float removeWeekends(Calendar start, Calendar end) {

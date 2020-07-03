@@ -11,13 +11,13 @@
 <h1>Public Holiday Listing</h1>
 	<a href="AddPublicHoliday.html" th:href="@{/ph/add}">Add Public Holiday</a>
     <div th:if="${error != ''}" th:text="${error}"></div>
-	<h2 th:if="${not #lists.isEmpty(ltlist)}">Public Holiday</h2>
-	<table class="w3-container" th:if="${not #lists.isEmpty(ltlist)}">
+	<h2 th:if="${not #lists.isEmpty(phlist)}">Public Holiday</h2>
+	<table class="w3-container" th:if="${not #lists.isEmpty(phlist)}">
 		<tr th:each="ph:${phlist}">
 			<td th:text=${ph.id}>Id</td>
 			<td th:text=${ph.name}>Name</td>
-			<td th:text=${ph.startDate}>Start Date</td>
-			<td th:text=${ph.endDate}>End Date</td>
+			<td th:text="${#dates.format(ph.startDate, 'dd-MM-yyyy')}">Start Date</td>
+			<td th:text="${#dates.format(ph.endDate, 'dd-MM-yyyy')}">End Date</td>
 			<td><a href="DeletePublicHoliday.html"
 				th:href="@{/ph/delete/}+${ph.id}">Delete</a></td>
 		</tr>

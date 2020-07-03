@@ -26,6 +26,9 @@ form
 		<fieldset>
 		<input type="hidden" th:field="*{id}">  
 		</fieldset>
+		<fieldset>
+		<input type="hidden" th:field="*{role}">  
+		</fieldset>
 		<fieldset style="margin-left:20px; margin-top:10px;">
 			Staff Name: <input type="text" class="form-control" th:field="*{name}">
 			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
@@ -38,9 +41,11 @@ form
         	Password: <input type="password" class="form-control" th:field="*{password}" style="margin-left:3px;">
       		<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
     	</fieldset>
-	    <fieldset style="margin-left:20px; margin-top:10px;">
+    			
+	    <fieldset th:if="*{role} != 'Manager'" style="margin-left:20px; margin-top:10px;">
     		Manager:
     		<select th:field="*{manager.name}">
+  				<option th:value ="0" text ="Please Select Manager"></option>
     			<option th:each="mname:${mnames}" th:value="${mname}" th:text="${mname}"></option>
     		</select>
     	</fieldset>

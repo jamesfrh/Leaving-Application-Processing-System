@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.lapse.domain.Manager;
+import com.example.lapse.domain.Staff;
 import com.example.lapse.repo.ManagerRepo;
 
 
@@ -17,10 +18,23 @@ public class ManagerServiceImpl implements ManagerService {
 	ManagerRepo mrepo;
 
 	@Override
+	public Manager findManagerById(int id) {
+		return mrepo.findById(id).orElse(null);
+	}
+	
+	@Override
 	public ArrayList<String> findAllManagerNames() {
 		return mrepo.findAllManagerNames();
 	}
 
+	@Override
+	public boolean saveManager(Manager manager) {
+		if(mrepo.save(manager)!=null) 
+		    return true; 
+		else 
+		    return false;
+	}
+	
 	
 	@Override
 	public Manager findManagerByName(String name) {

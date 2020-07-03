@@ -93,9 +93,21 @@ public class StaffController {
 			  model.addAttribute("mnames", mservice.findAllManagerNames());
 			  return "staff-form"; 
 		  }
-		  Manager savedManager = mservice.findManagerByName(staff.getManager().getName());
-		  staff.setManager(savedManager);
-		  staffservice.saveStaff(staff);
+		  if (staff.getManager() == null) {
+			  staff.setManager(null);
+		  } else {
+			  Manager savedManager = mservice.findManagerByName(staff.getManager().getName());
+			  staff.setManager(savedManager);
+		  }
+		  if (staff.getRole().equals("Manager")) {
+			  Manager myManager = mservice.findManagerById(staff.getId());
+			  myManager.setEmail(staff.getEmail());
+			  myManager.setName(staff.getName());
+			  myManager.setPassword(staff.getPassword());
+			  mservice.saveManager(myManager);
+		  } else {
+			  staffservice.saveStaff(staff);
+		  }
 		  return "forward:/staff/list";
 	  }
 	  

@@ -20,7 +20,7 @@ public class LeaveType {
 	private float entitlement;
 	
 	@ManyToMany (mappedBy="leaveTypes")
-	private List<Staff> staffList;
+	public List<Staff> staffList;
 	
 	public LeaveType() {
 		super();

@@ -18,7 +18,8 @@
 			<td th:text=${leaveType.leaveType}>Leave Type</td>
 			<td th:text=${leaveType.entitlement}>Entitlement</td>
 			<td><a href="DeleteLeaveType.html"
-				th:href="@{/leavetype/delete/}+${leaveType.id}">Delete</a></td>
+				th:href="@{/leavetype/delete/}+${leaveType.id}"
+				th:if="${leaveType.staffList ==null}">Delete</a></td>
 		</tr>
 	</table>
 </body>

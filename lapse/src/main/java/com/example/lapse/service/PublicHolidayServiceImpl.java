@@ -10,7 +10,7 @@ import com.example.lapse.repo.PublicRepo;
 
 
 @Service
-public class PublicServiceImpl implements PublicService {
+public class PublicHolidayServiceImpl implements PublicHolidayService {
 	
 	@Autowired
 	PublicRepo pubRepo;

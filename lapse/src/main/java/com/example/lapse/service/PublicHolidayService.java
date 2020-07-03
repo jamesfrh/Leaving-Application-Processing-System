@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.example.lapse.domain.PublicHoliday;
 
 @Service
-public interface PublicService {
+public interface PublicHolidayService {
 
 	List<PublicHoliday> findAll();
 

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.LeaveType;
+import com.example.lapse.domain.PublicHoliday;
 import com.example.lapse.domain.Staff;
 import com.example.lapse.enums.LeaveStatus;
 import com.example.lapse.service.Emailnotificationservice;
@@ -29,6 +30,8 @@ import com.example.lapse.service.LeaveApplicationService;
 import com.example.lapse.service.LeaveApplicationServiceImpl;
 import com.example.lapse.service.LeaveTypeService;
 import com.example.lapse.service.LeaveTypeServiceImpl;
+import com.example.lapse.service.PublicHolidayService;
+import com.example.lapse.service.PublicHolidayServiceImpl;
 import com.example.lapse.service.StaffService;
 import com.example.lapse.service.StaffServiceImpl;
 import com.example.lapse.utils.DateUtils;
@@ -64,6 +67,12 @@ public class LeaveController {
 	@Autowired
 	private Emailnotificationservice emailservice;
 	
+	@Autowired
+	private PublicHolidayService pubservice;
+	@Autowired
+	public void setPublicHolidayService(PublicHolidayServiceImpl phserviceImpl) {
+		this.pubservice = phserviceImpl;
+	}
 	
 	@Autowired
 	public void setEmailnotificationservice(Emailnotificationservice emailservice) {
@@ -163,17 +172,46 @@ public class LeaveController {
 			model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
 			return "applyLeave";
 		}
-			
+
 		Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
 		LeaveType leaveType = ltservice.findLeaveTypeByLeaveType(application.getLeaveType().getLeaveType());
 		application.setStaff(currStaff);
 		application.setLeaveType(leaveType);
 		Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
 	    Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
+	    
+		  //get a list of public holidays
+		  List<PublicHoliday> phList = pubservice.findAll();
+		  //iterate through each public holiday with dates applied
+		  float WeekdayPH = 0f;
+		  
+		  for (Iterator<PublicHoliday> iterator = phList.iterator(); iterator.hasNext();) {
+			PublicHoliday publicHoliday = (PublicHoliday) iterator.next();
+			
+			Calendar calPHStart = DateUtils.dateToCalendar(publicHoliday.getStartDate());
+		    Calendar calPHEnd = DateUtils.dateToCalendar(publicHoliday.getEndDate());
+		    
+		    //when applied start date = ph start date or applied end date = ph end date
+			if (application.getStartDate().equals(publicHoliday.getStartDate()) || 
+					application.getEndDate().equals(publicHoliday.getEndDate())) {
+				// if PH start != sunday or sat, add 1 (phStart on weekdayday)
+				// if PH end != PHstart && PH end !=sunday or sat, add 1 (phEnd on weekdays)				
+				WeekdayPH = DateUtils.countWeekDayPH(calPHStart, calPHEnd);
+				}
+			
+			if (application.getStartDate().before(publicHoliday.getStartDate()) && 
+					application.getEndDate().after(publicHoliday.getEndDate())) {
+				WeekdayPH =  WeekdayPH + DateUtils.countWeekDayPH(calPHStart, calPHEnd);
+			}
+    
+		}
+	    System.out.println("total PH weekdays " + WeekdayPH);
 		float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
 		if(daysBetween <= 14) {
 			daysBetween = DateUtils.removeWeekends(calStart, calEnd);
 		}
+		//factoring public holidays on weekdays
+		daysBetween = daysBetween - WeekdayPH;
 		application.setNoOfDays(daysBetween);
 		if (currStaff.getRole().equals("Manager")) {
 			application.setLeaveStatus(LeaveStatus.APPROVED);
@@ -258,40 +296,4 @@ public class LeaveController {
 	    lservice.cancelLeaveApplication(leaveapplication);
 	    return "forward:/leave/viewhistory";
 	  }
-	  
-	  @RequestMapping(value="/edit/{id}")
-	  public String edit(@PathVariable("id") Integer id,Model model)
-	  {
-	    LeaveApplication leaveapplication= lservice.findApplicationById(id);
-	    model.addAttribute("leaveapplication", leaveapplication);
-	    return "updateLeaveApplication";
-	  }
-	  
-	  @RequestMapping("/updateLA")
-		public String updateLA(@ModelAttribute("leaveapplication") @Valid LeaveApplication application, BindingResult bindingResult, HttpSession session, Model model) {
-			if (bindingResult.hasErrors()) {
-				model.addAttribute("leaveapplication", application);
-				model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
-				return "updateLeaveApplication";
-			}
-				
-			Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
-			LeaveType leaveType = ltservice.findLeaveTypeByLeaveType(application.getLeaveType().getLeaveType());
-			application.setStaff(currStaff);
-			application.setLeaveType(leaveType);
-			Calendar calStart = DateUtils.dateToCalendar(application.getStartDate());
-		    Calendar calEnd = DateUtils.dateToCalendar(application.getEndDate());
-			float daysBetween = ChronoUnit.DAYS.between(calStart.toInstant(), calEnd.toInstant()) + 1;
-			if(daysBetween <= 14) {
-				daysBetween = DateUtils.removeWeekends(calStart, calEnd);
-			}
-			application.setNoOfDays(daysBetween);
-			if (currStaff.getRole().equals("Manager")) {
-				application.setLeaveStatus(LeaveStatus.APPROVED);
-			}
-			lservice.addLeaveApplication(application);
-			emailservice.sendleavecreationsucessful(currStaff, application);
-			emailservice.alertmanageofleaveapproval(currStaff, application);
-			return "redirect:/home/index";
-		}
 }

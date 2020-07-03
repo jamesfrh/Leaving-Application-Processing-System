@@ -38,5 +38,23 @@ public class DateUtils {
 		  return daysWithoutWeekends;
 
 	  }
+	  //Count the weekdays that is a public Holiday
+	  public static float countWeekDayPH(Calendar start, Calendar end) {
+		  float WeekdayPH = 0f;
+
+			if (start.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+					&& start.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+				;
+				WeekdayPH++;
+			}
+			if(!(end.equals(start))) {
+				if (end.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+						&& end.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					;
+					WeekdayPH++;
+				}
+			}
+				return WeekdayPH;  
+	  }
 
 }

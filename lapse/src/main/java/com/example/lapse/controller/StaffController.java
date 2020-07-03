@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.lapse.domain.Manager;
 import com.example.lapse.domain.Staff;
+import com.example.lapse.service.ManagerService;
+import com.example.lapse.service.ManagerServiceImpl;
 import com.example.lapse.service.StaffService;
 import com.example.lapse.service.StaffServiceImpl;
 
@@ -30,6 +33,15 @@ public class StaffController {
 	@Autowired
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.staffservice = sserviceImpl;
+	}
+	
+	@Autowired
+	private ManagerService mservice;
+	
+	
+	@Autowired 
+	public void setManagerService(ManagerServiceImpl mserviceImpl) {
+		this.mservice = mserviceImpl;
 	}
 	
 	  @RequestMapping(value = "/admin")
@@ -54,7 +66,9 @@ public class StaffController {
 		  model.addAttribute("currentPage",currentPage);
 		  model.addAttribute("totalItems",totalItems);
 		  model.addAttribute("totalPages",totalPages);
+		  
 	    model.addAttribute("slist", listofstaff);
+	    model.addAttribute("mnames", mservice.findAllManagerNames());
 	    Object error = session.getAttribute("error");
 	    if (error != null) {
 	    	 model.addAttribute("error",String.valueOf(error));
@@ -67,6 +81,7 @@ public class StaffController {
 	  @RequestMapping(value = "/add")
 	  public String addStaff(Model model) {
 	    model.addAttribute("staff", new Staff());
+	    model.addAttribute("mnames", mservice.findAllManagerNames());
 	    return "staff-form";
 	  }
 	  
@@ -74,9 +89,12 @@ public class StaffController {
 	  @RequestMapping(value = "/save")
 	  public String saveStaff(@ModelAttribute("staff") @Valid Staff staff, BindingResult result, Model model) {	
 		  if (result.hasErrors()) { 
-			  model.addAttribute("staff", staff); 
+			  model.addAttribute("staff", staff);
+			  model.addAttribute("mnames", mservice.findAllManagerNames());
 			  return "staff-form"; 
 		  }
+		  Manager savedManager = mservice.findManagerByName(staff.getManager().getName());
+		  staff.setManager(savedManager);
 		  staffservice.saveStaff(staff);
 		  return "forward:/staff/list";
 	  }
@@ -87,6 +105,7 @@ public class StaffController {
 	  public String editForm(@PathVariable("id") Integer id, Model model) {
 	    Staff staff = staffservice.findStafftById(id);
 	    model.addAttribute("staff", staff);
+	    model.addAttribute("mnames", mservice.findAllManagerNames());
 	    return "staff-form";
 	  }
 	

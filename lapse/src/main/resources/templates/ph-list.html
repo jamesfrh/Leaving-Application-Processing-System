@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Public Holiday Listing</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<h1>Public Holiday Listing</h1>
+	<a href="AddPublicHoliday.html" th:href="@{/ph/add}">Add Public Holiday</a>
+    <div th:if="${error != ''}" th:text="${error}"></div>
+	<h2 th:if="${not #lists.isEmpty(ltlist)}">Public Holiday</h2>
+	<table class="w3-container" th:if="${not #lists.isEmpty(ltlist)}">
+		<tr th:each="ph:${phlist}">
+			<td th:text=${ph.id}>Id</td>
+			<td th:text=${ph.name}>Name</td>
+			<td th:text=${ph.startDate}>Start Date</td>
+			<td th:text=${ph.endDate}>End Date</td>
+			<td><a href="DeletePublicHoliday.html"
+				th:href="@{/ph/delete/}+${ph.id}">Delete</a></td>
+		</tr>
+	</table>
+</body>
+</html>

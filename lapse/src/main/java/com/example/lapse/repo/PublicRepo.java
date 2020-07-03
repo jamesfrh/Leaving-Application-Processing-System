@@ -9,7 +9,6 @@ import com.example.lapse.domain.PublicHoliday;
 
 public interface PublicRepo extends JpaRepository<PublicHoliday, Integer> {
 	
-	List<PublicHoliday> findAll();
 	List<PublicHoliday> findByName(String name);
 
 }

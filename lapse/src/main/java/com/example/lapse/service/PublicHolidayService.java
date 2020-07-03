@@ -9,7 +9,10 @@ import com.example.lapse.domain.PublicHoliday;
 @Service
 public interface PublicHolidayService {
 
-	List<PublicHoliday> findAll();
+	public List<PublicHoliday> findAll();
+	public PublicHoliday findPublicHolidayById(Integer id);
+	public void deletePublicHoliday(PublicHoliday publicHoliday);
+	public boolean savePublicHoliday(PublicHoliday publicHoliday);
 
 	
 }

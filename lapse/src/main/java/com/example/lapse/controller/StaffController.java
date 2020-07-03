@@ -1,5 +1,7 @@
 package com.example.lapse.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -123,7 +125,20 @@ public class StaffController {
 	
 	  @RequestMapping(value = "/delete/{id}")
 	  public String deleteStaff(@PathVariable("id") Integer id) {
-	    staffservice.deleteStaff(staffservice.findStafftById(id));
+		Staff myStaff = staffservice.findStafftById(id);
+		if (myStaff.getRole().equals("Manager")) {
+		  Manager myManager = mservice.findManagerById(myStaff.getId());
+		  Collection<Staff> sList = myManager.getStaffList();
+		  Iterator sListIterator = sList.iterator();
+		  while (sListIterator.hasNext()) {
+			  Staff managerStaff = (Staff) sListIterator.next();
+			  managerStaff.setManager(null);
+			  staffservice.saveStaff(managerStaff);
+		  }
+		  mservice.deleteManager(myManager);
+	  } else {
+		  staffservice.deleteStaff(myStaff);
+	  }
 	    return "forward:/staff/list";
 	  }
 	  

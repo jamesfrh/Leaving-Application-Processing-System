@@ -35,6 +35,10 @@ public class ManagerServiceImpl implements ManagerService {
 		    return false;
 	}
 	
+	@Override
+	public void deleteManager(Manager manager) {
+		mrepo.delete(manager);
+	}
 	
 	@Override
 	public Manager findManagerByName(String name) {

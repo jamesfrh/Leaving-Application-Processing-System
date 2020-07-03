@@ -12,4 +12,5 @@ public interface ManagerService {
 		public boolean saveManager(Manager manager);
 		public Manager findManagerById(int id);
 		public Manager findManagerByName(String name);
+		public void deleteManager(Manager manager);
 }

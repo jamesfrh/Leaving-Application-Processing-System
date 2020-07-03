@@ -51,5 +51,11 @@ public class AdminLoginController {
 		
 		return "admin-home";
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "admin-logout";
+	}
 
 }

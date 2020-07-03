@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.lapse.domain.Manager;
@@ -20,9 +23,9 @@ public class StaffServiceImpl implements StaffService {
 	ManagerRepo mrepo;
 
 	@Override
-	public ArrayList<Staff> findAll() {
-		ArrayList<Staff> staffList = (ArrayList<Staff>) srepo.findAll();
-	    return staffList;
+	public Page<Staff> findAll(int pageNumber) {
+		Pageable pageable=PageRequest.of(pageNumber-1, 5);		 
+	    return srepo.findAll(pageable);
 	}
 
 	@Override

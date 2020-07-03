@@ -81,14 +81,14 @@ public class LapseApplication {
 			
 			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com",leaveList );
 			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com",leaveList);
-			Manager manager3 = new Manager("MARK","MARKPASSWORD","MARKEMAIL@gmail.com",leaveList);
+			Manager manager3 = new Manager("MARK","MARKPASSWORD","team9manager@gmail.com",leaveList);
 
 			staffRepo.save(manager1);
 			staffRepo.save(manager2);
 			staffRepo.save(manager3);
 
 			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", leaveList, manager1);
-			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "JAKEEMAIL@gmail.com", leaveList, manager3);
+			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "team9employee@gmail.com", leaveList, manager3);
 			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", leaveList, manager3);
 			
 			staffRepo.save(staff1);

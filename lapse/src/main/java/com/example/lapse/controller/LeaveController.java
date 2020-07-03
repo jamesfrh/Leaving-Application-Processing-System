@@ -24,6 +24,7 @@ import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.LeaveType;
 import com.example.lapse.domain.Staff;
 import com.example.lapse.enums.LeaveStatus;
+import com.example.lapse.service.Emailnotificationservice;
 import com.example.lapse.service.LeaveApplicationService;
 import com.example.lapse.service.LeaveApplicationServiceImpl;
 import com.example.lapse.service.LeaveTypeService;
@@ -58,6 +59,15 @@ public class LeaveController {
 	@Autowired
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.staffservice = sserviceImpl;
+	}
+	
+	@Autowired
+	private Emailnotificationservice emailservice;
+	
+	
+	@Autowired
+	public void setEmailnotificationservice(Emailnotificationservice emailservice) {
+		this.emailservice = emailservice;
 	}
 	
 	@Autowired
@@ -169,7 +179,8 @@ public class LeaveController {
 			application.setLeaveStatus(LeaveStatus.APPROVED);
 		}
 		lservice.addLeaveApplication(application);
-		
+		emailservice.sendleavecreationsucessful(currStaff, application);
+		emailservice.alertmanageofleaveapproval(currStaff, application);
 		return "redirect:/home/index";
 	}
 	
@@ -230,6 +241,7 @@ public class LeaveController {
 		}
 		
 		lservice.updateLeaveStatus(leaveApp.getId(), leaveApp.getLeaveStatus(), leaveApp.getManagerComment());
+		emailservice.sendleavestatusemail(staffservice.findStafftById((leaveApp.getStaff().getId())),leaveApp);
 		return "forward:/leave/viewallpending";
 	}
 	

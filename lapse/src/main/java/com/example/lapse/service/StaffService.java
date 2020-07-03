@@ -2,13 +2,14 @@ package com.example.lapse.service;
 
 import java.util.ArrayList;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.example.lapse.domain.Staff;
 
 @Service
 public interface StaffService {
-	public ArrayList<Staff> findAll();
+	public Page<Staff> findAll(int pageNumber);
 	public boolean saveStaff(Staff staff);
 	public void deleteStaff(Staff staff);
 	

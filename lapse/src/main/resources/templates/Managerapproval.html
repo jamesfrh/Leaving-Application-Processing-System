@@ -7,55 +7,37 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>Managerapproval</title>
-	<style>
-	.button2 {
-    display: block;
-    width: 105px;
-    height: 40px;
-    background: #4E9CAF;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    line-height: 25px;
-    background-color: #008CBA; /* Green */
-}
-
-table
-{
-	width:auto;
-    text-align:center;
-    margin-left:110px; 
-}
-</style> 
-	
-
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
-<h1 style="margin-left:100px;">Leave Pending Approval</h1>
-<table class="table table-bordered" th:if="${not #lists.isEmpty(LeaveApplication)}">
+<div class="container" style="float:left; margin-left:80px; width:750px">
+<h1 align="center">Leave Pending Approval</h1>
+<p th:if="${LeaveApplication.empty}" style="color:red"  align="center">No applied applications found.</p>
+<table class="table table-bordered" align="center" th:if="${not #lists.isEmpty(LeaveApplication)}">
        <thead style="background-color:lightgrey" margin-left:50px;>  
          <tr>
 		    <td><b>Staff</b></td>	
-			<td><b>Applicationdate</b></td>			
-			<td><b>Startdate</b></td>
-			<td><b>Enddate</b></td>			
-			<td><b>Leavetype</b></td>
-			<td><b>Noofdays</b></td>		
+			<td><b>Application Date</b></td>			
+			<td><b>Start Date</b></td>
+			<td><b>End Date</b></td>			
+			<td><b>Leave Type</b></td>
+			<td><b>Number of Days</b></td>
+            <td><b>Detail</b></td>
+		</tr>		
 		</thead>	
-		<tr th:each="LeaveApplication:${LeaveApplication}">		
-		    <td th:text=${LeaveApplication.staff.name}>staff</td>	
-			<td th:text=${LeaveApplication.applicationDate}>applicationdate</td>			
-			<td th:text=${LeaveApplication.startDate}>startdate</td>
-			<td th:text=${LeaveApplication.endDate}>startdate</td>			
-			<td th:text=${LeaveApplication.leaveType.leaveType}>Leavetype</td>
-			<td th:text=${LeaveApplication.noOfDays}>nofodays 
-			<td><a class="button2" th:href="@{/leave/viewdetails/}+${LeaveApplication.id}">View Details</a></td>
-		    </td>
-        </tr>	
-        </table>	
+		<tbody>
+			<tr th:each="LeaveApplication:${LeaveApplication}">		
+			    <td th:text=${LeaveApplication.staff.name}>Staff</td>	
+				<td th:text=${LeaveApplication.applicationDate}>Application Date</td>			
+				<td th:text=${LeaveApplication.startDate}>Start Date</td>
+				<td th:text=${LeaveApplication.endDate}>End Date</td>			
+				<td th:text=${LeaveApplication.leaveType.leaveType}>Leave Type</td>
+				<td th:text=${LeaveApplication.noOfDays}>Number of Days</td>
+				<td><a class="button2" th:href="@{/leave/viewdetails/}+${LeaveApplication.id}">View Details</a></td>
+	        </tr>
+		</tbody>
+        </table>
+</div>	
 <th:block th:replace="~{layout/layout :: footer}"></th:block>	
 </body>
 </html>

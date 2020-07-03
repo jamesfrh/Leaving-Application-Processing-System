@@ -17,6 +17,11 @@
 <div class="mx-auto d-left">
 		<fieldset>
 		<input type="hidden" th:field="*{id}">  
+		</fieldset>
+		<input type="hidden" th:value="${session.id}" th:attr="name='staff.id'">  
+		</fieldset>
+		<fieldset>
+		<input type="hidden" th:value="${leavetype}" th:attr="name='leaveType.leaveType'">  
 		</fieldset>        
         
         <div class="form-group">

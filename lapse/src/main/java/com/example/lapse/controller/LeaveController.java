@@ -132,13 +132,17 @@ public class LeaveController {
 	@RequestMapping(value = "/addcompensation")
 	public String addCompensation(Model model) {
 		model.addAttribute("compensationapplication", new LeaveApplication());
-		model.addAttribute("leavetypes", ltservice.findAllLeaveTypeNamesExCL());
+		model.addAttribute("leavetype", "Compensation Leave");
 		return "claimCompensation";
 
 	}
 	@RequestMapping(value ="/submitCompensation")
-	public String submitCompensation(@ModelAttribute("leaveapplication") LeaveApplication application, HttpSession session, Model model) {
-		
+	public String submitCompensation(@ModelAttribute("compensationapplication") @Valid LeaveApplication application, BindingResult bindingResult, HttpSession session, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("compensationapplication", application);
+			model.addAttribute("leavetype", "Compensation Leave");
+			return "claimCompensation";
+		}
 		
 		Staff currStaff = staffservice.findStafftById((Integer)session.getAttribute("id"));
 		LeaveType leaveType = ltservice.findLeaveTypeByLeaveType("Compensation Leave");

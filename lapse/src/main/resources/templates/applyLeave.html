@@ -7,80 +7,78 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>Leave Application</title>
-<style>
-form
-{
-    margin-top:20px;
-    margin-left:100px;
-    width:400px;
-    height:400px;
-    display:inline-block;
-}
-
-textarea
-{
-	width:170px;
-	height:50px;
-}
-
-</style>
 </head>
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
-<h1 style="margin-left:100px;">Leave Application</h1>
+<div class="container" >
+<h1 align="center">Leave Application</h1>
 
-<form action="#" th:object="${leaveapplication}" th:action="@{/leave/submit}" method="post">
-		<fieldset>
-		<input type="hidden" th:field="*{id}">  
-		</fieldset>
-		<fieldset>
-		<input type="hidden" th:value="${session.id}" th:attr="name='staff.id'">  
-		</fieldset>
-            <div th:each="type : ${leavetypes}" style="margin-left:20px">
-                    <input type="radio" th:field="${leaveapplication.leaveType.leaveType}" th:value="${type}" >
-                    <label th:for="${#ids.seq('leaveapplication.leaveType.leaveType')}" th:text="${type}">type</label>
-			</div>
-			<script> 
-  			document.getElementById('leaveType.leaveType1').checked=true; 
-  			</script>
-<!--		<fieldset>
-			Leave Type: <input type="radio" name="type" value="Annual Leave" th:field="*{leaveType.leaveType}">
-		</fieldset>
-		<fieldset>
-			<input type="radio" name="type" value="Medical Leave" th:field="*{leaveType.leaveType}">
-		</fieldset> -->
-		<fieldset  style="margin-left:20px">
-			Overseas Trip:<br/>
-			<input type="radio" value="true" th:field="*{overseasTrip}" />Yes <input type="radio" value="false" th:field="*{overseasTrip}" />No
-		</fieldset>
-		<fieldset  style="margin-left:20px">
-			Start Date:
-			<input type="text" th:field="*{startDate}" placeholder="dd-MM-yyyy" style="margin-left:58px; margin-top:10px;"
-              th:text="${#dates.format(leaveapplication.startDate, 'dd-MM-yyyy')}"/>
-              <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
-		</fieldset>
-		<fieldset style="margin-left:20px">
-			End Date:
-			<input type="text" th:field="*{endDate}" placeholder="dd-MM-yyyy" style="margin-left:65px;margin-top:10px;"
-              th:text="${#dates.format(leaveapplication.endDate, 'dd-MM-yyyy')}"/>
-              <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
-		</fieldset>		
-		<fieldset style="margin-left:20px">
-        	Reason:<textarea th:field="*{reason}" style="margin-left:75px;margin-top:10px;"></textarea>
-    	</fieldset>
-    	<fieldset style="margin-left:20px">
-        Work Dissemination:<textarea th:field="*{workDissemination}"></textarea>
-    	</fieldset>
-		<fieldset  style="margin-left:20px">
-        	Contact Details:<input type="text" th:field="*{contactDetails}"style="margin-left:30px; margin-top:10px	">
-			<p th:if="${#fields.hasErrors('contactDetails')}" th:errors="*{contactDetails}"></p>
-    	</fieldset>
-		<br/>
-		<fieldset  style="margin-left:20px">
-			<button type="submit" class="btn btn-success" >Save</button>
-			<button type="reset"  class="btn btn-danger">Reset</button>
-		</fieldset>
-	</form>		
+<form action="#" th:object="${leaveapplication}" th:action="@{/leave/submit}" method="post" style="display: block; margin-left: auto; margin-right: auto; width: 25%;">
+  <div class="mx-auto d-left"> 
+  <input type="hidden" th:field="*{id}">  
+    <input type="hidden" th:value="${session.id}" th:attr="name='staff.id'"> 
+    <div th:each="type : ${leavetypes}">
+      <input type="radio" th:field="${leaveapplication.leaveType.leaveType}" th:value="${type}" class="form-check-input">
+         <label th:for="${#ids.seq('leaveapplication.leaveType.leaveType')}" th:text="${type}" class="form-check-label">type</label>
+    </div>
+    <script> 
+        document.getElementById('leaveType.leaveType1').checked=true; 
+    </script>
+
+       <label class="control-label">Overseas Trip:</label>
+         
+         <label class="radio-inline"><input type="radio" checked value="true" th:field="*{overseasTrip}">Yes</label>
+         
+         <label class="radio-inline"><input type="radio"  value="false" th:field="*{overseasTrip}" >No</label>
+   
+    
+     <div class="form-group">
+       <label>Start Date:</label>
+        <div>          
+          <input type="text" class="form-control" th:field="*{startDate}" placeholder="e.g. 20-09-2019" style=" width :300px">
+      <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" style="color:red"></p>
+        </div>
+      </div>
+      
+      <div class="form-group">
+       <label>End Date:</label>
+        <div>          
+          <input type="text" class="form-control" th:field="*{endDate}" placeholder="e.g. 20-09-2019" style=" width :300px">
+      <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" style="color:red"></p>
+        </div>
+      </div> 
+      
+      <div class="form-group">
+        <label for="comment">Reason:</label>
+        <textarea class="form-control" th:field="*{reason}" style="width:300px"></textarea>
+        <p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" style="color:red"></p>
+      </div>
+      
+      <div class="form-group">
+       <label>Work Dissemination:</label>
+        <div>          
+          <input type="text" class="form-control" th:field="*{workDissemination}" style=" width :300px">
+        </div>
+      </div> 
+      
+      <div class="form-group">
+       <label>Contact Detail:</label>
+        <div>          
+          <input type="text" class="form-control" th:field="*{contactDetails}" style=" width :300px">
+        </div>
+      </div> 
+       
+      <div class="form-group">   
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-success" style="width:100px">Submit</button>
+          <button type="reset" class="btn btn-primary" style="width:100px">Reset</button>
+        </div>
+      </div>
+     </div>
+  </form>  
+</div>  
+<div style="margin-bottom: 70px"></div>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

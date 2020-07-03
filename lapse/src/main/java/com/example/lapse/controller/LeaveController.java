@@ -332,6 +332,6 @@ public class LeaveController {
 			lservice.addLeaveApplication(application);
 			emailservice.sendleavecreationsucessful(currStaff, application);
 			emailservice.alertmanageofleaveapproval(currStaff, application);
-			return "redirect:/home/index";
+			return "redirect:/home/";
 		}
 }

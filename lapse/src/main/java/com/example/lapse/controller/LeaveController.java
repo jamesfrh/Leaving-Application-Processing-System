@@ -259,10 +259,12 @@ public class LeaveController {
 		
 		for (Iterator<LeaveApplication> iterator=leaveList.iterator();iterator.hasNext();) {
 			 LeaveApplication la=(LeaveApplication)iterator.next();
-			 boolean isTrue=lservice.isWithinDateRange(currStartDate, currEndDate, la.getStartDate(), la.getEndDate());
-			 if(isTrue) {
-				 finalLeaveAppList.add(la);
-			 }
+			 if(la.getId()!=leave.getId()) {
+				 boolean isTrue=lservice.isWithinDateRange(currStartDate, currEndDate, la.getStartDate(), la.getEndDate());
+				 if(isTrue) {
+					 finalLeaveAppList.add(la);
+				 }
+			 }			 
 		}
 		
 		model.addAttribute("leaveListExceptApproveAndReject",finalLeaveAppList);

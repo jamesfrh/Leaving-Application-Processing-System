@@ -127,7 +127,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 
 	 @Override
 		public boolean isWithinDateRange(Date currStartDate, Date currEndDate, Date testStartDate, Date testEndDate) {
-			if(testStartDate.after(currStartDate) && testEndDate.before(currEndDate)) {
+		
+		 if(testStartDate.equals(currStartDate) && testEndDate.equals(currEndDate)){
+			 return true;
+		 }
+		 
+		 if(testStartDate.after(currStartDate) && testEndDate.before(currEndDate)) {
 				return true;
 			}
 			return false;

@@ -2,25 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <title>Public Holiday Listing</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-
-<h1>Public Holiday Listing</h1>
-	<a href="AddPublicHoliday.html" th:href="@{/ph/add}">Add Public Holiday</a>
+<th:block th:replace="~{layout/layout :: header}"></th:block>
+<style>
+form
+{
+    margin-left:100px;
+    border: 1px solid black;
+    width:400px;
+    height:400px;
+    display:inline-block;
+}
+table
+{
+    margin-left:20px;
+}
+</style>
+<h1 style="margin-left:20px;">Public Holiday Listing</h1>
+	<a href="AddPublicHoliday.html" th:href="@{/ph/add}" style="margin-left:20px;">Add Public Holiday</a>
     <div th:if="${error != ''}" th:text="${error}"></div>
-	<h2 th:if="${not #lists.isEmpty(phlist)}">Public Holiday</h2>
-	<table class="w3-container" th:if="${not #lists.isEmpty(phlist)}">
+	<h2 th:if="${not #lists.isEmpty(phlist)}" style="margin-left:20px">Public Holiday</h2>
+	<table class="table table-bordered" th:if="${not #lists.isEmpty(phlist)}">
+		<tr style="background-color:lightgrey">
+		    <td ><b>Id</b></td>	
+			<td ><b>Name</b></td>			
+			<td ><b>Start Date</b></td>
+			<td ><b>End Date</b></td>			
+			<td><b>Actions</b></td>
+		</tr>
 		<tr th:each="ph:${phlist}">
 			<td th:text=${ph.id}>Id</td>
 			<td th:text=${ph.name}>Name</td>
 			<td th:text="${#dates.format(ph.startDate, 'dd-MM-yyyy')}">Start Date</td>
 			<td th:text="${#dates.format(ph.endDate, 'dd-MM-yyyy')}">End Date</td>
 			<td><a href="DeletePublicHoliday.html"
-				th:href="@{/ph/delete/}+${ph.id}">Delete</a></td>
+				th:href="@{/ph/delete/}+${ph.id}" style="color:red">Delete</a></td>
 		</tr>
 	</table>
+<th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

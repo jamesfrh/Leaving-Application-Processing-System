@@ -2,17 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <title>Leave Type Listing</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
 
-<h1>Leave Type Listing</h1>
-	<a href="AddLeaveType.html" th:href="@{/leavetype/add}">Add Leave Type</a>
+<th:block th:replace="~{layout/layout :: header}"></th:block>
+<h1 style="margin-left:20px;">Leave Type Listing</h1>
+
+	<a href="AddLeaveType.html" th:href="@{/leavetype/add}" style="margin-left:20px;">Add Leave Type</a>
     <div th:if="${error != ''}" th:text="${error}"></div>
-	<h2 th:if="${not #lists.isEmpty(ltlist)}">Leave Type List</h2>
-	<table class="w3-container" th:if="${not #lists.isEmpty(ltlist)}">
+	<h2 th:if="${not #lists.isEmpty(ltlist)}" style="margin-left:20px;">Leave Type List</h2>
+	<table  class="table table-bordered" th:if="${not #lists.isEmpty(ltlist)}">
 		<tr th:each="leaveType:${ltlist}">
 			<td th:text=${leaveType.id}>Id</td>
 			<td th:text=${leaveType.leaveType}>Leave Type</td>
@@ -22,5 +27,7 @@
 				th:if="${leaveType.staffList ==null}">Delete</a></td>
 		</tr>
 	</table>
+
+<th:block th:replace="~{layout/layout :: footer}"></th:block>	
 </body>
 </html>

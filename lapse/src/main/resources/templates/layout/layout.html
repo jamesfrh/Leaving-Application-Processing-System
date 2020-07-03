@@ -16,6 +16,11 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="#"><b>Leave Application Processing System</b></a>
     </div>
+    <ul class="nav navbar-nav" th:if="${session.role}=='Admin'">
+      <li class="active"><a th:href="@{/staff/list}">Manage Staff</a></li>
+      <li><a th:href="@{/leavetype/list/}">Manage Leave Type</a></li>
+      <li><a th:href="@{/ph/list/}">Manage Public Holidays</a></li>
+    </ul>
     <ul class="nav navbar-nav" th:if="${session.role}=='Manager'">
       <li class="active"><a th:href="@{/home/}">Home</a></li>
       <li><a th:href="@{/leave/add}">Apply Leave</a></li>

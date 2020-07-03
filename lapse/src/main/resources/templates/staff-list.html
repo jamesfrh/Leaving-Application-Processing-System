@@ -38,13 +38,13 @@ table
     <div th:if="${error != ''}" th:text="${error}"></div>
 	<h2 th:if="${not #lists.isEmpty(slist)}" style="margin-left:20px">Staff List</h2>
 	<table class="table table-bordered" th:if="${not #lists.isEmpty(slist)}">
-        <tr>
-		    <td >Staff Id</td>	
-			<td >Name</td>			
-			<td >Role</td>
-			<td >Email</td>			
-			<td >Manager</td>
-			<td>Actions</td>
+        <tr style="background-color:lightgrey">
+		    <td ><b>Staff Id</b></td>	
+			<td ><b>Name</b></td>			
+			<td ><b>Role</b></td>
+			<td ><b>Email</b></td>			
+			<td ><b>Manager</b></td>
+			<td><b>Actions</b></td>
 		</tr>
 		<tr th:each="staff:${slist}">
 			<td th:text=${staff.id}>Id</td>
@@ -65,6 +65,29 @@ table
 				th:href="@{/staff/demote/}+${staff.id}">Demote</a></td>
 		</tr>
 	</table>
+	<div align="center">
+<br> 
+Total Staff: [[${totalItems}]]  -  Page [[${currentPage}]] of [[${totalPages}]]
+&nbsp;
+<a th:if="${currentPage>1}" th:href="@{/staff/page/1}">First</a>
+<span th:unless="${currentPage>1}">First</span>
+&nbsp;&nbsp;
+<a th:if="${currentPage> 1}" th:href="@{/staff/page/}+${currentPage-1}">Previous</a>
+<span th:unless="${currentPage> 1}">Previous</span>
+&nbsp;&nbsp;
+<span th:each="i:${#numbers.sequence(1,totalPages)}">
+<a th:if="${i !=currentPage}" th:href="@{/staff/page/}+${i}">[[${i}]]</a>
+<span th:unless="${i !=currentPage}">[[${i}]]</span>
+&nbsp;&nbsp;
+</span>
+
+<a th:if="${currentPage<totalPages}" th:href="@{/staff/page/}+${currentPage+1}">Next</a>
+<span th:unless="${currentPage<totalPages}">Next</span> 
+&nbsp;&nbsp;
+<a th:if="${currentPage<totalPages}" th:href="@{/staff/page/}+${totalPages}">Last</a>
+<span th:unless="${currentPage<totalPages}">Last</span>
+&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

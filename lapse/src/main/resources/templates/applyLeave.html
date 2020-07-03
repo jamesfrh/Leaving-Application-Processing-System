@@ -65,6 +65,7 @@
        <label>Contact Detail:</label>
         <div>          
           <input type="text" class="form-control" th:field="*{contactDetails}" style=" width :300px">
+          <p th:if="${#fields.hasErrors('contactDetails')}" th:errors="*{contactDetails}"></p>
         </div>
       </div> 
        

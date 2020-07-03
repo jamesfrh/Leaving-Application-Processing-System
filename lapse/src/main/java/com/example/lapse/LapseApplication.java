@@ -72,13 +72,7 @@ public class LapseApplication {
 			ltRepo.save(lt3);
 			
 			List<LeaveType> leaveList = ltRepo.findAll();
-			for (Iterator<LeaveType> iterator = leaveList.iterator(); iterator.hasNext();) {
-				LeaveType leaveType = (LeaveType) iterator.next();
-				System.out.println(leaveType.toString());
-				
-			}
-			
-			
+	
 			Manager manager1 = new Manager("JAMES","JAMESPASSWORD","EMAIL@gmail.com",leaveList );
 			Manager manager2 = new Manager("BOB","BOBPASSWORD","BOBEMAIL@gmail.com",leaveList);
 			Manager manager3 = new Manager("MARK","MARKPASSWORD","team9manager@gmail.com",leaveList);
@@ -98,7 +92,6 @@ public class LapseApplication {
 			//User applied start date and end date of leave
 			LocalDate ApplicationDate = LocalDate.of(2020, 6, 1);
 
-			
 			LocalDate dateStart1 = LocalDate.of(2020, 6, 15);
 			LocalDate dateEnd1 = LocalDate.of(2020, 6,17);
 			
@@ -133,72 +126,58 @@ public class LapseApplication {
 			laRepo.save(apply3);
 
 
-			//Validate that start day and end day must not be weekends
-			DayOfWeek dayStart = DayOfWeek.of(dateStart1.get(ChronoField.DAY_OF_WEEK));
-			System.out.println(dayStart);
-			DayOfWeek dayEnd = DayOfWeek.of(dateEnd1.get(ChronoField.DAY_OF_WEEK));
-			System.out.println(dayStart);
-			
-			if((dayStart == DayOfWeek.SATURDAY || dayStart == DayOfWeek.SUNDAY) ||
-					(dayEnd == DayOfWeek.SATURDAY || dayEnd == DayOfWeek.SUNDAY)) {
-				System.out.println("start day/ end day of leave is a weekend");
-			}
+//			//Validate that start day and end day must not be weekends
+//			DayOfWeek dayStart = DayOfWeek.of(dateStart1.get(ChronoField.DAY_OF_WEEK));
+//			System.out.println(dayStart);
+//			DayOfWeek dayEnd = DayOfWeek.of(dateEnd1.get(ChronoField.DAY_OF_WEEK));
+//			System.out.println(dayStart);
+//			
+//			if((dayStart == DayOfWeek.SATURDAY || dayStart == DayOfWeek.SUNDAY) ||
+//					(dayEnd == DayOfWeek.SATURDAY || dayEnd == DayOfWeek.SUNDAY)) {
+//				System.out.println("start day/ end day of leave is a weekend");
+//			}
 			
 		
-			float actualLeaveDaysApplied = 0;
+//			float actualLeaveDaysApplied = 0;
+//
+//			//validate if appliedLeaveDays <=14 with a method and put the if statment below inside
+//			if(noOfDays1 <=14) {
+//				//converting start and end date from LocalDate format to Calendar format
+//	            GregorianCalendar calStart = GregorianCalendar.from(dateStart1.atStartOfDay(ZoneId.systemDefault()));
+//	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd1.atStartOfDay(ZoneId.systemDefault()));
+//				System.out.println(calStart);
+//				
+////				System.out.println(daysBetween);
+////				System.out.println(noOfDays1);
+//
+//
+//	            //validate if end date is before start date, return an error if they are
+//	            //startCal.getTimeInMillis() > endCal.getTimeInMillis()
+//
+//
+//				do {
+//				  if (calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
+//				  calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {;
+//				  actualLeaveDaysApplied++; }
+//				  calStart.add(Calendar.DAY_OF_MONTH, 1);
+//				  } 
+//				while (calStart.getTimeInMillis() <= calEnd.getTimeInMillis());
+//				
+//				System.out.println(actualLeaveDaysApplied);
+//				// return actualLeaveDaysApplied
+//			}
 
-			//validate if appliedLeaveDays <=14 with a method and put the if statment below inside
-			if(noOfDays1 <=14) {
-				//converting start and end date from LocalDate format to Calendar format
-	            GregorianCalendar calStart = GregorianCalendar.from(dateStart1.atStartOfDay(ZoneId.systemDefault()));
-	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd1.atStartOfDay(ZoneId.systemDefault()));
-				System.out.println(calStart);
-				
-//				System.out.println(daysBetween);
-//				System.out.println(noOfDays1);
 
-
-	            //validate if end date is before start date, return an error if they are
-	            //startCal.getTimeInMillis() > endCal.getTimeInMillis()
-
-
-				do {
-				  if (calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
-				  calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {;
-				  actualLeaveDaysApplied++; }
-				  calStart.add(Calendar.DAY_OF_MONTH, 1);
-				  } 
-				while (calStart.getTimeInMillis() <= calEnd.getTimeInMillis());
-				
-				System.out.println(actualLeaveDaysApplied);
-				// return actualLeaveDaysApplied
-			}
-			//query if balance in DB >= actualLeaveDaysApplied
-			//deduct from balance if ok, if not then return an error
-
-			//when appliedLeaveDays >14 
-			else {
-				//query if balance in DB >= appliedLeaveDays
-				//deduct from balance if ok, if not then return an error
-				
-			}
-
-			
-				  Calendar cal = Calendar.getInstance();
-				  cal.setTime(START1);
-			      System.out.println(cal);
-			      
-			      
-			      // test get sum of leaves applied by Staff3 
-					LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
-							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, false, "999",  "holiday", staff3);
-					LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
-							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
-					LeaveApplication apply6 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
-							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
-					laRepo.save(apply4);
-					laRepo.save(apply5);
-					laRepo.save(apply6);
+//			      // test get sum of leaves applied by Staff3 
+//					LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+//							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, false, "999",  "holiday", staff3);
+//					LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+//							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
+//					LeaveApplication apply6 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
+//							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
+//					laRepo.save(apply4);
+//					laRepo.save(apply5);
+//					laRepo.save(apply6);
 					
 			      float totaldaysapplied = laRepo.getSumOfLeavesAppliedByStaff(6, 2);
 			      System.out.println(totaldaysapplied);
@@ -253,11 +232,6 @@ public class LapseApplication {
 				  phRepo.save(ph8);
 				  phRepo.save(ph9);
 				  phRepo.save(ph10);
-
-
-
-
-			      
 
 		};
 	}

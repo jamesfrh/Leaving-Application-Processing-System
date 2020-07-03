@@ -9,7 +9,7 @@ import com.example.lapse.domain.Staff;
 
 @Service
 public interface StaffService {
-	public Page<Staff> findAll(int pageNumber);
+	public Page<Staff> findAll(int pageNumber,int numberofitems);
 	public boolean saveStaff(Staff staff);
 	public void deleteStaff(Staff staff);
 	

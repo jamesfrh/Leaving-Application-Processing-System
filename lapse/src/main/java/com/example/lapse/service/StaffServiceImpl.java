@@ -23,8 +23,8 @@ public class StaffServiceImpl implements StaffService {
 	ManagerRepo mrepo;
 
 	@Override
-	public Page<Staff> findAll(int pageNumber) {
-		Pageable pageable=PageRequest.of(pageNumber-1, 5);		 
+	public Page<Staff> findAll(int pageNumber,int numberofitems) {
+		Pageable pageable=PageRequest.of(pageNumber-1, numberofitems);		 
 	    return srepo.findAll(pageable);
 	}
 

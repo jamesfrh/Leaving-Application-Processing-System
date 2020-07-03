@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.lapse.domain.Manager;
 import com.example.lapse.domain.Staff;
@@ -52,23 +53,22 @@ public class StaffController {
 	  //staff list
 	  @RequestMapping(value = "/list")
 	  public String list(Model model, HttpSession session) {
-		  return listByPage(model,session,1);
+		  return listByPage(model,session,1,5);
 	  }
 	  
-	  @GetMapping("/page/{pageNumber}")
-	  public String listByPage(Model model,HttpSession session,@PathVariable("pageNumber")int currentPage) {
-		  
-		  Page<Staff>page=staffservice.findAll(currentPage);
+	  @GetMapping("/page")
+	  public String listByPage(Model model,HttpSession session,@RequestParam("currentPage")int currentPage, 
+			  @RequestParam("numberofitems") int numberofitems ) {
+		  	  
+		  Page<Staff>page=staffservice.findAll(currentPage,numberofitems);
 		  List<Staff> listofstaff= page.getContent();		  
 		  long totalItems=page.getTotalElements();
 		  int totalPages=page.getTotalPages();
-		  
+		  model.addAttribute("numberofitems",numberofitems);
 		  model.addAttribute("currentPage",currentPage);
 		  model.addAttribute("totalItems",totalItems);
 		  model.addAttribute("totalPages",totalPages);
-		  
 	    model.addAttribute("slist", listofstaff);
-	    model.addAttribute("mnames", mservice.findAllManagerNames());
 	    Object error = session.getAttribute("error");
 	    if (error != null) {
 	    	 model.addAttribute("error",String.valueOf(error));

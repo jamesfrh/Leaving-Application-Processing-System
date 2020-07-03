@@ -2,26 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <title>Staff Form</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
+<style>
+form
+{
+    margin-top:20px;
+    border: 1px solid black;
+    margin-left:100px;
+    width:250px;
+    height:250px;
+    display:inline-block;
+}
+</style>
 </head>
 <body>
-<h1>Staff Form</h1>
+<th:block th:replace="~{layout/layout :: header}"></th:block>
+<h1 style="margin-left:100px;">Staff Form</h1>
 <form action="#" th:object="${staff}" th:action="@{/staff/save}" method="post" >
 		<fieldset>
 		<input type="hidden" th:field="*{id}">  
 		</fieldset>
-		<fieldset>
+		<fieldset style="margin-left:20px; margin-top:10px;">
 			Staff Name: <input type="text" th:field="*{name}">
 			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 		</fieldset>
-		<fieldset>
+		<fieldset style="margin-left:20px; margin-top:10px;">
 			Staff Email: <input type="email" th:field="*{email}">
 			<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 		</fieldset>
-	    <fieldset>
-        	Password: <input type="password" th:field="*{password}">
+	    <fieldset style="margin-left:20px; margin-top:10px;">
+        	Password: <input type="password" th:field="*{password}" style="margin-left:3px;">
       		<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
     	</fieldset>
 <!-- 	<fieldset>
@@ -32,12 +47,12 @@
 			Staff Medical Leave Entitlement: <input type="text" th:field="*{medicalLeaveEntitlement}">
 			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 		</fieldset> -->
-		<fieldset>
-			<button type="submit" >Save</button>
-			<button type="reset">Reset</button>
+		<fieldset style="margin-left:20px; margin-top:10px;">
+			<button type="submit"  class="btn btn-success"  >Save</button>
+			<button type="reset"  class="btn btn-danger">Reset</button>
 		</fieldset>
 		
 	</form>
-
+<th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

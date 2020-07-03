@@ -81,7 +81,7 @@ public class LoginController {
 		session.setAttribute("role", currStaff.getRole());
 		session.setAttribute("id", currStaff.getId());
 		
-		return "redirect:/home/index";
+		return "redirect:/home/";
 	}
 	
 //	@RequestMapping("/submit")
@@ -97,7 +97,7 @@ public class LoginController {
 //	  }
 	
 	
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String index(Model model, HttpSession session) {
 		if (session.getAttribute("id") == null) {
 			return "redirect:/home/login";
@@ -115,7 +115,7 @@ public class LoginController {
 		}
 		model.addAttribute("balanceArr", balanceArr);
 		model.addAttribute("leaveTypes",leaveTypeArr);
-		return "index";
+		return "homePage";
 	}
 	
 	

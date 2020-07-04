@@ -81,7 +81,7 @@ public class LapseApplication {
 			staffRepo.save(manager2);
 			staffRepo.save(manager3);
 
-			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", leaveList, manager1);
+			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", leaveList, manager3);
 			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "team9employee@gmail.com", leaveList, manager3);
 			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", leaveList, manager3);
 			Staff staff4 = new Staff("NATHAN", "NATHANPASSWORD1", "NATHANEMAIL@gmail.com", leaveList, manager3);

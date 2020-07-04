@@ -26,7 +26,7 @@ table
 }
 </style>
 <h1 style="margin-left:20px;">Public Holiday Listing</h1><br>
-	<a th:href="@{/ph/add}" class="btn btn-success" style="margin-left:20px">Add New Leave Type</a>
+	<a th:href="@{/ph/add}" class="btn btn-success" style="margin-left:20px">Add New Public Holiday</a>
     <div th:if="${error != ''}" th:text="${error}"></div>
     <div style="width:900px; margin-left:50px" align="center">
 	<h2 th:if="${not #lists.isEmpty(phlist)}" style="margin-left:20px">Public Holiday</h2>

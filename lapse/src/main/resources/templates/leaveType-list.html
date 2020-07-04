@@ -12,12 +12,20 @@
 <body>
 
 <th:block th:replace="~{layout/layout :: header}"></th:block>
-<h1 style="margin-left:20px;">Leave Type Listing</h1>
-
-	<a href="AddLeaveType.html" th:href="@{/leavetype/add}" style="margin-left:20px;">Add Leave Type</a>
+<h1 style="margin-left:20px">Leave Type Listing</h1>
+	<a th:href="@{/leavetype/add}" class="btn btn-success" style="margin-left:20px">Add New Leave Type</a>
+<!-- 	<a href="AddLeaveType.html" th:href="@{/leavetype/add}" style="margin-left:20px">Add Leave Type</a> -->
     <div th:if="${error != ''}" th:text="${error}"></div>
-	<h2 th:if="${not #lists.isEmpty(ltlist)}" style="margin-left:20px;">Leave Type List</h2>
+ <div style="width:900px; margin-left:50px" align="center">
+	<h2 th:if="${not #lists.isEmpty(ltlist)}" align="center">Leave Type List</h2>
 	<table  class="table table-bordered" th:if="${not #lists.isEmpty(ltlist)}">
+		<tr style="background-color:lightgrey;text-align:center">
+		    <td ><b>Id</b></td>	
+			<td ><b>Leave Type Name</b></td>			
+			<td ><b>Entitlement</b></td>
+			<td colspan="3"><b>Actions</b></td>
+		</tr>
+		
 		<tr th:each="leaveType:${ltlist}">
 			<td th:text=${leaveType.id}>Id</td>
 			<td th:text=${leaveType.leaveType}>Leave Type</td>
@@ -27,7 +35,7 @@
 				th:if="${leaveType.staffList ==null}">Delete</a></td>
 		</tr>
 	</table>
-
+</div>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>	
 </body>
 </html>

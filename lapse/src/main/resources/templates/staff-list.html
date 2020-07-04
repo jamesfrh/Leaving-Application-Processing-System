@@ -34,7 +34,7 @@ table
 <body>
 <th:block th:replace="~{layout/layout :: header}"></th:block>
 <h1 style="margin-left:20px;">Staff Listing</h1>
-	<a href="AddStaff.html" th:href="@{/staff/add}" style="margin-left:20px;">Add Staff</a>
+	<a class="btn btn-success" th:href="@{/staff/add}" style="margin-left:20px">Add New Staff</a>
     <div th:if="${error != ''}" th:text="${error}" style="margin-left:20px;"></div>
 	<h2 th:if="${not #lists.isEmpty(slist)}" style="margin-left:20px">Staff List</h2>
 	<table class="table table-bordered" th:if="${not #lists.isEmpty(slist)}">

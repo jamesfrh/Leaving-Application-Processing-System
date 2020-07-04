@@ -25,9 +25,10 @@ table
     margin-left:20px;
 }
 </style>
-<h1 style="margin-left:20px;">Public Holiday Listing</h1>
-	<a href="AddPublicHoliday.html" th:href="@{/ph/add}" style="margin-left:20px;">Add Public Holiday</a>
+<h1 style="margin-left:20px;">Public Holiday Listing</h1><br>
+	<a th:href="@{/ph/add}" class="btn btn-success" style="margin-left:20px">Add New Leave Type</a>
     <div th:if="${error != ''}" th:text="${error}"></div>
+    <div style="width:900px; margin-left:50px; margin-bottom:30px" align="center">
 	<h2 th:if="${not #lists.isEmpty(phlist)}" style="margin-left:20px">Public Holiday</h2>
 	<table class="table table-bordered" th:if="${not #lists.isEmpty(phlist)}">
 		<tr style="background-color:lightgrey">
@@ -46,6 +47,7 @@ table
 				th:href="@{/ph/delete/}+${ph.id}" style="color:red">Delete</a></td>
 		</tr>
 	</table>
+   </div>
 <th:block th:replace="~{layout/layout :: footer}"></th:block>
 </body>
 </html>

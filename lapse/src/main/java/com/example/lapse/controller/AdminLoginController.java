@@ -31,6 +31,14 @@ public class AdminLoginController {
 		binder.addValidators(adminLoginValidator);
 	}
 	
+	@RequestMapping("/")
+	  public String index(Model model, HttpSession session) {
+	    if (session.getAttribute("id") == null) {
+	      return "redirect:/admin/login";
+	    }
+	    return "admin-home";
+	  }
+	
 	@RequestMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("login", new AdminLogin());

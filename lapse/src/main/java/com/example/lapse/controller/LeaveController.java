@@ -165,7 +165,10 @@ public class LeaveController {
 		}
 		application.setNoOfDays(daysBetween);
 		lservice.addLeaveApplication(application);
-		
+		emailservice.sendleavecreationsucessful(currStaff, application);
+		if(currStaff.getManager()!=null) {
+			emailservice.alertmanageofleaveapproval(currStaff, application);
+			}
 		return "redirect:/home/";
 	}
 

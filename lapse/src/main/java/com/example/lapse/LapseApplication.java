@@ -84,10 +84,12 @@ public class LapseApplication {
 			Staff staff1 = new Staff("JOHN", "JOHNPASSWORD", "JOHNEMAIL@gmail.com", leaveList, manager1);
 			Staff staff2 = new Staff("JAKE", "JAKEPASSWORD1", "team9employee@gmail.com", leaveList, manager3);
 			Staff staff3 = new Staff("ELL", "ELLPASSWORD1", "ELLEMAIL@gmail.com", leaveList, manager3);
+			Staff staff4 = new Staff("NATHAN", "NATHANPASSWORD1", "NATHANEMAIL@gmail.com", leaveList, manager3);
 			
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
+			staffRepo.save(staff4);
 			
 			//User applied start date and end date of leave
 			LocalDate ApplicationDate = LocalDate.of(2020, 6, 1);
@@ -120,7 +122,13 @@ public class LapseApplication {
 			
 			LeaveApplication apply3 = new LeaveApplication(APPLICATIONDATE, START2,/*TimeOfDay.AM,*/END2, /*TimeOfDay.AM,*/
 					lt2, noOfDays2, LeaveStatus.APPROVED, "sick again", "return", true, false, "777",  "hospital", manager2);
+			LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START2,/*TimeOfDay.AM,*/END2, /*TimeOfDay.AM,*/
+					lt2, noOfDays2, LeaveStatus.APPROVED, "Sugery", "return", true, false, "777",  "hospital", staff3);
+			LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START2,/*TimeOfDay.AM,*/END2, /*TimeOfDay.AM,*/
+					lt2, noOfDays2, LeaveStatus.APPROVED, "cough", "return", true, false, "777",  "hospital", staff4);
 			
+			laRepo.save(apply5);
+			laRepo.save(apply4);
 			laRepo.save(apply1);
 			laRepo.save(apply2);
 			laRepo.save(apply3);

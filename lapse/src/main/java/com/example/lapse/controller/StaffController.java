@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.lapse.domain.LeaveApplication;
 import com.example.lapse.domain.Manager;
 import com.example.lapse.domain.Staff;
+import com.example.lapse.service.LeaveApplicationService;
+import com.example.lapse.service.LeaveApplicationServiceImpl;
 import com.example.lapse.service.ManagerService;
 import com.example.lapse.service.ManagerServiceImpl;
 import com.example.lapse.service.StaffService;
@@ -46,6 +49,17 @@ public class StaffController {
 	public void setManagerService(ManagerServiceImpl mserviceImpl) {
 		this.mservice = mserviceImpl;
 	}
+	
+	@Autowired
+	private LeaveApplicationService laservice;
+	
+	
+	@Autowired 
+	public void setLeaveApplicationService(LeaveApplicationServiceImpl laserviceImpl) {
+		this.laservice=laserviceImpl;
+	}
+	
+	
 	
 	  @RequestMapping(value = "/admin")
 	  public String adminPage() {
@@ -126,6 +140,13 @@ public class StaffController {
 	  @RequestMapping(value = "/delete/{id}")
 	  public String deleteStaff(@PathVariable("id") Integer id) {
 		Staff myStaff = staffservice.findStafftById(id);
+		Collection<LeaveApplication> laList = myStaff.getLeaveTransactions(); 
+		Iterator laListIterator = laList.iterator();
+		while (laListIterator.hasNext()) {
+			LeaveApplication staffLA = (LeaveApplication) laListIterator.next();
+			staffLA.setStaff(null);
+			laservice.saveLeaveApplication(staffLA);
+		}
 		if (myStaff.getRole().equals("Manager")) {
 		  Manager myManager = mservice.findManagerById(myStaff.getId());
 		  Collection<Staff> sList = myManager.getStaffList();
@@ -135,6 +156,7 @@ public class StaffController {
 			  managerStaff.setManager(null);
 			  staffservice.saveStaff(managerStaff);
 		  }
+		  
 		  mservice.deleteManager(myManager);
 	  } else {
 		  staffservice.deleteStaff(myStaff);

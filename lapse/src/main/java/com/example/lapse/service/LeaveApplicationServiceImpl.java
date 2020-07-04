@@ -36,6 +36,14 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 		laRepo.save(leaveApplication);
 	}
 	
+	@Override
+	public boolean saveLeaveApplication(LeaveApplication leaveApplication) {
+		if(laRepo.save(leaveApplication)!=null) 
+		    return true; 
+		else 
+		    return false;
+	}
+	
 	@Transactional
 	public ArrayList<LeaveApplication> listAllLeaveApplications() {
 		ArrayList<LeaveApplication> leaveApplicationList = (ArrayList<LeaveApplication>) laRepo.findAll();
@@ -110,10 +118,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 	 
 	 @Transactional
 	 public void deleteLeaveApplication(LeaveApplication leaveApplication) {
-		 if(leaveApplication.getLeaveStatus()==LeaveStatus.APPLIED) {
-			 leaveApplication.setLeaveStatus(LeaveStatus.DELETED);
-			 laRepo.save(leaveApplication);
-		 }
+		 laRepo.delete(leaveApplication);
 	 }
 	 
 	 @Transactional

@@ -19,6 +19,8 @@ public interface LeaveApplicationService {
 	
 	public void addLeaveApplication(LeaveApplication leaveApplication);
 	public void cancelLeaveApplication(LeaveApplication leaveApplication);
+	public boolean saveLeaveApplication(LeaveApplication leaveApplication);
+
 	public ArrayList<LeaveApplication> listAllLeaveApplications();
 	
 	public float getSumOfLeavesAppliedByStaff(Integer staffId, Integer leaveTypeId);

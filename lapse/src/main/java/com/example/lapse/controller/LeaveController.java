@@ -158,17 +158,40 @@ public class LeaveController {
 			daysBetween = DateUtils.removeWeekends(calStart, calEnd);
 			System.out.println("inside < 14 if condition " + daysBetween );
 		}
+		//get a list of public holidays
+		List<PublicHoliday> phList = pubservice.findAll();
+		//iterate through each public holiday with dates applied
+		float WeekdayPH = 0f;
 
+		for (Iterator<PublicHoliday> iterator = phList.iterator(); iterator.hasNext();) {
+			PublicHoliday publicHoliday = (PublicHoliday) iterator.next();
+
+			Calendar calPHStart = DateUtils.dateToCalendar(publicHoliday.getStartDate());
+			Calendar calPHEnd = DateUtils.dateToCalendar(publicHoliday.getEndDate());
+
+			//when applied start date = ph start date or applied end date = ph end date
+			if (application.getStartDate().equals(publicHoliday.getStartDate()) || 
+					application.getEndDate().equals(publicHoliday.getEndDate())) {
+				// if PH start != sunday or sat, add 1 (phStart on weekdayday)
+				// if PH end != PHstart && PH end !=sunday or sat, add 1 (phEnd on weekdays)				
+				WeekdayPH = DateUtils.countWeekDayPH(calPHStart, calPHEnd);
+			}
+
+			if (application.getStartDate().before(publicHoliday.getStartDate()) && 
+					application.getEndDate().after(publicHoliday.getEndDate())) {
+				WeekdayPH =  WeekdayPH + DateUtils.countWeekDayPH(calPHStart, calPHEnd);
+			}
+		}
+		//factoring public holidays on weekdays
+		daysBetween = daysBetween - WeekdayPH;
+		application.setNoOfDays(daysBetween);
 		if(application.isHalfday() == true) {
 			daysBetween = daysBetween - 0.5f;
 			System.out.println("inside if " + daysBetween);
 		}
 		application.setNoOfDays(daysBetween);
 		lservice.addLeaveApplication(application);
-		emailservice.sendleavecreationsucessful(currStaff, application);
-		if(currStaff.getManager()!=null) {
-			emailservice.alertmanageofleaveapproval(currStaff, application);
-			}
+		
 		return "redirect:/home/";
 	}
 

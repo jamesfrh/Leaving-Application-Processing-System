@@ -48,7 +48,7 @@ public class AdminLoginController {
 		currAdmin = adminservice.findAdminByEmail(currAdmin.getEmail());
 		session.setAttribute("role", "Admin");
 		session.setAttribute("id", currAdmin.getId());
-		
+		session.setAttribute("name", currAdmin.getName());
 		return "admin-home";
 	}
 	

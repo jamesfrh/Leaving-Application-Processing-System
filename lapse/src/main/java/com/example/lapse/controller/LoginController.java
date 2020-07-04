@@ -80,7 +80,7 @@ public class LoginController {
 		currStaff = staffservice.findStaffByEmail(currStaff.getEmail());
 		session.setAttribute("role", currStaff.getRole());
 		session.setAttribute("id", currStaff.getId());
-		
+		session.setAttribute("name", currStaff.getName());
 		return "redirect:/home/";
 	}
 	

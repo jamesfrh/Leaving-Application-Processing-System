@@ -43,6 +43,9 @@ table
 			<td th:text=${ph.name}>Name</td>
 			<td th:text="${#dates.format(ph.startDate, 'dd-MM-yyyy')}">Start Date</td>
 			<td th:text="${#dates.format(ph.endDate, 'dd-MM-yyyy')}">End Date</td>
+			<td><a href="EditStaff.html"
+				th:href="@{/ph/edit/}+${ph.id}" >Edit</a></td>
+
 			<td><a href="DeletePublicHoliday.html"
 				th:href="@{/ph/delete/}+${ph.id}" style="color:red">Delete</a></td>
 		</tr>

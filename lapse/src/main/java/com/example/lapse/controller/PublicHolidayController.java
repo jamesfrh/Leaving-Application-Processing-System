@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lapse.domain.PublicHoliday;
+import com.example.lapse.domain.Staff;
 import com.example.lapse.service.PublicHolidayService;
 import com.example.lapse.service.PublicHolidayServiceImpl;
 
@@ -59,5 +60,11 @@ public class PublicHolidayController {
 		  pubservice.savePublicHoliday(publicHoliday);
 		  return "forward:/ph/list";
 	}
+	  @RequestMapping(value = "/edit/{id}")
+	  public String editPublicHoliday(@PathVariable("id") Integer id, Model model) {
+		  PublicHoliday publicHoliday = pubservice.findPublicHolidayById(id);
+	    model.addAttribute("publicholiday", publicHoliday);
+	    return "ph-form";
+	  }
 
 }

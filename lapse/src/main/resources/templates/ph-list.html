@@ -36,14 +36,14 @@ table
 			<td ><b>Name</b></td>			
 			<td ><b>Start Date</b></td>
 			<td ><b>End Date</b></td>			
-			<td><b>Actions</b></td>
+			<td colspan="2"><b>Actions</b></td>
 		</tr>
 		<tr th:each="ph:${phlist}">
 			<td th:text=${ph.id}>Id</td>
 			<td th:text=${ph.name}>Name</td>
 			<td th:text="${#dates.format(ph.startDate, 'dd-MM-yyyy')}">Start Date</td>
 			<td th:text="${#dates.format(ph.endDate, 'dd-MM-yyyy')}">End Date</td>
-			<td><a href="EditStaff.html"
+			<td><a href="EditPublicHoliday.html"
 				th:href="@{/ph/edit/}+${ph.id}" >Edit</a></td>
 
 			<td><a href="DeletePublicHoliday.html"

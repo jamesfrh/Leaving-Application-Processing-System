@@ -108,14 +108,31 @@ public class LoginController {
 		List<LeaveType> leaveTypeArr = ltservice.findAllLeaveTypesEXCL();
 		Iterator<LeaveType> leaveTypeIterator = leaveTypeArr.iterator();
 		List<Float> balanceArr = new ArrayList<Float>();
+		List<Float> UsedArr = new ArrayList<Float>();
 		while(leaveTypeIterator.hasNext()) {
 			LeaveType lt = leaveTypeIterator.next();
 			Float leavesApplied = laservice.getSumOfLeavesAppliedByStaff(staffId, lt.getId());
 			balanceArr.add(lt.getEntitlement() - leavesApplied);
+			UsedArr.add (leavesApplied);
 		}
 		model.addAttribute("balanceArr", balanceArr);
 		model.addAttribute("leaveTypes",leaveTypeArr);
-		return "homePage";
+				
+		//add
+			//first model	
+			List<String> Listofleave=ltservice.findAllLeaveTypeNamesExCL();
+			List<Float> ListEntitlement = new ArrayList<Float>();
+			for (Iterator iterator = Listofleave.iterator(); iterator.hasNext();) {
+				String string = (String) iterator.next();
+				ListEntitlement.add(ltservice.findEntitlementByLeaveType(string));
+			}
+			model.addAttribute("ListofEntitlement", ListEntitlement);
+			System.out.println(ListEntitlement);
+			//second model					
+			model.addAttribute("UsedLeave", UsedArr);
+			ArrayList<String> List=ltservice.findAllLeaveTypeNamesExCL();
+			model.addAttribute("TypesofLeave", List);
+			return "homePage";
 	}
 	
 	

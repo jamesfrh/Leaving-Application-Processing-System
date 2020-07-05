@@ -133,59 +133,6 @@ public class LapseApplication {
 			laRepo.save(apply2);
 			laRepo.save(apply3);
 
-
-//			//Validate that start day and end day must not be weekends
-//			DayOfWeek dayStart = DayOfWeek.of(dateStart1.get(ChronoField.DAY_OF_WEEK));
-//			System.out.println(dayStart);
-//			DayOfWeek dayEnd = DayOfWeek.of(dateEnd1.get(ChronoField.DAY_OF_WEEK));
-//			System.out.println(dayStart);
-//			
-//			if((dayStart == DayOfWeek.SATURDAY || dayStart == DayOfWeek.SUNDAY) ||
-//					(dayEnd == DayOfWeek.SATURDAY || dayEnd == DayOfWeek.SUNDAY)) {
-//				System.out.println("start day/ end day of leave is a weekend");
-//			}
-			
-		
-//			float actualLeaveDaysApplied = 0;
-//
-//			//validate if appliedLeaveDays <=14 with a method and put the if statment below inside
-//			if(noOfDays1 <=14) {
-//				//converting start and end date from LocalDate format to Calendar format
-//	            GregorianCalendar calStart = GregorianCalendar.from(dateStart1.atStartOfDay(ZoneId.systemDefault()));
-//	            GregorianCalendar calEnd = GregorianCalendar.from(dateEnd1.atStartOfDay(ZoneId.systemDefault()));
-//				System.out.println(calStart);
-//				
-////				System.out.println(daysBetween);
-////				System.out.println(noOfDays1);
-//
-//
-//	            //validate if end date is before start date, return an error if they are
-//	            //startCal.getTimeInMillis() > endCal.getTimeInMillis()
-//
-//
-//				do {
-//				  if (calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
-//				  calStart.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {;
-//				  actualLeaveDaysApplied++; }
-//				  calStart.add(Calendar.DAY_OF_MONTH, 1);
-//				  } 
-//				while (calStart.getTimeInMillis() <= calEnd.getTimeInMillis());
-//				
-//				System.out.println(actualLeaveDaysApplied);
-//				// return actualLeaveDaysApplied
-//			}
-
-
-//			      // test get sum of leaves applied by Staff3 
-//					LeaveApplication apply4 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
-//							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true, false, "999",  "holiday", staff3);
-//					LeaveApplication apply5 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
-//							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
-//					LeaveApplication apply6 = new LeaveApplication(APPLICATIONDATE, START1,/*TimeOfDay.PM,*/END1, /*TimeOfDay.AM,*/
-//							lt2, noOfDays1, LeaveStatus.APPLIED,"holiday","staff 2", true,false, "999",  "holiday", staff3);
-//					laRepo.save(apply4);
-//					laRepo.save(apply5);
-//					laRepo.save(apply6);
 					
 			      float totaldaysapplied = laRepo.getSumOfLeavesAppliedByStaff(6, 2);
 			      System.out.println(totaldaysapplied);

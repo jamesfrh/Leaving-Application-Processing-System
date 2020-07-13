@@ -12,11 +12,18 @@
 ![](Screenshots/Staff%20List.JPG)
 ### Add new staff
 ![](Screenshots/addNewStaff.JPG)
+### Staff Form Validation
+![](Screenshots/staffFormValidation.JPG)
 ### Leave Type List
 ![](Screenshots/leaveTypeList.JPG)
 ### Add new leave
 ![](Screenshots/addNewLeave.JPG)
+### Leave Form Validation
+![](Screenshots/leaveFormvalid.JPG)
 ### Holiday List
 ![](Screenshots/holidayList.JPG)
 ### Add new holiday
 ![](Screenshots/addNewHoliday.JPG)
+### Holiday Form Validation
+![](Screenshots/publicHolValidation.JPG)
+

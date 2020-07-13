@@ -14,7 +14,8 @@
 ![](Screenshots/addNewStaff.JPG)
 ### Leave Type List
 ![](Screenshots/leaveTypeList.JPG)
-
+### Add new leave
+![](Screenshots/addNewLeave.JPG)
 ### Holiday List
 ![](Screenshots/holidayList.JPG)
 ### Add new holiday

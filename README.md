@@ -1,5 +1,5 @@
 # Leaving-Application-Processing-System
-
+A leave application processing system that accommodates three levels of employee roles and multiple leave categories using Java, Thymeleaf, HTML5, JS, CSS. 
 ## Admin Login Page
 ![](Screenshots/Admin%20Login%20Portal.JPG)
 ### Invalid Username

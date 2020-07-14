@@ -42,3 +42,17 @@ A leave application processing system that accommodates three levels of employee
 ### Leave Application History
 ![](Screenshots/Leaveapplicationhistory.JPG)
 ### Edit Leave Application
+![](Screenshots/editleaveapplication.JPG)
+### Manager Dashboard
+![](Screenshots/MANAGERhomepage.JPG)
+### Subordinates Leave Approval List
+![](Screenshots/viewforapproval.JPG)
+### View Subordinate Leave Application 
+To approve/reject  leave application. 
+Managers may also view other subordinates leave application that fall within the period of the current application to check if there is enough manpower.
+![](Screenshots/ViewIndividualapplication.JPG)
+When no other leave applications fall within the period of the current application
+![](Screenshots/ViewIndividualapplication2.JPG)
+### Subordinates Leave History 
+![](Screenshots/Viewsubleavehistory.JPG)
+
